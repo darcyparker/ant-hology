@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.freehep-graphics2d"
+  basedir="."
+  default="ant-hology.getLibraryDefs.freehep-graphics2d"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.freehep-graphics2d.dir" file="${ant.file.ant-hology.getLibraryDefs.freehep-graphics2d}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/freehep-graphics2d.xml" unless:set="ant-hology.pathdefs.freehep-graphics2d.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <target
+    name="ant-hology.get.freehep-graphics2d"
+    description="Installs freehep-graphics2d library"
+    unless="ant-hology.availableLibraries.freehep-graphics2d">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.freehep-graphics2d"
+      pathRefId="freehep-graphics2d.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.freehep-graphics2d"
+      >
+      <echo>Installing freehep-graphics2d, version 2.2.1</echo>
+      <delete dir="${ant-hology.lib.dir}/freehep-graphics2d-2.2.1"/>
+      <mkdir dir="${ant-hology.lib.dir}/freehep-graphics2d-2.2.1"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphics2d/2.2.1/freehep-graphics2d-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphics2d-2.2.1/freehep-graphics2d-2.2.1.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.freehep-graphics2d"
+        pathRefId="freehep-graphics2d.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='freehep-graphics2d.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.freehep-graphics2d"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>freehep-graphics2d, version 2.2.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.freehep-graphics2d.loaded" value="true"/>
+
+</project>

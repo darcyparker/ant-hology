@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.jline"
+  basedir="."
+  default="ant-hology.getLibraryDefs.jline"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.jline.dir" file="${ant.file.ant-hology.getLibraryDefs.jline}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jline.xml" unless:set="ant-hology.pathdefs.jline.loaded"/>
+
+  <!-- jline provides console input/output to rhino with envjs -->
+  <!-- See http://sourceforge.net/projects/jline/ -->
+  <!-- See http://www.envjs.com/ -->
+  <target
+    name="ant-hology.get.jline"
+    description="Installs jline library."
+    unless="ant-hology.availableLibraries.jline">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/jline/files/jline/1.0/jline-1.0.zip/download"
+      libName="jline"
+      libVersion="1.0"
+      classpath="jline.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.jline.loaded" value="true"/>
+
+</project>

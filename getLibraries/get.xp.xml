@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xp"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xp"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.xp.dir" file="${ant.file.ant-hology.getLibraryDefs.xp}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xp.xml" unless:set="ant-hology.pathdefs.xp.loaded"/>
+
+  <!-- See http://www.jclark.com/xml/xp/index.html -->
+  <target
+    name="ant-hology.get.xp"
+    description="Installs xp library."
+    unless="ant-hology.availableLibraries.xp">
+    <getLibraryDefs.tasks.getLib
+      libUrl="ftp://ftp.jclark.com/pub/xml/xp.zip"
+      libName="xp"
+      libVersion=""
+      classpath="xp.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xp.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.msv"
+  basedir="."
+  default="ant-hology.getLibraryDefs.msv"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.msv.dir" file="${ant.file.ant-hology.getLibraryDefs.xmlunit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xsdlib.xml" unless:set="ant-hology.getLibraryDefs.xsdlib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jing.xml" unless:set="ant-hology.getLibraryDefs.jing.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/msv.xml" unless:set="ant-hology.pathdefs.msv.loaded"/>
+
+  <!-- See http://msv.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.msv"
+    description="Installs msv library."
+    depends="
+    ant-hology.get.xsdlib,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver,
+    ant-hology.get.jing
+    "
+    unless="ant-hology.availableLibraries.msv">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://java.net/downloads/msv/releases/msv.20090415.zip"
+      libName="msv"
+      libVersion="20090415"
+      classpath="msv.classpath"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.msv.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.ant-contrib"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.ant-contrib.dir" file="${ant.file.ant-hology.pathdefs.ant-contrib}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+
+  <!-- See http://sourceforge.net/projects/ant-contrib/ -->
+  <!-- See http://ant-contrib.sourceforge.net/tasks/tasks/index.html -->
+  <path id="ant-contrib.classpath">
+    <pathelement location="${ant-hology.lib.dir}/ant-contrib/target/ant-contrib.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.ant-contrib.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.jchardet"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.jchardet.dir" file="${ant.file.ant-hology.pathdefs.jchardet}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- http://jchardet.sourceforge.net -->
+  <!--Used by htmlparser 1.4-->
+  <path
+    id="jchardet.classpath"
+    location="${ant-hology.lib.dir}/jchardet-1.1/dist/lib/chardet.jar"/>
+
+  <property name="ant-hology.pathdefs.jchardet.loaded" value="true"/>
+
+</project>

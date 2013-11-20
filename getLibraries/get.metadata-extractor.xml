@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.metadata-extractor"
+  basedir="."
+  default="ant-hology.getLibraryDefs.metadata-extractor"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.metadata-extractor.dir" file="${ant.file.ant-hology.getLibraryDefs.metadata-extractor}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/metadata-extractor.xml" unless:set="ant-hology.pathdefs.metadata-extractor.loaded"/>
+
+  <!-- See http://drewnoakes.com/code/exif/ -->
+  <target
+    name="ant-hology.get.metadata-extractor"
+    description="Installs metadata-extractor library."
+    unless="ant-hology.availableLibraries.metadata-extractor">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://metadata-extractor.googlecode.com/files/metadata-extractor-2.6.4.zip"
+      libName="metadata-extractor"
+      libVersion="2.6.4"
+      classpath="metadata-extractor.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.metadata-extractor.loaded" value="true"/>
+
+</project>

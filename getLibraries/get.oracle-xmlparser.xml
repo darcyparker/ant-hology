@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.oracle-xmlparser"
+  basedir="."
+  default="ant-hology.getLibraryDefs.oracle-xmlparser"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.oracle-xmlparser.dir" file="${ant.file.ant-hology.getLibraryDefs.oracle-xmlparser}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/oracle-xmlparser.xml" unless:set="ant-hology.pathdefs.oracle-xmlparser.loaded"/>
+
+  <!--oracle xslt processor and xml parser are in xmlparserv2.jar-->
+  <!-- See http://docs.oracle.com/cd/B14117_01/appdev.101/b12024/oracle/xml/parser/v2/oracle-xmlparser.html -->
+  <target
+    name="ant-hology.get.oracle-xmlparser"
+    description="Installs oracle-xmlparser library"
+    unless="ant-hology.availableLibraries.oracle-xmlparser">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.oracle-xmlparser"
+      pathRefId="oracle-xmlparser.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.oracle-xmlparser"
+      >
+      <echo>Installing oracle-xmlparser, version 2</echo>
+      <delete dir="${ant-hology.lib.dir}/oracle-xmlparser-v2"/>
+      <mkdir dir="${ant-hology.lib.dir}/oracle-xmlparser-v2"/>
+      <get
+        src="http://mirrors.ibiblio.org/pub/mirrors/maven/mule/dependencies/maven1/oracle-xdb/jars/xmlparserv2.jar"
+        dest="${ant-hology.lib.dir}/oracle-xmlparser-v2/xmlparserv2.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.oracle-xmlparser"
+        pathRefId="oracle-xmlparser.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='oracle-xmlparser.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.oracle-xmlparser"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>oracle-xmlparser, version 2 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.oracle-xmlparser.loaded" value="true"/>
+
+</project>

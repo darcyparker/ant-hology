@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-xalan"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-xalan"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-xalan.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-xalan}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <!--Not necessary to load bsf, logging or rhino getters because these are in necessary libs and already loaded-->
+  <import file="${ant-hology.pathdefs.dir}/apache-xalan.xml" unless:set="ant-hology.pathdefs.apache-xalan.loaded"/>
+
+  <!-- See http://xalan.apache.org/xalan-j/index.html -->
+  <target
+    name="ant-hology.get.apache-xalan"
+    description="Installs apache-xalan library"
+    unless="ant-hology.availableLibraries.apache-xalan">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.spinellicreations.com/xalan/xalan-j/binaries/xalan-j_2_7_1-bin.zip"
+      originalDestDir="xalan-j_2_7_1"
+      libName="apache-xalan"
+      libVersion="2.7.1"
+      classpath="apache-xalan.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-xalan.loaded" value="true"/>
+
+</project>

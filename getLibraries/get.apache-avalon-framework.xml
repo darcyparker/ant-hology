@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-avalon-framework"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-avalon-framework"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-avalon-framework.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-avalon-framework}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-avalon-framework.xml" unless:set="ant-hology.pathdefs.apache-avalon-framework.loaded"/>
+
+  <!-- See http://avalon.apache.org/ -->
+  <!-- used by apache fop and calabash -->
+  <target
+    name="ant-hology.get.apache-avalon-framework"
+    description="Installs apache-avalon-framework library"
+    unless="ant-hology.availableLibraries.apache-avalon-framework">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://archive.apache.org/dist/avalon/avalon-framework/v4.2.0/avalon-framework-4.2.0.zip"
+      originalDestDir="avalon-framework"
+      libName="apache-avalon-framework"
+      libVersion="4.2.0"
+      classpath="apache-avalon-framework.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-avalon-framework.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxonb"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxonb"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxonb.dir" file="${ant.file.ant-hology.getLibraryDefs.saxonb}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonb.xml" unless:set="ant-hology.pathdefs.saxonb.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.saxonb"
+    description="Installs saxonb library."
+    unless="ant-hology.availableLibraries.saxonb">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/saxon/files/Saxon-B/9.1.0.8/saxonb9-1-0-8j.zip/download"
+      libName="saxonb"
+      libVersion="9.1.0.8j"
+      classpath="saxonb.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxonb.loaded" value="true"/>
+
+</project>

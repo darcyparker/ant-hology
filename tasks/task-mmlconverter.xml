@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-mmlconverter"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-mmlconverter.dir" file="${ant.file.ant-hology.taskdefs.task-mmlconverter}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jeuclid.xml" unless:set="ant-hology.pathdefs.jeuclid.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.jeuclid"
+    pathRefId="jeuclid.all.classpath"
+    />
+
+  <!-- See http://jeuclid.sourceforge.net/usage.html -->
+  <taskdef
+    name="mmlconverter"
+    classname="net.sourceforge.jeuclid.ant.MathMLConverter"
+    if:set="ant-hology.availableLibraries.jeuclid"
+    >
+    <classpath refid="jeuclid.core.classpath"/>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-mmlconverter.loaded" value="true"/>
+
+</project>

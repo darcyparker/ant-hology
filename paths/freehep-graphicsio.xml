@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.freehep-graphicsio"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.freehep-graphicsio.dir" file="${ant.file.ant-hology.pathdefs.freehep-graphicsio}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <path id="freehep-graphicsio.classpath">
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-emf-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-pdf-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-ps-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-swf-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-tests-2.2.1.jar"/>
+
+    <!--Note: jeuclid doesn't seem to use the following. But they are apart of freehep-graphicsio-->
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-svg-2.2.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-java-2.2.1.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.freehep-graphicsio.loaded" value="true"/>
+
+</project>

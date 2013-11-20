@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-net"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-net.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-net}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-net/ -->
+  <path
+    id="apache-commons-net.classpath"
+    path="${ant-hology.lib.dir}/apache-commons-net-3.3/commons-net-3.3.jar"
+    />
+
+  <property name="ant-hology.pathdefs.apache-commons-net.loaded" value="true"/>
+
+</project>

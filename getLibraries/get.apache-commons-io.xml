@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-io"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-io"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-io.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-io}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-io.xml" unless:set="ant-hology.pathdefs.apache-commons-io.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-io/ -->
+  <target
+    name="ant-hology.get.apache-commons-io"
+    description="Installs apache-commons-io library"
+    unless="ant-hology.availableLibraries.apache-commons-io">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://mirrors.gigenet.com/apache//commons/io/binaries/commons-io-2.4-bin.zip"
+      originalDestDir="commons-io-2.4"
+      libName="apache-commons-io"
+      libVersion="2.4"
+      classpath="apache-commons-io.classpath"/>
+    <chmod perm="755"
+      if:set="ant-hology.availableLibraries.apache-commons-io"
+      >
+      <dirset dir="${ant-hology.lib.dir}/apache-commons-io-2.4">
+        <include name="**/*"/>
+      </dirset>
+    </chmod>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-io.loaded" value="true"/>
+
+</project>

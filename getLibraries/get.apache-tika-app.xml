@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-tika-app"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-tika-app"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-tika-app.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-tika-app}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-tika-app.xml" unless:set="ant-hology.pathdefs.apache-tika-app.loaded"/>
+
+  <!-- See https://tika.apache.org/ -->
+  <target
+    name="ant-hology.get.apache-tika-app"
+    description="Installs apache-tika-app library"
+    unless="ant-hology.availableLibraries.apache-tika-app">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.apache-tika-app"
+      pathRefId="apache-tika-app.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-tika-app"
+      >
+      <echo>Installing apache-tika-app, version 1.4</echo>
+      <delete dir="${ant-hology.lib.dir}/apache-tika-app-1.4"/>
+      <mkdir dir="${ant-hology.lib.dir}/apache-tika-app-1.4"/>
+      <get
+        src="http://mirror.tcpdiag.net/apache/tika/tika-app-1.4.jar"
+        dest="${ant-hology.lib.dir}/apache-tika-app-1.4/tika-app-1.4.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.apache-tika-app"
+        pathRefId="apache-tika-app.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='apache-tika-app.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-tika-app"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>apache-tika-app, version 1.4 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-tika-app.loaded" value="true"/>
+
+</project>

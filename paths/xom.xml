@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xom"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xom.dir" file="${ant.file.ant-hology.pathdefs.xom}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://xom.nu/ -->
+  <!--Used by htmlparser 1.4-->
+  <path id="xom.classpath">
+    <pathelement location="${ant-hology.lib.dir}/xom-1.2.10/xom-1.2.10.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.xom.loaded" value="true"/>
+
+</project>

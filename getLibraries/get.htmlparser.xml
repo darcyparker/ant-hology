@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.htmlparser"
+  basedir="."
+  default="ant-hology.getLibraryDefs.htmlparser"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.htmlparser.dir" file="${ant.file.ant-hology.getLibraryDefs.htmlparser}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.icu4j.xml" unless:set="ant-hology.getLibraryDefs.icu4j.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jchardet.xml" unless:set="ant-hology.getLibraryDefs.jchardet.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xom.xml" unless:set="ant-hology.getLibraryDefs.xom.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/htmlparser.xml" unless:set="ant-hology.pathdefs.htmlparser.loaded"/>
+
+  <!-- See http://about.validator.nu/htmlparser/ -->
+  <target
+    name="ant-hology.get.htmlparser"
+    description="Installs htmlparser library."
+    depends="
+    ant-hology.get.icu4j,
+    ant-hology.get.jchardet,
+    ant-hology.get.xom
+    "
+    unless="ant-hology.availableLibraries.htmlparser">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://about.validator.nu/htmlparser/htmlparser-1.4.zip"
+      libName="htmlparser"
+      libVersion="1.4"
+      classpath="htmlparser.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.htmlparser.loaded" value="true"/>
+
+</project>

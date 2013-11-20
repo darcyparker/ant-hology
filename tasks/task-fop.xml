@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-fop"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-fop.dir" file="${ant.file.ant-hology.taskdefs.task-fop}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-fop.xml" unless:set="ant-hology.pathdefs.apache-fop.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-fop"
+    pathRefId="apache-fop.classpath"
+    />
+
+  <!-- See http://xmlgraphics.apache.org/fop/1.1/anttask.html -->
+  <taskdef
+    name="fop"
+    classname="org.apache.fop.tools.anttasks.Fop"
+    if:set="ant-hology.availableLibraries.apache-fop"
+    >
+    <classpath refid="apache-fop.classpath"/>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-fop.loaded" value="true"/>
+
+</project>

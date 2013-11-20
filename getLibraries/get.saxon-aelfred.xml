@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxon-aelfred"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxon-aelfred"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxon-aelfred.dir" file="${ant.file.ant-hology.getLibraryDefs.saxon-aelfred}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxon-aelfred.xml" unless:set="ant-hology.pathdefs.saxon-aelfred.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.saxon-aelfred"
+    description="Installs saxon-aelfred library."
+    unless="ant-hology.availableLibraries.saxon-aelfred">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://prdownloads.sourceforge.net/saxon/aelfred7_0.zip"
+      libName="saxon-aelfred"
+      libVersion="7.0"
+      unzipToDestDir="true"
+      testInstallationAtEnd="false"
+      classpath="saxon-aelfred.classpath"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.saxon-aelfred"
+      >
+      <unzip src="${ant-hology.lib.dir}/saxon-aelfred-7.0/aelfred-source.zip" dest="${ant-hology.lib.dir}/saxon-aelfred-7.0/src"/>
+      <delete file="${ant-hology.lib.dir}/saxon-aelfred-7.0/aelfred-source.zip"/>
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.saxon-aelfred"
+        pathRefId="saxon-aelfred.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='saxon-aelfred.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.saxon-aelfred"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>saxon-aelfred, version 7.0 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxon-aelfred.loaded" value="true"/>
+
+</project>

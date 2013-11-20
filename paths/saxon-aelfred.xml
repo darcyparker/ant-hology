@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.saxon-aelfred"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.saxon-aelfred.dir" file="${ant.file.ant-hology.pathdefs.saxon-aelfred}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <path
+    id="saxon-aelfred.classpath"
+    path="${ant-hology.lib.dir}/saxon-aelfred-7.0/saxon-aelfred.jar"
+    />
+
+  <property name="ant-hology.pathdefs.saxon-aelfred.loaded" value="true"/>
+
+</project>

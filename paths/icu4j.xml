@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.icu4j"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.icu4j.dir" file="${ant.file.ant-hology.pathdefs.icu4j}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://site.icu-project.org/ -->
+  <!--Used by htmlparser 1.4-->
+  <path id="icu4j.classpath">
+    <pathelement location="${ant-hology.lib.dir}/icu4j-51.2/icu4j-51_2.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/icu4j-51.2/icu4j-charset-51_2.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/icu4j-51.2/icu4j-localespi-51_2.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.icu4j.loaded" value="true"/>
+
+</project>

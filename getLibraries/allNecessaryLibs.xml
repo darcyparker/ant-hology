@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.allNecessaryLibs"
+  basedir="."
+  default="ant-hology.get.allNecessaryLibs"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.allNecessaryLibs.dir" file="${ant.file.ant-hology.getLibraryDefs.allNecessaryLibs}"/>
+
+  <import file="../commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-bsf-2.4.0.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-logging.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.rhino.xml" unless:set="ant-hology.getLibraryDefs.rhino.loaded"/>
+
+  <echo unless:set="ant-hology.availableLibraries.allNecessaryLibs">Installing necessary libraries.</echo>
+  <target
+    name="ant-hology.get.allNecessaryLibs"
+    depends="
+    ant-hology.get.apache-commons-bsf-2.4.0,
+    ant-hology.get.apache-commons-logging,
+    ant-hology.get.rhino
+    "
+    unless:set="ant-hology.availableLibraries.allNecessaryLibs"
+    >
+    <condition property="ant-hology.availableLibraries.allNecessaryLibs">
+      <and>
+        <isset property="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"/>
+        <isset property="ant-hology.availableLibraries.apache-commons-logging"/>
+        <isset property="ant-hology.availableLibraries.rhino"/>
+      </and>
+    </condition>
+    <echo if:set="ant-hology.availableLibraries.allNecessaryLibs">All necessary libraries installed.</echo>
+    <fail
+      unless:set="ant-hology.availableLibraries.allNecessaryLibs"
+      message="Failed to install necessary libraries"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.allNecessaryLibs.loaded" value="true"/>
+
+</project>

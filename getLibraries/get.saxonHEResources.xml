@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxonHEResources"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxonHEResources"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxonHEResources.dir" file="${ant.file.ant-hology.getLibraryDefs.saxonHEResources}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.saxonHEResources"
+    description="Installs saxonHE Resources in saxonHE library install folder."
+    depends="ant-hology.get.saxonHE"
+    unless="ant-hology.availableLibraries.saxonHEResources">
+
+    <condition
+      property="ant-hology.availableLibraries.saxonHEResources"
+      unless:set="ant-hology.availableLibraries.saxonHEResources"
+      >
+      <and>
+        <available
+          file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources"
+          type="dir"/>
+        <available
+          file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-saxonHE-9.5.1.2"
+          type="dir"/>
+        <available
+          file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-userdoc"
+          type="dir"/>
+      </and>
+    </condition>
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.saxonHEResources"
+      >
+      <echo>Installing saxonHE v9.5 and 9.5.1.2 resources</echo>
+      <delete dir="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources"/>
+      <get
+        src="http://sourceforge.net/projects/saxon/files/Saxon-HE/9.5/saxon-resources9-5.zip/download"
+        dest="${ant-hology.lib.dir}/saxonHE-9.5.1.2/saxon-resources9-5.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonHE-9.5.1.2/saxon-resources9-5.zip"
+        dest="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-userdoc.zip"
+        dest="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-userdoc"/>
+      <get
+        src="http://sourceforge.net/projects/saxon/files/Saxon-HE/9.5/saxon9-5-1-2source.zip/download"
+        dest="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/saxon9-5-1-2source.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/saxon9-5-1-2source.zip"
+        dest="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-saxonHE-9.5.1.2"/>
+      <delete file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/saxon-resources9-5.zip"/>
+      <delete file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-userdoc.zip"/>
+      <delete file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/saxon9-5-1-2source.zip"/>
+
+      <!--Test if installation was successful.-->
+      <condition property="ant-hology.availableLibraries.saxonHEResources">
+        <and>
+          <available
+            file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources"
+            type="dir"/>
+          <available
+            file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-saxonHE-9.5.1.2"
+            type="dir"/>
+          <available
+            file="${ant-hology.lib.dir}/saxonHE-9.5.1.2/resources/source-userdoc"
+            type="dir"/>
+        </and>
+      </condition>
+      <fail message="Installation failed. Expected resources dirs under saxonHE-9.5.1.2 dir not present.">
+        <!--Note, condition inside fail task doesn't support '@property' so it is defined in previous task-->
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.saxonHEResources"/>
+          </not>
+        </condition>
+
+      </fail>
+      <echo>saxonHE v9.5 resources dir installed successfully under saxonHE v9.5.1.2.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxonHEResources.loaded" value="true"/>
+
+</project>

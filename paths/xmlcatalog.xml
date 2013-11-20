@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xmlcatalog"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xmlcatalog.dir" file="${ant.file.ant-hology.pathdefs.xmlcatalog}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Note, ${xmlcatalog.dir} is set in commonProperties.xml if one is not set by-->
+  <!--user before loading commonProperties.xml-->
+
+  <path
+    id="xmlcatalog.classpath"
+    location="${xmlcatalog.dir}"
+    />
+
+  <path
+    id="xmlcatalog.topxmlcatalogfile"
+    location="${xmlcatalog.dir}/catalog.xml"
+    />
+
+  <path
+    id="xmlcatalog.CatalogManager.properties"
+    location="${xmlcatalog.dir}/CatalogManager.properties"
+    />
+
+  <xmlcatalog id="xmlcatalog.catalog">
+    <catalogpath>
+      <path refid="xmlcatalog.topxmlcatalogfile"/>
+    </catalogpath>
+  </xmlcatalog>
+
+  <!--The following is used for testing if minimum required files are present-->
+  <!--It is not used in classpaths or xmlcatalog elements-->
+  <path id="xmlcatalog.required">
+    <path refid="xmlcatalog.classpath"/>
+    <path refid="xmlcatalog.topxmlcatalogfile"/>
+    <path refid="xmlcatalog.CatalogManager.properties"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.xmlcatalog.loaded" value="true"/>
+
+</project>

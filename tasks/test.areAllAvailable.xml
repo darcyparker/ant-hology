@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.test.areAllAvailable"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.test.areAllAvailable.dir" file="${ant-hology.taskdefs.test.areAllAvailable}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="${ant-hology.commonProperties.loaded}"/>
+  <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
+
+  <scriptdef-javascript
+    name="areAllAvailable"
+    description="areAllAvailable is an ant task that checks if all files in @{pathRefId} are available and sets the specified @{property} if true."
+    src="${ant-hology.taskdefs.dir}/test.areAllAvailable.min.js">
+    <!--src="${ant-hology.taskdefs.dir}/test.areAllAvailable.js">-->
+    <!--FYI: minified with google closure compiler-->
+    <!--Of course minification is not necessary... but trying it out.-->
+    <attribute
+      name="property"/>
+    <attribute
+      name="pathRefId"/>
+    <attribute
+      name="ant:if:if:set"/>
+    <attribute
+      name="ant:if:if:true"/>
+    <attribute
+      name="ant:if:if:blank"/>
+    <attribute
+      name="ant:unless:unless:set"/>
+    <attribute
+      name="ant:unless:unless:true"/>
+    <attribute
+      name="ant:unless:unless:blank"/>
+  </scriptdef-javascript>
+
+  <property name="ant-hology.taskdefs.test.areAllAvailable.loaded" value="true"/>
+
+</project>

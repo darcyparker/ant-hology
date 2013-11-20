@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.exec-svn"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.exec-svn.dir" file="${ant.file.ant-hology.taskdefs.exec-svn}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Simple wrapper for svn command.-->
+  <!--Could be replaced by the http://subclipse.tigris.org/svnant/svn.html -->
+  <!--However this works fine for now.-->
+
+  <macrodef
+    name="exec-svn"
+    description="A simple wrapper for the svn command"
+    >
+    <attribute
+      name="dir"
+      description="the directory in which the svn command will be executed"
+      />
+    <attribute
+      name="options"
+      description="options to pass to svn executable"
+      default=""/>
+    <attribute
+      name="failonerror"
+      default="true"
+      />
+
+    <sequential>
+      <!--Convert attributes to paths for os-->
+      <local name="_dir"/>
+      <property
+        name="_dir"
+        location="@{dir}"
+        />
+      <exec executable="svn" dir="${_dir}" searchpath="true" failonerror="@{failonerror}">
+        <arg line="@{options}"/>
+      </exec>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.exec-svn.loaded" value="true"/>
+
+</project>

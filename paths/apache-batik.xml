@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-batik"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-batik.dir" file="${ant.file.ant-hology.pathdefs.apache-batik}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xml-external.xml" unless:set="ant-hology.pathdefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/rhino.xml" unless:set="ant-hology.pathdefs.rhino.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xalan.xml" unless:set="ant-hology.pathdefs.apache-xalan.loaded"/>
+
+  <!-- See http://xmlgraphics.apache.org/batik/ -->
+
+  <!-- Add xml-apis.jar first -->
+  <!-- See http://xmlgraphics.apache.org/batik/faq.html#batik-fails-with-fop-on-org.w3c.xxx -->
+  <!-- Add <path refid="apache-commons-xml-external.classpath"> first when using fop -->
+
+  <path id="apache-batik.classpath">
+    <!--This jar file refers to other jars in the collections below.-->
+    <!--For finer control, use the paths defined below-->
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik.jar"/>
+  </path>
+
+  <!--Low Level and Core Modules-->
+  <path id="apache-batik.core.classpath">
+    <!--In same order that batik.jar lists them in its manifest -->
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-ext.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-dom.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-css.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-svg-dom.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-gvt.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-parser.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-script.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-bridge.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-swing.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-anim.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-transcoder.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-gui-util.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-awt-util.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-codec.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-util.jar"/>
+    <!-- lib/batik-root.jar not present in distribution, but in batik.jar manifest -->
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-svggen.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-xml.jar"/>
+  </path>
+
+  <path id="apache-batik.extension.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/batik-extension.jar"/>
+  </path>
+
+  <!--This is separated out from dependencies because it is a re-packaging of fop classes-->
+  <!--When using fop, it is probably not necessary-->
+  <path id="apache-batik.pdf-transcoder.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/lib/pdf-transcoder.jar"/>
+  </path>
+
+  <path id="apache-batik.dependencies.classpath">
+    <!--<path refid="apache-commons-xml-external.classpath"/>-->
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-xalan.classpath"/>
+    <path refid="rhino.classpath"/>
+    <!--Adding commons-logging for rhino-->
+    <path refid="apache-commons-logging.classpath"/>
+  </path>
+
+  <!--Applications-->
+  <path id="apache-batik.applications.rasterizer.classpath">
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+    <!--<path refid="apache-batik.extension.classpath"/>-->
+    <path refid="apache-batik.pdf-transcoder.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizer.jar"/>
+  </path>
+
+  <path id="apache-batik.applications.svgprettyprinter.classpath">
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+    <!--<path refid="apache-batik.extension.classpath"/>-->
+    <path refid="apache-batik.pdf-transcoder.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-svgpp.jar"/>
+  </path>
+
+  <path id="apache-batik.applications.svgfontconverter.classpath">
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+    <!--<path refid="apache-batik.extension.classpath"/>-->
+    <path refid="apache-batik.pdf-transcoder.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-ttf2svg.jar"/>
+  </path>
+
+  <path id="apache-batik.applications.svgbrowser.classpath">
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+    <!--<path refid="apache-batik.extension.classpath"/>-->
+    <path refid="apache-batik.pdf-transcoder.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-squiggle.jar"/>
+  </path>
+
+  <!--Ant Tasks-->
+  <path id="apache-batik.anttasks.rasterizertask.classpath">
+    <path refid="apache-batik.applications.rasterizer.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizertask.jar"/>
+  </path>
+
+  <!--This path is used for testing installation. Rarely should all paths be used in a single classpath.-->
+  <path id="apache-batik.all.classpath">
+    <path refid="apache-batik.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.extension.classpath"/>
+    <path refid="apache-batik.pdf-transcoder.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizer.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-svgpp.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-ttf2svg.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-squiggle.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizertask.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-batik.loaded" value="true"/>
+
+</project>

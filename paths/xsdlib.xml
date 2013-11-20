@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xsdlib"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xsdlib.dir" file="${ant.file.ant-hology.pathdefs.xsdlib}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://msv.java.net/  (msv and xsdlib) -->
+  <path id="xsdlib.classpath">
+    <pathelement location="${ant-hology.lib.dir}/xsdlib-20090415/xsdlib.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/xsdlib-20090415/relaxngDatatype.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.xsdlib.loaded" value="true"/>
+
+</project>

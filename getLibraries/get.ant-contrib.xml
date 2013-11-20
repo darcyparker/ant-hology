@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.ant-contrib"
+  basedir="."
+  default="ant-hology.getLibraryDefs.ant-contrib"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!--Note: Does not use get.tasks.getLib task in target ant-hology.get.ant-contrib because -->
+  <!--      get.tasks.getLib task depends on ant-contrib -->
+  <dirname property="ant-hology.getLibraryDefs.ant-contrib.dir" file="${ant.file.ant-hology.getLibraryDefs.ant-contrib}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/exec-svn.xml" unless:set="ant-hology.taskdefs.exec-svn.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/ant-contrib.xml" unless:set="ant-hology.pathdefs.ant-contrib.loaded"/>
+
+  <!-- See http://sourceforge.net/projects/ant-contrib/ -->
+  <!-- See http://ant-contrib.sourceforge.net/tasks/tasks/index.html -->
+  <target
+    name="ant-hology.get.ant-contrib"
+    description="Installs ant-contrib library"
+    unless="ant-hology.availableLibraries.ant-contrib">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.ant-contrib"
+      pathRefId="ant-contrib.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.ant-contrib"
+      >
+      <echo>Installing ant-contrib, latest on svn trunk</echo>
+
+      <!--Install by checking out svn repo and building jars from src-->
+      <delete dir="${ant-hology.lib.dir}/ant-contrib"/>
+      <exec-svn
+        dir="${ant-hology.lib.dir}"
+        options="checkout svn://svn.code.sf.net/p/ant-contrib/code/ant-contrib/trunk ant-contrib"/>
+      <ant
+        dir="${ant-hology.lib.dir}/ant-contrib"
+        antfile="build.xml"
+        target="jar"
+        />
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.ant-contrib"
+        pathRefId="ant-contrib.classpath"
+        />
+      <fail message="Installation failed: Some file(s) in path[@refid='ant-contrib-classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.ant-contrib"/>
+          </not>
+        </condition>
+      </fail>
+      <!--TODO: Consider loading antcontrib taskdef after install-->
+      <echo>ant-contrib was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.ant-contrib.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.AppleJavaExtensions"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.AppleJavaExtensions.dir" file="${ant.file.ant-hology.pathdefs.AppleJavaExtensions}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <path id="AppleJavaExtensions.classpath">
+    <pathelement location="${ant-hology.lib.dir}/AppleJavaExtensions-1.4/AppleJavaExtensions-1.4.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.AppleJavaExtensions.loaded" value="true"/>
+
+</project>

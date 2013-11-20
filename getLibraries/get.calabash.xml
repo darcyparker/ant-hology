@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.calabash"
+  basedir="."
+  default="ant-hology.getLibraryDefs.calabash"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.calabash.dir" file="${ant.file.ant-hology.getLibraryDefs.calabash}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-fop.xml" unless:set="ant-hology.getLibraryDefs.apache-fop.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jing.xml" unless:set="ant-hology.getLibraryDefs.jing.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xmlunit.xml" unless:set="ant-hology.getLibraryDefs.xmlunit.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.msv.xml" unless:set="ant-hology.getLibraryDefs.msv.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.metadata-extractor.xml" unless:set="ant-hology.getLibraryDefs.metadata-extractor.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tagsoup.xml" unless:set="ant-hology.getLibraryDefs.tagsoup.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.htmlparser.xml" unless:set="ant-hology.getLibraryDefs.htmlparser.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/calabash.xml" unless:set="ant-hology.pathdefs.calabash.loaded"/>
+
+  <!-- See http://xmlcalabash.com/ -->
+  <!-- See https://en.wikipedia.org/wiki/XProc -->
+  <target
+    name="ant-hology.get.calabash"
+    description="Installs calabash library."
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver,
+    ant-hology.get.apache-fop,
+    ant-hology.get.jing,
+    ant-hology.get.xmlunit,
+    ant-hology.get.msv,
+    ant-hology.get.metadata-extractor,
+    ant-hology.get.tagsoup,
+    ant-hology.get.htmlparser
+    "
+    unless="ant-hology.availableLibraries.calabash">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://xmlcalabash.com/download/calabash-1.0.13-95.zip"
+      libName="calabash"
+      libVersion="1.0.13-95"
+      classpath="calabash.classpath"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.calabash.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-xml-external"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-xml-external.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-xml-external}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://xerces.apache.org/xml-commons/ -->
+  <path id="apache-commons-xml-external.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-xml-external-1.4.01/xml-apis.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-xml-external-1.4.01/xml-apis-ext.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-commons-xml-external.loaded" value="true"/>
+
+</project>

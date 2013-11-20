@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.WindowsElevationPowerToys"
+  basedir="."
+  default="ant-hology.getLibraryDefs.WindowsElevationPowerToys"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.WindowsElevationPowerToys.dir" file="${ant.file.ant-hology.getLibraryDefs.WindowsElevationPowerToys}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/WindowsElevationPowerToys.xml" unless:set="ant-hology.pathdefs.WindowsElevationPowerToys.loaded"/>
+
+  <property
+    name="ant-hology.getLibraryDefs.WindowsElevationPowerToys.destDir"
+    value="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06"/>
+
+  <!--The 'elevate' commands are used to run commands as administrator.-->
+  <!--They are often better than 'runas.exe' because sometimes a user has administrator privileges but-->
+  <!--does not know the administrator password.-->
+  <!--An example where a user needs to run a command as administrator is 'mklink' to make symbolic links in windows.-->
+  <!--Article: http://technet.microsoft.com/en-us/magazine/2008.06.elevation.aspx -->
+  <!--download: http://download.microsoft.com/download/f/d/-1/fd05def7-68a1-4f71-8546-25c359cc0842/Elevation2008_06.exe -->
+  <target
+    name="ant-hology.get.WindowsElevationPowerToys"
+    description="Installs Apple Java Extensions library"
+    if="ant-hology.OS.onWindows"
+    unless="ant-hology.availableLibraries.WindowsElevationPowerToys">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.WindowsElevationPowerToys"
+      pathRefId="WindowsElevationPowerToys.requiredFiles"
+      if:set="ant-hology.OS.onWindows"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.WindowsElevationPowerToys"
+      >
+      <echo>Installing Windows Elevation PowerToys, version 2008_06</echo>
+      <delete dir="${ant-hology.getLibraryDefs.WindowsElevationPowerToys.destDir}"/>
+      <delete file="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06.exe"/>
+      <delete file="${ant-hology.lib.dir}\ELEVAT~1.EXE"/>
+      <get
+        src="http://download.microsoft.com/download/f/d/0/fd05def7-68a1-4f71-8546-25c359cc0842/Elevation2008_06.exe"
+        dest="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06.exe"/>
+      <!--Silently install. This extracts a file called "ELEVAT~1.EXE" which is a self-extracting zip file -->
+      <exec
+        executable="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06.exe"
+        failonerror="true">
+        <arg value="/Q"/>
+        <arg value="/C"/>
+        <arg prefix="/T:" path="${ant-hology.lib.dir}"/>
+      </exec>
+      <unzip src="${ant-hology.lib.dir}\ELEVAT~1.EXE" dest="${ant-hology.lib.dir}"/>
+      <move file="${ant-hology.lib.dir}/Elevation" tofile="${ant-hology.getLibraryDefs.WindowsElevationPowerToys.destDir}"/>
+      <delete file="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06.exe"/>
+      <delete file="${ant-hology.lib.dir}\ELEVAT~1.EXE"/>
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.WindowsElevationPowerToys"
+        pathRefId="WindowsElevationPowerToys.requiredFiles"
+        if:set="ant-hology.OS.onWindows"
+        />
+      <fail
+        message="Installation failed: Some file(s) in path[@refid='WindowsElevationPowerToys.requiredFiles'] were not found."
+        if:set="ant-hology.OS.onWindows"
+        >
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.WindowsElevationPowerToys"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>Windows Elevation Power Toys (2008-06) was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property
+    name="ant-hology.getLibraryDefs.WindowsElevationPowerToys.loaded"
+    value="true"
+    if:set="ant-hology.OS.onWindows"
+    />
+
+</project>

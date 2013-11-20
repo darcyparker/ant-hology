@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-calabash"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-calabash.dir" file="${ant.file.ant-hology.taskdefs.task-calabash}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/calabash.xml" unless:set="ant-hology.pathdefs.calabash.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.calabash"
+    pathRefId="calabash.classpath"
+    />
+
+  <!-- See http://xmlcalabash.com/ -->
+  <!--uri="antlib:com.xmlcalabash"-->
+  <taskdef
+    name="calabash"
+    classname="com.xmlcalabash.drivers.CalabashTask"
+    if:set="ant-hology.availableLibraries.calabash"
+    >
+    <classpath refid="calabash.classpath"/>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-calabash.loaded" value="true"/>
+
+</project>

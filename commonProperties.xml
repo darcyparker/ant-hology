@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.commonProperties"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.commonProperties.dir" file="${ant.file.ant-hology.commonProperties}"/>
+
+  <!--ant-hology.lib.dir gets set to this default if not set already-->
+  <dirname property="ant-hology.dir" file="${ant.file.ant-hology.commonProperties}" unless:set="ant-hology.dir"/>
+  <available property="ant-hology.dir.isAvailable" file="${ant-hology.dir}" type="dir"/>
+
+  <property name="ant-hology.pathdefs.dir" location="${ant-hology.dir}/paths"/>
+  <available property="ant-hology.pathdefs.dir.isAvailable" file="${ant-hology.pathdefs.dir}" type="dir"/>
+
+  <property name="ant-hology.taskdefs.dir" location="${ant-hology.dir}/tasks"/>
+  <available property="ant-hology.taskdefs.dir.isAvailable" file="${ant-hology.taskdefs.dir}" type="dir"/>
+
+  <property name="ant-hology.getLibraryDefs.dir" location="${ant-hology.dir}/getLibraries"/>
+  <available property="ant-hology.getLibraryDefs.dir.isAvailable" file="${ant-hology.getLibraryDefs.dir}" type="dir"/>
+
+  <property name="ant-hology.patches.dir" location="${ant-hology.dir}/patches"/>
+  <available property="ant-hology.patches.dir.isAvailable" file="${ant-hology.patches.dir}" type="dir"/>
+
+  <!--ant-hology.lib.dir gets set to this default if not set already-->
+  <property name="ant-hology.lib.dir" location="${ant-hology.dir}/lib" unless:set="ant-hology.lib.dir"/>
+  <available property="ant-hology.lib.dir.isAvailable" file="${ant-hology.lib.dir}" type="dir"/>
+
+  <!--ant-hology.bin.dir gets set to this default if not set already-->
+  <property name="ant-hology.useBinDir" value="true" unless:set="ant-hology.useBinDir"/>
+  <property name="ant-hology.bin.dir" location="${ant-hology.dir}/bin" unless:set="ant-hology.bin.dir"/>
+  <available property="ant-hology.bin.dir.isAvailable" file="${ant-hology.bin.dir}" type="dir"/>
+
+  <!--ant-hology.temp.dir gets set to this default if not set already-->
+  <property name="ant-hology.temp.dir" location="${ant-hology.dir}/temp" unless:set="ant-hology.temp.dir"/>
+  <available property="ant-hology.temp.dir.isAvailable" file="${ant-hology.temp.dir}" type="dir"/>
+
+  <!--${ant-hology.lib.dir} may not equal the default ${ant-hology.dir}/lib.-->
+  <!--If so, this may be a concern because scripts in ${ant-hology.dir}/bin expect-->
+  <!--their dependent jars to be in ${ant-hology.dir}/lib.  A user doesn't have to-->
+  <!--use these scripts. But they should be warned they will not work if-->
+  <!--${ant-hology.lib.dir} is not in the default location.-->
+  <local name="_binAndlibSameLocation"/>
+  <condition property="_binAndlibSameLocation">
+    <equals arg1="${ant-hology.dir}${file.separator}lib" arg2="${ant-hology.lib.dir}"/>
+  </condition>
+  <echo unless:set="_binAndlibSameLocation">Warning: Scripts in "${ant-hology.dir}${file.separator}bin" expect their dependent libraries to be organized under "${ant-hology.dir}${file.separator}lib". But ant-hology's libraries are pointing to "${ant-hology.lib.dir}". If you don't intend to use the scripts in "${ant-hology.dir}${file.separator}bin", then this is okay. Otherwise, don't change the default `ant-hology.lib.dir` property.</echo>
+
+  <!--xmlcatalog.dir gets set to this default if not set already-->
+  <!--Requires ${root.dir} to be defined in project. This should be the project's root directory.-->
+  <property name="xmlcatalog.dir" location="${root.dir}/XMLCatalog" if:set="root.dir" unless:set="xmlcatalog.dir"/>
+  <available property="xmlcatalog.dir.isAvailable" file="${xmlcatalog.dir}" type="dir"/>
+
+  <!--Current environment variables will have prefix ant-hology.env-->
+  <property environment="ant-hology.env"/>
+
+  <!--Save properties about OS-->
+  <condition property="ant-hology.OS.onWindows">
+    <os family="windows"/>
+  </condition>
+
+  <condition property="ant-hology.OS.onMac">
+    <os family="mac"/>
+  </condition>
+
+  <condition property="ant-hology.OS.onUnix">
+    <os family="unix"/>
+  </condition>
+
+  <condition property="ant-hology.OS.onUnixandNotMac" unless:set="ant-hology.OS.onMac">
+    <os family="unix"/>
+  </condition>
+
+  <!--Test if the minimum necessary libs are available-->
+  <condition property="ant-hology.availableLibraries.allNecessaryLibs">
+    <and>
+      <available
+        property="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"
+        file="${ant-hology.lib.dir}/apache-commons-bsf-2.4.0/lib/bsf.jar"
+        type="file"
+        />
+      <available
+        property="ant-hology.availableLibraries.apache-commons-logging"
+        file="${ant-hology.lib.dir}/apache-commons-logging-1.1.3/commons-logging-1.1.3.jar"
+        type="file"
+        />
+      <available
+        property="ant-hology.availableLibraries.rhino"
+        file="${ant-hology.lib.dir}/rhino-1.7R4/js.jar"
+        type="file"
+        />
+    </and>
+  </condition>
+
+  <property name="ant-hology.commonProperties.loaded" value="true"/>
+
+  <!--<echo>Loaded Common Properties</echo>-->
+  <!--<echo>ant-hology.dir=${ant-hology.dir}  available=${ant-hology.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.pathdefs.dir=${ant-hology.pathdefs.dir}  available=${ant-hology.pathdefs.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.taskdefs.dir=${ant-hology.taskdefs.dir}  available=${ant-hology.taskdefs.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.getLibraryDefs.dir=${ant-hology.getLibraryDefs.dir}  available=${ant-hology.getLibraryDefs.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.patches.dir=${ant-hology.patches.dir}  available=${ant-hology.patches.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.lib.dir=${ant-hology.lib.dir}  available=${ant-hology.lib.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.useBinDir=${ant-hology.useBinDir}</echo>-->
+  <!--<echo>ant-hology.bin.dir=${ant-hology.bin.dir}  available=${ant-hology.bin.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.temp.dir=${ant-hology.temp.dir}  available=${ant-hology.temp.dir.isAvailable}</echo>-->
+  <!--<echo>build.dir=${build.dir}  available=${build.dir.isAvailable}</echo>-->
+  <!--<echo>xmlcatalog.dir=${xmlcatalog.dir}  available=${xmlcatalog.dir.isAvailable}</echo>-->
+  <!--<echo>ant-hology.OS.onWindows=${ant-hology.OS.onWindows}</echo>-->
+  <!--<echo>ant-hology.OS.onMac=${ant-hology.OS.onMac}</echo>-->
+  <!--<echo>ant-hology.OS.onUnix=${ant-hology.OS.onUnix}</echo>-->
+  <!--<echo>ant-hology.OS.onUnixandNotMac"=${ant-hology.OS.onUnixandNotMac"}</echo>-->
+  <!--<echo>ant-hology.availableLibraries.allNecessaryLibs=${ant-hology.availableLibraries.allNecessaryLibs}</echo>-->
+
+</project>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.tasks.getLib"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.tasks.getLib.dir" file="${ant.file.ant-hology.getLibraryDefs.tasks.getLib}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+
+  <macrodef name="getLibraryDefs.tasks.getLib">
+
+    <attribute
+      name="libName"
+      description="Library Name"/>
+    <attribute
+      name="libVersion"
+      description="Library Version"/>
+    <attribute
+      name="libUrl"
+      description="The URL of the library's zip file to download"/>
+    <attribute
+      name="classpath"
+      description="Path refid to test installation."/>
+    <attribute
+      name="originalDestDir"
+      default=""
+      description="Sometimes a zip file contains the destdir and it needs to be renamed. If Blank, it will not be renamed."/>
+    <attribute
+      name="unzipToDestDir"
+      default="false"
+      description="Sometimes zip files include the destination dir and other times not. If true, the zip file will be extracted to destination directory rather than just ${ant-hology.lib.dir} dir"/>
+    <attribute
+      name="testInstallationAtEnd"
+      default="true"
+      description="Set to false if you will test installation later."/>
+
+    <sequential>
+      <!--Test if install is necessary-->
+      <!--  Note: This also tests dependent libs. It is possible that this lib is installed but-->
+      <!--  a dependent lib was not when ant started. The dependent lib may have just been installed-->
+      <!--  earlier in this ant session. So test again.-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.@{libName}"
+        pathRefId="@{classpath}"
+        />
+
+      <sequential unless:set="ant-hology.availableLibraries.@{libName}">
+        <echo>Installing @{libName}, version @{libVersion}</echo>
+        <local name="_destDirName"/>
+        <property
+          name="_destDirName"
+          value="@{libName}-@{libVersion}"
+          unless:blank="@{libVersion}"
+          />
+        <property
+          name="_destDirName"
+          value="@{libName}"
+          if:blank="@{libVersion}"
+          />
+
+        <mkdir dir="${ant-hology.lib.dir}"/>
+        <delete dir="${ant-hology.lib.dir}/${_destDirName}"/>
+        <delete dir="${ant-hology.lib.dir}/${_destDirName}.zip"/>
+        <get src="@{libUrl}" dest="${ant-hology.lib.dir}/${_destDirName}.zip"/>
+
+        <unzip
+          if:true="@{unzipToDestDir}"
+          src="${ant-hology.lib.dir}/${_destDirName}.zip" dest="${ant-hology.lib.dir}/${_destDirName}"/>
+        <unzip
+          unless:true="@{unzipToDestDir}"
+          src="${ant-hology.lib.dir}/${_destDirName}.zip" dest="${ant-hology.lib.dir}"/>
+
+        <delete file="${ant-hology.lib.dir}/${_destDirName}.zip"/>
+
+        <move
+          file="${ant-hology.lib.dir}/@{originalDestDir}"
+          tofile="${ant-hology.lib.dir}/${_destDirName}"
+          unless:blank="@{originalDestDir}"
+          />
+
+        <!--Test installation if @{testInstallationAtEnd} is not blank-->
+        <areAllAvailable
+          property="ant-hology.availableLibraries.@{libName}"
+          pathRefId="@{classpath}"
+          if:true="@{testInstallationAtEnd}"
+          />
+        <fail
+          message="Installation failed: Some file(s) in path[@refid='@{classpath}'] were not found."
+          if:true="@{testInstallationAtEnd}"
+          >
+          <condition>
+            <not>
+              <isset property="ant-hology.availableLibraries.@{libName}"/>
+            </not>
+          </condition>
+        </fail>
+        <echo
+          if:true="@{testInstallationAtEnd}"
+          unless:blank="@{classpath}">@{libName}, version @{libVersion} was installed successfully.</echo>
+      </sequential>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.getLibraryDefs.tasks.getLib.loaded" value="true"/>
+
+</project>

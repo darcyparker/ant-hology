@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.google-closure-compiler"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.google-closure-compiler.dir" file="${ant.file.ant-hology.pathdefs.google-closure-compiler}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://developers.google.com/closure/compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/wiki/BuildingWithAnt -->
+  <path id="google-closure-compiler.classpath">
+    <pathelement location="${ant-hology.lib.dir}/google-closure-compiler-latest/compiler.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.google-closure-compiler.loaded" value="true"/>
+
+</project>

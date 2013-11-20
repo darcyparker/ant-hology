@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-cli"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-cli.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-cli}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-cli/ -->
+  <path
+    id="apache-commons-cli.classpath"
+    path="${ant-hology.lib.dir}/apache-commons-cli-1.2/commons-cli-1.2.jar"
+    />
+
+  <property name="ant-hology.pathdefs.apache-commons-cli.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-xerces"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-xerces.dir" file="${ant.file.ant-hology.pathdefs.apache-xerces}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xml-external.xml" unless:set="ant-hology.pathdefs.apache-commons-xml-external.loaded"/>
+
+  <!-- See http://xerces.apache.org/xerces2-j/ -->
+  <path id="apache-xerces.classpath">
+    <path refid="apache-commons-xml-external.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-xerces-2.11.0/xercesImpl.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-xerces-2.11.0/serializer.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-xerces.loaded" value="true"/>
+
+</project>

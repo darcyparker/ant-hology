@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-ant"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-ant.dir" file="${ant.file.ant-hology.pathdefs.apache-ant}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+
+  <path id="ant-hology.apache-ant.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-antlr.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-bcel.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-bsf.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-log4j.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-oro.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-regexp.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-resolver.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-apache-xalan2.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-commons-logging.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-commons-net.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-jai.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-javamail.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-jdepend.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-jmf.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-jsch.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-junit.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-junit4.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-launcher.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-netrexx.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-swing.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant-testutil.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-ant-1.9.2/lib/ant.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-ant.loaded" value="true"/>
+
+</project>

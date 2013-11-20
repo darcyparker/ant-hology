@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.msv"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.msv.dir" file="${ant.file.ant-hology.pathdefs.msv}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xsdlib.xml" unless:set="ant-hology.pathdefs.xsdlib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jing.xml" unless:set="ant-hology.pathdefs.jing.loaded"/>
+
+  <!-- See https://msv.java.net/  (msv and xsdlib) -->
+  <path id="msv.classpath">
+    <path refid="xsdlib.classpath"/>
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-commons-xmlresolver.classpath"/>
+    <path refid="xmlcatalog.classpath"/>
+    <path refid="jing.classpath"/> <!--Need isorelax.jar-->
+    <pathelement location="${ant-hology.lib.dir}/msv-20090415/msv.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.msv.loaded" value="true"/>
+
+</project>

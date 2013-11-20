@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xmltask"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xmltask.dir" file="${ant.file.ant-hology.pathdefs.xmltask}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://www.oopsconsultancy.com/software/xmltask/ -->
+  <!-- See http://sourceforge.net/projects/xmltask/ -->
+  <path id="xmltask.classpath">
+    <pathelement location="${ant-hology.lib.dir}/xmltask/xmltask.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.xmltask.loaded" value="true"/>
+
+</project>

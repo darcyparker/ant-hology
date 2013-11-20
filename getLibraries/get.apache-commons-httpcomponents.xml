@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-httpcomponents"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-httpcomponents"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-httpcomponents.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-httpcomponents}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Not necessary to load apache-commons-logging getter because these are in necessary libs and already loaded-->
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-codec.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-codec.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-cli.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-cli.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-httpcomponents.xml" unless:set="ant-hology.pathdefs.apache-commons-httpcomponents.loaded"/>
+
+  <!-- See https://hc.apache.org/ -->
+  <target
+    name="ant-hology.get.apache-commons-httpcomponents"
+    description="Installs apache-commons-httpcomponents library"
+    depends="
+    ant-hology.get.apache-commons-codec,
+    ant-hology.get.apache-commons-cli
+    "
+    unless="ant-hology.availableLibraries.apache-commons-httpcomponents">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.cs.utah.edu//httpcomponents/httpclient/binary/httpcomponents-client-4.3-bin.zip"
+      libName="apache-commons-httpcomponents"
+      libVersion="4.3"
+      classpath="apache-commons-httpcomponents.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-httpcomponents.loaded" value="true"/>
+
+</project>

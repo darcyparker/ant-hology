@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xsdlib"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xsdlib"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.xsdlib.dir" file="${ant.file.ant-hology.getLibraryDefs.xmlunit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xsdlib.xml" unless:set="ant-hology.pathdefs.xsdlib.loaded"/>
+
+  <!-- See http://msv.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.xsdlib"
+    description="Installs xsdlib library."
+    unless="ant-hology.availableLibraries.xsdlib">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://java.net/downloads/msv/releases/xsdlib.20090415.zip"
+      libName="xsdlib"
+      libVersion="20090415"
+      classpath="xsdlib.classpath"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xsdlib.loaded" value="true"/>
+
+</project>

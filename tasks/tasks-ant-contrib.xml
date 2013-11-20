@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.tasks-ant-contrib"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  >
+
+  <dirname property="ant-hology.taskdefs.tasks-ant-contrib.dir" file="${ant.file.ant-hology.taskdefs.tasks-ant-contrib}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/ant-contrib.xml" unless:set="ant-hology.pathdefs.ant-contrib.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.ant-contrib"
+    pathRefId="ant-contrib.classpath"
+    />
+
+  <!-- See http://sourceforge.net/projects/ant-contrib/ -->
+  <!-- See http://ant-contrib.sourceforge.net/tasks/tasks/index.html -->
+  <taskdef
+    uri="antlib:net.sf.antcontrib"
+    resource="net/sf/antcontrib/antlib.xml"
+    if:set="ant-hology.availableLibraries.ant-contrib"
+    >
+    <classpath refid="ant-contrib.classpath"/>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.tasks-ant-contrib.loaded" value="true"/>
+
+</project>

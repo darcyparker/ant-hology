@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.diffx"
+  basedir="."
+  default="ant-hology.getLibraryDefs.diffx"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.diffx.dir" file="${ant.file.ant-hology.getLibraryDefs.diffx}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/diffx.xml" unless:set="ant-hology.pathdefs.diffx.loaded"/>
+
+  <!-- See http://weborganic.org/diffx.html -->
+  <!-- See https://code.google.com/p/wo-diffx/ -->
+  <!-- See http://pageseeder.org/apidocs/diffx/latest/index.html -->
+  <!-- See https://code.google.com/p/wo-diffx/w/list -->
+  <target
+    name="ant-hology.get.diffx"
+    description="Installs diffx library"
+    unless="ant-hology.availableLibraries.diffx">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.diffx"
+      pathRefId="diffx.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.diffx"
+      >
+      <echo>Installing diffx, version 0.7.4</echo>
+      <delete dir="${ant-hology.lib.dir}/diffx-0.7.4"/>
+      <mkdir dir="${ant-hology.lib.dir}/diffx-0.7.4/docs"/>
+      <get
+        src="https://wo-diffx.googlecode.com/files/diffx-0.7.4.jar"
+        dest="${ant-hology.lib.dir}/diffx-0.7.4/diffx-0.7.4.jar"/>
+      <get
+        src="https://wo-diffx.googlecode.com/files/diffx-0.7.4-docs.zip"
+        dest="${ant-hology.lib.dir}/diffx-0.7.4/diffx-0.7.4-docs.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/diffx-0.7.4/diffx-0.7.4-docs.zip"
+        dest="${ant-hology.lib.dir}/diffx-0.7.4/docs"/>
+      <delete file="${ant-hology.lib.dir}/diffx-0.7.4/diffx-0.7.4-docs.zip"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.diffx"
+        pathRefId="diffx.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='diffx.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.diffx"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>diffx, version 0.7.4 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.diffx.loaded" value="true"/>
+
+</project>

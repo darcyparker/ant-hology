@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.jline"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.jline.dir" file="${ant.file.ant-hology.pathdefs.jline}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- jline provides console input/output to rhino with envjs -->
+  <!-- See http://sourceforge.net/projects/jline/ -->
+  <!-- See http://www.envjs.com/ -->
+  <path id="jline.classpath">
+    <pathelement location="${ant-hology.lib.dir}/jline-1.0/jline-1.0.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.jline.loaded" value="true"/>
+
+</project>

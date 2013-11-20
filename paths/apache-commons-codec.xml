@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-codec"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-codec.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-codec}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-codec/ -->
+  <path
+    id="apache-commons-codec.classpath"
+    path="${ant-hology.lib.dir}/apache-commons-codec-1.8/commons-codec-1.8.jar"
+    />
+
+  <property name="ant-hology.pathdefs.apache-commons-codec.loaded" value="true"/>
+
+</project>

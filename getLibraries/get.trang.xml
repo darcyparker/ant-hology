@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.trang"
+  basedir="."
+  default="ant-hology.getLibraryDefs.trang"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.trang.dir" file="${ant.file.ant-hology.getLibraryDefs.trang}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/trang.xml" unless:set="ant-hology.pathdefs.trang.loaded"/>
+
+  <!-- See http://www.thaiopensource.com/relaxng/jing-ant.html -->
+  <!-- See https://code.google.com/p/jing-trang/ -->
+  <target
+    name="ant-hology.get.trang"
+    description="Installs trang library."
+    depends="
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver
+    "
+    unless="ant-hology.availableLibraries.trang">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://jing-trang.googlecode.com/files/trang-20091111.zip"
+      libName="trang"
+      libVersion="20091111"
+      classpath="trang.classpath"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.trang"
+      >
+      <mkdir dir="${ant-hology.lib.dir}/trang-20091111/src"/>
+      <unzip
+        src="${ant-hology.lib.dir}/trang-20091111/src.zip"
+        dest="${ant-hology.lib.dir}/trang-20091111/src"/>
+      <delete file="${ant-hology.lib.dir}/trang-20091111/src.zip"/>
+      <areAllAvailable
+        property="ant-hology.availableLibraries.trang"
+        pathRefId="trang.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='trang.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.trang"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>trang, version 20091111 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.trang.loaded" value="true"/>
+
+</project>

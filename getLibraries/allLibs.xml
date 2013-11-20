@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.allLibs"
+  basedir="."
+  default="ant-hology.get.allLibs"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.allLibs.dir" file="${ant.file.ant-hology.getLibraryDefs.allLibs}"/>
+
+  <import file="../commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Load definitions for getting libraries-->
+  <import file="${ant-hology.getLibraryDefs.dir}/get.ant-contrib.xml" unless:set="ant-hology.getLibraryDefs.ant-contrib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.ant-schematron.xml" unless:set="ant-hology.getLibraryDefs.ant-schematron.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.antlr.xml" unless:set="ant-hology.getLibraryDefs.antlr.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-ant.xml" unless:set="ant-hology.getLibraryDefs.apache-ant.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-avalon-framework.xml" unless:set="ant-hology.getLibraryDefs.apache-avalon-framework.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-batik-resources.xml" unless:set="ant-hology.getLibraryDefs.apache-batik-resources.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-batik.xml" unless:set="ant-hology.getLibraryDefs.apache-batik.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-cli.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-cli.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-codec.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-codec.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-httpcomponents.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-httpcomponents.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-io.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-io.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-lang.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-lang.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-net.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-net.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xml-external.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlgraphics.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-fop.xml" unless:set="ant-hology.getLibraryDefs.apache-fop.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-tika-app.xml" unless:set="ant-hology.getLibraryDefs.apache-tika-app.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xalan.xml" unless:set="ant-hology.getLibraryDefs.apache-xalan.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.AppleJavaExtensions.xml" unless:set="ant-hology.getLibraryDefs.AppleJavaExtensions.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.calabash.xml" unless:set="ant-hology.getLibraryDefs.calabash.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.diffx.xml" unless:set="ant-hology.getLibraryDefs.diffx.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.dtd-flatten.xml" unless:set="ant-hology.getLibraryDefs.dtd-flatten.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.env-js.xml" unless:set="ant-hology.getLibraryDefs.env-js.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphics2d.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphics2d.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphicsbase.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphicsbase.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphicsio.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphicsio.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-io.xml" unless:set="ant-hology.getLibraryDefs.freehep-io.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.google-closure-compiler.xml" unless:set="ant-hology.getLibraryDefs.google-closure-compiler.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.hamcrest.xml" unless:set="ant-hology.getLibraryDefs.hamcrest.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.htmlparser.xml" unless:set="ant-hology.getLibraryDefs.htmlparser.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.icu4j.xml" unless:set="ant-hology.getLibraryDefs.icu4j.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jchardet.xml" unless:set="ant-hology.getLibraryDefs.jchardet.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jeuclid.xml" unless:set="ant-hology.getLibraryDefs.jeuclid.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jing.xml" unless:set="ant-hology.getLibraryDefs.jing.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jline.xml" unless:set="ant-hology.getLibraryDefs.jline.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jtidy.xml" unless:set="ant-hology.getLibraryDefs.jtidy.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.junit.xml" unless:set="ant-hology.getLibraryDefs.junit.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.metadata-extractor.xml" unless:set="ant-hology.getLibraryDefs.metadata-extractor.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.msv.xml" unless:set="ant-hology.getLibraryDefs.msv.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.nekohtml.xml" unless:set="ant-hology.getLibraryDefs.nekohtml.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.oracle-xmlparser.xml" unless:set="ant-hology.getLibraryDefs.oracle-xmlparser.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxon-aelfred.xml" unless:set="ant-hology.getLibraryDefs.saxon-aelfred.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxon-ant.xml" unless:set="ant-hology.getLibraryDefs.saxon-ant.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonb.xml" unless:set="ant-hology.getLibraryDefs.saxonb.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonbResources.xml" unless:set="ant-hology.getLibraryDefs.saxonbResources.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHEResources.xml" unless:set="ant-hology.getLibraryDefs.saxonHEResources.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tagsoup.xml" unless:set="ant-hology.getLibraryDefs.tagsoup.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.trang.xml" unless:set="ant-hology.getLibraryDefs.trang.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.WindowsElevationPowerToys.xml" unless:set="ant-hology.getLibraryDefs.WindowsElevationPowerToys.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xmltask.xml" unless:set="ant-hology.getLibraryDefs.xmltask.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xmlunit.xml" unless:set="ant-hology.getLibraryDefs.xmlunit.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xom.xml" unless:set="ant-hology.getLibraryDefs.xom.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xp.xml" unless:set="ant-hology.getLibraryDefs.xp.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xt.xml" unless:set="ant-hology.getLibraryDefs.xt.loaded"/>
+
+  <target
+    name="ant-hology.getAllLibraries"
+    description="Installs all libraries"
+    depends="
+    ant-hology.get.ant-contrib,
+    ant-hology.get.ant-schematron,
+    ant-hology.get.antlr,
+    ant-hology.get.apache-ant,
+    ant-hology.get.apache-avalon-framework,
+    ant-hology.get.apache-batik-resources,
+    ant-hology.get.apache-batik,
+    ant-hology.get.apache-commons-cli,
+    ant-hology.get.apache-commons-codec,
+    ant-hology.get.apache-commons-httpcomponents,
+    ant-hology.get.apache-commons-io,
+    ant-hology.get.apache-commons-lang,
+    ant-hology.get.apache-commons-net,
+    ant-hology.get.apache-commons-xml-external,
+    ant-hology.get.apache-commons-xmlgraphics,
+    ant-hology.get.apache-commons-xmlresolver,
+    ant-hology.get.apache-fop,
+    ant-hology.get.apache-tika-app,
+    ant-hology.get.apache-xalan,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.AppleJavaExtensions,
+    ant-hology.get.calabash,
+    ant-hology.get.diffx,
+    ant-hology.get.dtd-flatten,
+    ant-hology.get.env-js,
+    ant-hology.get.freehep-graphics2d,
+    ant-hology.get.freehep-graphicsbase,
+    ant-hology.get.freehep-graphicsio,
+    ant-hology.get.freehep-io,
+    ant-hology.get.google-closure-compiler,
+    ant-hology.get.hamcrest,
+    ant-hology.get.htmlparser,
+    ant-hology.get.icu4j,
+    ant-hology.get.jchardet,
+    ant-hology.get.jeuclid,
+    ant-hology.get.jing,
+    ant-hology.get.jline,
+    ant-hology.get.jtidy,
+    ant-hology.get.junit,
+    ant-hology.get.metadata-extractor,
+    ant-hology.get.msv,
+    ant-hology.get.nekohtml,
+    ant-hology.get.oracle-xmlparser,
+    ant-hology.get.saxon-aelfred,
+    ant-hology.get.saxon-ant,
+    ant-hology.get.saxonb,
+    ant-hology.get.saxonbResources,
+    ant-hology.get.saxonHE,
+    ant-hology.get.saxonHEResources,
+    ant-hology.get.tagsoup,
+    ant-hology.get.trang,
+    ant-hology.get.WindowsElevationPowerToys,
+    ant-hology.get.xmltask,
+    ant-hology.get.xmlunit,
+    ant-hology.get.xom,
+    ant-hology.get.xp,
+    ant-hology.get.xt
+    "
+    >
+    <echo>Successfully installed all libraries.</echo>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.allLibs.loaded" value="true"/>
+
+</project>

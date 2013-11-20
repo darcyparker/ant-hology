@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-google-closure-compile"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-google-closure-compile.dir" file="${ant.file.ant-hology.taskdefs.task-google-closure-compile}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/google-closure-compiler.xml" unless:set="ant-hology.pathdefs.google-closure-compiler.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.google-closure-compiler"
+    pathRefId="google-closure-compiler.classpath"
+    />
+
+  <!-- See https://developers.google.com/closure/compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/wiki/BuildingWithAnt -->
+  <taskdef
+    name="jscompile"
+    classname="com.google.javascript.jscomp.ant.CompileTask"
+    if:set="ant-hology.availableLibraries.google-closure-compiler"
+    >
+    <classpath>
+      <path refid="google-closure-compiler.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-google-closure-compile.loaded" value="true"/>
+
+</project>

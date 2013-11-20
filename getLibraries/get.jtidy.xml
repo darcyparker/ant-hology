@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.jtidy"
+  basedir="."
+  default="ant-hology.getLibraryDefs.jtidy"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.jtidy.dir" file="${ant.file.ant-hology.getLibraryDefs.jtidy}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jtidy.xml" unless:set="ant-hology.pathdefs.jtidy.loaded"/>
+
+  <!-- See http://jtidy.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.jtidy"
+    description="Installs jtidy library."
+    unless="ant-hology.availableLibraries.jtidy">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/jtidy/files/JTidy/r938/jtidy-r938.zip/download"
+      libName="jtidy"
+      unzipToDestDir="true"
+      libVersion="r938"
+      classpath="jtidy.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.jtidy.loaded" value="true"/>
+
+</project>

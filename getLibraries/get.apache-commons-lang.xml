@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-lang"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-lang"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-lang.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-lang}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-lang.xml" unless:set="ant-hology.pathdefs.apache-commons-lang.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-lang/ -->
+  <target
+    name="ant-hology.get.apache-commons-lang"
+    description="Installs apache-commons-lang library"
+    unless="ant-hology.availableLibraries.apache-commons-lang">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://mirror.olnevhost.net/pub/apache//commons/lang/binaries/commons-lang3-3.1-bin.zip"
+      originalDestDir="commons-lang3-3.1"
+      libName="apache-commons-lang"
+      libVersion="3.3.1"
+      classpath="apache-commons-lang.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-lang.loaded" value="true"/>
+
+</project>

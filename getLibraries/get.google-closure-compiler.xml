@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.google-closure-compiler"
+  basedir="."
+  default="ant-hology.getLibraryDefs.google-closure-compiler"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.google-closure-compiler.dir" file="${ant.file.ant-hology.getLibraryDefs.google-closure-compiler}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/google-closure-compiler.xml" unless:set="ant-hology.pathdefs.google-closure-compiler.loaded"/>
+
+  <!-- See https://developers.google.com/closure/compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/ -->
+  <!-- See https://code.google.com/p/closure-compiler/wiki/BuildingWithAnt -->
+  <target
+    name="ant-hology.get.google-closure-compiler"
+    description="Installs google-closure-compiler library"
+    unless="ant-hology.availableLibraries.google-closure-compiler">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://dl.google.com/closure-compiler/compiler-latest.zip"
+      libName="google-closure-compiler"
+      libVersion="latest"
+      classpath="google-closure-compiler.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.google-closure-compiler.loaded" value="true"/>
+
+</project>

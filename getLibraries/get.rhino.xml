@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.rhino"
+  basedir="."
+  default="ant-hology.getLibraryDefs.rhino"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!--Note: Does not use get.tasks.getLib task because get.tasks.getLib task depends on rhino -->
+  <dirname property="ant-hology.getLibraryDefs.rhino.dir" file="${ant.file.ant-hology.getLibraryDefs.rhino}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <property name="ant-hology.getLibraryDefs.rhino.destDir" value="${ant-hology.lib.dir}/rhino-1.7R4"/>
+
+  <!-- See https://developer.mozilla.org/en-US/docs/Rhino -->
+  <target
+    name="ant-hology.get.rhino"
+    description="Installs rhino library"
+    unless="ant-hology.availableLibraries.rhino">
+
+    <available
+      property="ant-hology.availableLibraries.rhino"
+      file="${ant-hology.getLibraryDefs.rhino.destDir}/js.jar"
+      type="file"
+      unless:set="ant-hology.availableLibraries.rhino"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.rhino"
+      >
+      <echo>Installing rhino, version 1.7R4</echo>
+      <local name="_libUrl"/><property name="_libUrl" value="http://cloud.github.com/downloads/mozilla/rhino/rhino1_7R4.zip"/>
+      <local name="_originalDestDir"/><property name="_originalDestDir" value="rhino1_7R4"/>
+
+      <local name="_destDir"/><property name="_destDir" value="${ant-hology.getLibraryDefs.rhino.destDir}"/>
+      <local name="_destZip"/><property name="_destZip" value="${_destDir}.zip"/>
+
+      <delete dir="${ant-hology.getLibraryDefs.rhino.destDir}"/>
+      <delete dir="${_destZip}"/>
+      <mkdir dir="${ant-hology.lib.dir}"/>
+      <get src="${_libUrl}" dest="${_destZip}"/>
+      <unzip src="${_destZip}" dest="${ant-hology.lib.dir}"/>
+      <delete file="${_destZip}"/>
+      <move file="${ant-hology.lib.dir}/${_originalDestDir}" tofile="${_destDir}"/>
+
+      <!--Test if installation was successful.-->
+      <available
+        property="ant-hology.availableLibraries.rhino"
+        file="${_destDir}/js.jar"
+        type="file"/>
+      <fail message="${_destDir} is not available or missing required files.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.rhino"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>Rhino v1.7R4 installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.rhino.loaded" value="true"/>
+
+</project>

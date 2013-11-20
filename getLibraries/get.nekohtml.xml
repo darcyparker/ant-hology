@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.nekohtml"
+  basedir="."
+  default="ant-hology.getLibraryDefs.nekohtml"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.nekohtml.dir" file="${ant.file.ant-hology.getLibraryDefs.nekohtml}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/nekohtml.xml" unless:set="ant-hology.pathdefs.nekohtml.loaded"/>
+
+  <!-- See http://sourceforge.net/projects/nekohtml/ -->
+  <target
+    name="ant-hology.get.nekohtml"
+    description="Installs nekohtml library."
+    unless="ant-hology.availableLibraries.nekohtml">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://downloads.sourceforge.net/nekohtml/nekohtml-1.9.18.zip"
+      libName="nekohtml"
+      libVersion="1.9.18"
+      classpath="nekohtml.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.nekohtml.loaded" value="true"/>
+
+</project>

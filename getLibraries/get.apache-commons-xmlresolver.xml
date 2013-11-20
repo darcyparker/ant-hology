@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-xmlresolver"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-xmlresolver"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-xmlresolver.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-xmlresolver}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+
+  <!-- See https://projects.apache.org/projects/xml_commons_resolver.html -->
+  <target
+    name="ant-hology.get.apache-commons-xmlresolver"
+    description="Installs apache-commons-xmlresolver library"
+    unless="ant-hology.availableLibraries.apache-commons-xmlresolver">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://archive.apache.org/dist/xml/commons/xml-commons-resolver-1.2.zip"
+      originalDestDir="xml-commons-resolver-1.2"
+      libName="apache-commons-xmlresolver"
+      libVersion="1.2"
+      classpath="apache-commons-xmlresolver.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded" value="true"/>
+
+</project>

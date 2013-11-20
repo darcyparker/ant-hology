@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.trang"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.trang.dir" file="${ant.file.ant-hology.pathdefs.trang}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <!-- See http://www.thaiopensource.com/relaxng/trang-ant.html -->
+  <!-- See https://code.google.com/p/trang-trang/ -->
+  <path id="trang.classpath">
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-commons-xmlresolver.classpath"/>
+    <path refid="xmlcatalog.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/trang-20091111/trang.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.trang.loaded" value="true"/>
+
+</project>

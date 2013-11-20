@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.junit"
+  basedir="."
+  default="ant-hology.getLibraryDefs.junit"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.junit.dir" file="${ant.file.ant-hology.getLibraryDefs.junit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/junit.xml" unless:set="ant-hology.pathdefs.junit.loaded"/>
+
+  <!-- See http://www.junit.org/ -->
+  <!-- required to build xmlunit -->
+  <target
+    name="ant-hology.get.junit"
+    description="Installs junit library"
+    unless="ant-hology.availableLibraries.junit">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.junit"
+      pathRefId="junit.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.junit"
+      >
+      <echo>Installing junit, version 4.11</echo>
+      <delete dir="${ant-hology.lib.dir}/junit-4.11"/>
+      <mkdir dir="${ant-hology.lib.dir}/junit-4.11"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
+        dest="${ant-hology.lib.dir}/junit-4.11/junit-4.11.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.junit"
+        pathRefId="junit.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='junit.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.junit"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>junit, version 4.11 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.junit.loaded" value="true"/>
+
+</project>

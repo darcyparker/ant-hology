@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.saxon-ant"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.saxon-ant.dir" file="${ant.file.ant-hology.pathdefs.saxon-ant}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <!-- See http://www.saxonica.com/documentation9.1/using-xsl/xsltfromant.html -->
+  <path
+    id="saxon-ant.classpath"
+    path="${ant-hology.lib.dir}/saxon-ant-9.1/saxon9-ant.jar"
+    />
+
+  <property name="ant-hology.pathdefs.saxon-ant.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.WindowsElevationPowerToys"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.WindowsElevationPowerToys.dir" file="${ant.file.ant-hology.pathdefs.WindowsElevationPowerToys}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--The 'elevate' commands are used to run commands as administrator.-->
+  <!--They are often better than 'runas.exe' because sometimes a user has administrator privileges but-->
+  <!--does not know the administrator password.-->
+  <!--An example where a user needs to run a command as administrator is 'mklink' to make symbolic links in windows.-->
+  <!--Article: http://technet.microsoft.com/en-us/magazine/2008.06.elevation.aspx -->
+  <!--download: http://download.microsoft.com/download/f/d/-1/fd05def7-68a1-4f71-8546-25c359cc0842/Elevation2008_06.exe -->
+  <path id="WindowsElevationPowerToys.requiredFiles">
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/elevate.vbs"/>
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/elevate.cmd"/>
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/CmdAsAdmin.cmd"/>
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/CmdAsSystem.cmd"/>
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/PSAsAdmin.cmd"/>
+    <pathelement location="${ant-hology.lib.dir}/WindowsElevationPowerToys-2008_06/PSAsSystem.cmd"/>
+  </path>
+
+  <!--Note, this property is used by task "windows-mklink" defined in ${ant-hology.taskdefs.dir}/windows-mklink.xml-->
+  <property name="ant-hology.pathdefs.WindowsElevationPowerToys.destDir" location="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06"/>
+
+  <property name="ant-hology.pathdefs.WindowsElevationPowerToys.loaded" value="true"/>
+
+</project>

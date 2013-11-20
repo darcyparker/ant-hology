@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.alltasks"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.alltasks.dir" file="${ant.file.ant-hology.taskdefs.alltasks}"/>
+
+  <!-- import all tasks, macros and preset definitions -->
+  <import file="commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <import file="${ant-hology.taskdefs.dir}/exec-git.xml" unless:set="ant-hology.taskdefs.exec-git.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/exec-svn.xml" unless:set="ant-hology.taskdefs.exec-svn.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonbhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonbhtmlparser.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonbneko.xml" unless:set="ant-hology.taskdefs.java-saxonbneko.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonbtagsoup.xml" unless:set="ant-hology.taskdefs.java-saxonbtagsoup.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonHE.xml" unless:set="ant-hology.taskdefs.java-saxonHE.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonHEhtmlparser.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonHEneko.xml" unless:set="ant-hology.taskdefs.java-saxonHEneko.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-saxonHEtagsoup.xml" unless:set="ant-hology.taskdefs.java-saxonHEtagsoup.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-tika-extractXML.xml" unless:set="ant-hology.taskdefs.java-tika-extractXML.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-xalan.xml" unless:set="ant-hology.taskdefs.java-xalan.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-xt.xml" unless:set="ant-hology.taskdefs.java-xt.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/mathmlToPng.xml" unless:set="ant-hology.taskdefs.mathmlToPng.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.ant-hology.jdk_JAVA_HOME.xml" unless:set="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/script-javascript.xml" unless:set="ant-hology.taskdefs.script-javascript.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-calabash.xml" unless:set="ant-hology.taskdefs.task-calabash.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-fop.xml" unless:set="ant-hology.taskdefs.task-fop.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-google-closure-compile.xml" unless:set="ant-hology.taskdefs.task-google-closure-compile.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-jing.xml" unless:set="ant-hology.taskdefs.task-jing.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-mmlconverter.xml" unless:set="ant-hology.taskdefs.task-mmlconverter.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-schematron.xml" unless:set="ant-hology.taskdefs.task-schematron.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-SVGRasterize.xml" unless:set="ant-hology.taskdefs.task-SVGRasterize.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-tidy.xml" unless:set="ant-hology.taskdefs.task-tidy.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-xmltask.xml" unless:set="ant-hology.taskdefs.task-xmltask.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/tasks-ant-contrib.xml" unless:set="ant-hology.taskdefs.tasks-ant-contrib.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs..test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/windows-mklink.xml" unless:set="ant-hology.taskdefs..windows-mklink.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xmlvalidate-wellformed-xerces.xml" unless:set="ant-hology.taskdefs.xmlvalidate-wellformed-xerces.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xmlvalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.xmlvalidate-xmlcatalog.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xslt-saxonHE.xml" unless:set="ant-hology.taskdefs.xslt-saxonHE.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEhtmlparser.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEneko.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEneko.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEtagsoup.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEtagsoup.loaded"/>
+
+  <import file="${ant-hology.taskdefs.dir}/works-withclasspath/all.xml" unless:set="${ant-hology.taskdefs.works-withclasspath.all.loaded}"/>
+
+  <property name="ant-hology.alltasks.loaded" value="true"/>
+
+</project>

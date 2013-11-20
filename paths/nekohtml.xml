@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.nekohtml"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.nekohtml.dir" file="${ant.file.ant-hology.pathdefs.nekohtml}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://sourceforge.net/projects/nekohtml/ -->
+  <path
+    id="nekohtml.classpath"
+    path="${ant-hology.lib.dir}/nekohtml-1.9.18/nekohtml.jar"
+    />
+
+  <property name="ant-hology.pathdefs.nekohtml.loaded" value="true"/>
+
+</project>

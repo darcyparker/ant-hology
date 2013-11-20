@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-ant"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-ant"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-ant.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-ant}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/windows-mklink.xml" unless:set="ant-hology.taskdefs.windows-mklink.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.WindowsElevationPowerToys.xml" unless:set="ant-hology.getLibraryDefs.WindowsElevationPowerToys.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-ant.xml" unless:set="ant-hology.pathdefs.apache-ant.loaded"/>
+
+  <!-- See https://ant.apache.org/ -->
+  <!-- Using ant to get ant 1.9.2 -->
+  <!--Currently my debian install has apache 1.9.1 and it doesn't always work as-->
+  <!--expected... so it can be useful to install 1.9.2-->
+  <target
+    name="ant-hology.get.apache-ant"
+    description="Installs apache-ant library"
+    depends="
+    ant-hology.get.WindowsElevationPowerToys
+    "
+    unless="ant-hology.availableLibraries.apache-ant">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://archive.apache.org/dist/ant/binaries/apache-ant-1.9.2-bin.zip"
+      libName="apache-ant"
+      libVersion="1.9.2"
+      classpath="ant-hology.apache-ant.classpath"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-ant"
+      >
+      <chmod file="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant" perm="ugo+xr"/>
+      <sequential if:true="${ant-hology.useBinDir}">
+        <symlink
+          if:set="ant-hology.OS.onUnix"
+          link="${ant-hology.bin.dir}/ant"
+          resource="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant"
+          overwrite="true"/>
+        <chmod
+          if:set="ant-hology.OS.onUnix"
+          file="${ant-hology.bin.dir}/ant"
+          perm="ugo+xr"/>
+
+        <!--The following tasks have no effect on unix-->
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant"
+          target="${ant-hology.bin.dir}/ant"
+          overwrite="true"
+          failonerror="true"
+          />
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant.bat"
+          target="${ant-hology.bin.dir}/ant.bat"
+          overwrite="true"
+          failonerror="true"
+          />
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant.cmd"
+          target="${ant-hology.bin.dir}/ant.cmd"
+          overwrite="true"
+          failonerror="true"
+          />
+      </sequential>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.apache-ant"
+        pathRefId="ant-hology.apache-ant.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='ant-hology.apache-ant.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-ant"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>apache-ant, version 1.9.2 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-ant.loaded" value="true"/>
+
+</project>

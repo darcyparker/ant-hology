@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.antlr"
+  basedir="."
+  default="ant-hology.getLibraryDefs.antlr"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.antlr.dir" file="${ant.file.ant-hology.getLibraryDefs.antlr}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/antlr.xml" unless:set="ant-hology.pathdefs.antlr.loaded"/>
+
+  <!-- See http://www.antlr.org/ -->
+  <target
+    name="ant-hology.get.antlr"
+    description="Installs antlr library"
+    unless="ant-hology.availableLibraries.antlr">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.antlr"
+      pathRefId="antlr.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.antlr"
+      >
+      <echo>Installing antlr (complete), version 4.1</echo>
+      <delete dir="${ant-hology.lib.dir}/antlr-4.1"/>
+      <mkdir dir="${ant-hology.lib.dir}/antlr-4.1"/>
+      <get
+        src="http://www.antlr.org/download/antlr-4.1-complete.jar"
+        dest="${ant-hology.lib.dir}/antlr-4.1/antlr-4.1-complete.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.antlr"
+        pathRefId="antlr.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='antlr.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.antlr"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>antlr, version 4.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.antlr.loaded" value="true"/>
+
+</project>

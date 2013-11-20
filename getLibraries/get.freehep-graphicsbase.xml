@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.freehep-graphicsbase"
+  basedir="."
+  default="ant-hology.getLibraryDefs.freehep-graphicsbase"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.freehep-graphicsbase.dir" file="${ant.file.ant-hology.getLibraryDefs.freehep-graphicsbase}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/freehep-graphicsbase.xml" unless:set="ant-hology.pathdefs.freehep-graphicsbase.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <target
+    name="ant-hology.get.freehep-graphicsbase"
+    description="Installs freehep-graphicsbase library"
+    unless="ant-hology.availableLibraries.freehep-graphicsbase">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.freehep-graphicsbase"
+      pathRefId="freehep-graphicsbase.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.freehep-graphicsbase"
+      >
+      <echo>Installing freehep-graphicsbase, version 2.2.1</echo>
+      <delete dir="${ant-hology.lib.dir}/freehep-graphicsbase-2.2.1"/>
+      <mkdir dir="${ant-hology.lib.dir}/freehep-graphicsbase-2.2.1"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsbase/2.2.1/freehep-graphicsbase-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsbase-2.2.1/freehep-graphicsbase-2.2.1.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.freehep-graphicsbase"
+        pathRefId="freehep-graphicsbase.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='freehep-graphicsbase.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.freehep-graphicsbase"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>freehep-graphicsbase, version 2.2.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.freehep-graphicsbase.loaded" value="true"/>
+
+</project>

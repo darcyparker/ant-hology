@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-xalan"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-xalan.dir" file="${ant.file.ant-hology.pathdefs.apache-xalan}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-bsf-2.4.0.xml" unless:set="ant-hology.pathdefs.apache-commons-bsf-2.4.0.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/rhino.xml" unless:set="ant-hology.pathdefs.rhino.loaded"/>
+
+  <!-- See https://xalan.apache.org/xalan-j/index.html -->
+  <path id="apache-xalan.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-xalan-2.7.1/xalan.jar"/>
+    <path refid="apache-commons-bsf-2.4.0.classpath"/>
+    <path refid="apache-commons-logging.classpath"/>
+    <path refid="rhino.classpath"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-xalan.loaded" value="true"/>
+
+</project>

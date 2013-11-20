@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.AppleJavaExtensions"
+  basedir="."
+  default="ant-hology.getLibraryDefs.AppleJavaExtensions"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.AppleJavaExtensions.dir" file="${ant.file.ant-hology.getLibraryDefs.AppleJavaExtensions}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/AppleJavaExtensions.xml" unless:set="ant-hology.pathdefs.AppleJavaExtensions.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <target
+    name="ant-hology.get.AppleJavaExtensions"
+    description="Installs Apple Java Extensions library"
+    unless="ant-hology.availableLibraries.AppleJavaExtensions">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.AppleJavaExtensions"
+      pathRefId="AppleJavaExtensions.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.AppleJavaExtensions"
+      >
+      <echo>Installing Apple Java Extensions library, version 1.4</echo>
+      <delete dir="${ant-hology.lib.dir}/AppleJavaExtensions-1.4"/>
+      <mkdir dir="${ant-hology.lib.dir}/AppleJavaExtensions-1.4"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=com/apple/AppleJavaExtensions/1.4/AppleJavaExtensions-1.4.jar"
+        dest="${ant-hology.lib.dir}/AppleJavaExtensions-1.4/AppleJavaExtensions-1.4.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.AppleJavaExtensions"
+        pathRefId="AppleJavaExtensions.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='AppleJavaExtensions.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.AppleJavaExtensions"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>Apple Java Extensions, version 1.4 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.AppleJavaExtensions.loaded" value="true"/>
+
+</project>

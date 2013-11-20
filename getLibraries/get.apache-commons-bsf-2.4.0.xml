@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!--Note: Does not use get.tasks.getLib task because get.tasks.getLib task depends on rhino -->
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.destDir" value="${ant-hology.lib.dir}/apache-commons-bsf-2.4.0"/>
+
+  <!--See http://commons.apache.org/proper/commons-bsf/ -->
+  <target
+    name="ant-hology.get.apache-commons-bsf-2.4.0"
+    description="Installs apache-commons-bsf-2.4.0 library"
+    unless="ant-hology.availableLibraries.apache-commons-bsf-2.4.0">
+
+    <available
+      property="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"
+      file="${ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.destDir}/lib/bsf.jar"
+      type="file"
+      unless:set="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"
+      >
+      <echo>Installing apache-commons-bsf, version 2.4.0</echo>
+      <local name="_libUrl"/><property name="_libUrl" value="http://apache.mirrors.pair.com//commons/bsf/binaries/bsf-bin-2.4.0.zip"/>
+      <local name="_originalDestDir"/><property name="_originalDestDir" value="bsf-2.4.0"/>
+
+      <local name="_destDir"/><property name="_destDir" value="${ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.destDir}"/>
+      <local name="_destZip"/><property name="_destZip" value="${_destDir}.zip"/>
+
+      <delete dir="${ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.destDir}"/>
+      <delete dir="${_destZip}"/>
+      <mkdir dir="${ant-hology.lib.dir}"/>
+      <get src="${_libUrl}" dest="${_destZip}"/>
+      <unzip src="${_destZip}" dest="${ant-hology.lib.dir}"/>
+      <delete file="${_destZip}"/>
+      <move file="${ant-hology.lib.dir}/${_originalDestDir}" tofile="${_destDir}"/>
+
+      <!--Test if installation was successful.-->
+      <available
+        property="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"
+        file="${ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.destDir}/lib/bsf.jar"
+        type="file"
+        />
+      <fail message="${_destDir} is not available or missing required files.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-commons-bsf-2.4.0"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>Apache Commons BSF v2.4.0 installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-bsf-2.4.0.loaded" value="true"/>
+
+</project>

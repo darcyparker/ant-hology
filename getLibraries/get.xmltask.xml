@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xmltask"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xmltask"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!--Note: Does not use get.tasks.getLib task in target ant-hology.get.xmltask because -->
+  <!--      get.tasks.getLib task depends on xmltask -->
+  <dirname property="ant-hology.getLibraryDefs.xmltask.dir" file="${ant.file.ant-hology.getLibraryDefs.xmltask}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.hamcrest.xml" unless:set="ant-hology.getLibraryDefs.hamcrest.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.junit.xml" unless:set="ant-hology.getLibraryDefs.junit.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/xmltask.xml" unless:set="ant-hology.pathdefs.xmltask.loaded"/>
+
+  <!-- See http://xmlunit.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.xmltask"
+    description="Installs xmltask library"
+    depends="
+    ant-hology.get.junit,
+    ant-hology.get.hamcrest
+    "
+    unless="ant-hology.availableLibraries.xmltask">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.xmltask"
+      pathRefId="xmltask.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.xmltask"
+      >
+      <echo>Installing xmltask, latest on cvs</echo>
+
+      <!--Install by checking out svn repo and building jars from src-->
+      <delete dir="${ant-hology.lib.dir}/xmltask"/>
+      <cvs
+        command="checkout"
+        cvsRoot=":pserver:anonymous@xmltask.cvs.sourceforge.net:/cvsroot/xmltask"
+        package="xmltask"
+        dest="${ant-hology.lib.dir}"
+        failonerror="true"
+        />
+
+      <!--Using java-ant task instead of ant task so that classpath can be augmented-->
+      <java-ant
+        antfile="${ant-hology.lib.dir}/xmltask/build.xml"
+        dir="${ant-hology.lib.dir}/xmltask"
+        target="package"
+        >
+        <additional-classpath>
+          <path refid="junit.classpath"/>
+          <path refid="hamcrest.classpath"/>
+        </additional-classpath>
+      </java-ant>
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.xmltask"
+        pathRefId="xmltask.classpath"
+        />
+      <fail message="Installation failed: Some file(s) in path[@refid='xmltask-classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.xmltask"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>xmltask was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xmltask.loaded" value="true"/>
+
+</project>

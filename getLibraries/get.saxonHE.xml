@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxonHE"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxonHE"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxonHE.dir" file="${ant.file.ant-hology.getLibraryDefs.saxonHE}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.saxonHE"
+    description="Installs saxonHE library."
+    unless="ant-hology.availableLibraries.saxonHE">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/saxon/files/Saxon-HE/9.5/SaxonHE9-5-1-2J.zip/download"
+      libName="saxonHE"
+      libVersion="9.5.1.2"
+      classpath="saxonHE.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxonHE.loaded" value="true"/>
+
+</project>

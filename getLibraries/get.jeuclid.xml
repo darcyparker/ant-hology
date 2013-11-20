@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.jeuclid"
+  basedir="."
+  default="ant-hology.getLibraryDefs.jeuclid"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.jeuclid.dir" file="${ant.file.ant-hology.getLibraryDefs.jeuclid}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <!--Not necessary to load apache-commons-logging getter because these are in necessary libs and already loaded-->
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-batik.xml" unless:set="ant-hology.getLibraryDefs.apache-batik.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-cli.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-cli.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-io.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-io.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-lang.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-lang.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xml-external.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlgraphics.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.AppleJavaExtensions.xml" unless:set="ant-hology.getLibraryDefs.AppleJavaExtensions.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphics2d.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphics2d.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphicsbase.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphicsbase.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-graphicsio.xml" unless:set="ant-hology.getLibraryDefs.freehep-graphicsio.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-io.xml" unless:set="ant-hology.getLibraryDefs.freehep-io.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/jeuclid.xml" unless:set="ant-hology.pathdefs.jeuclid.loaded"/>
+
+  <!-- See http://jeuclid.sourceforge.net/usage.html -->
+  <target
+    name="ant-hology.get.jeuclid"
+    description="Installs jeuclid library"
+    depends="
+    ant-hology.get.apache-batik,
+    ant-hology.get.apache-commons-cli,
+    ant-hology.get.apache-commons-io,
+    ant-hology.get.apache-commons-lang,
+    ant-hology.get.apache-commons-xml-external,
+    ant-hology.get.apache-commons-xmlgraphics,
+    ant-hology.get.AppleJavaExtensions,
+    ant-hology.get.freehep-graphics2d,
+    ant-hology.get.freehep-graphicsbase,
+    ant-hology.get.freehep-graphicsio,
+    ant-hology.get.freehep-io
+    "
+    unless="ant-hology.availableLibraries.jeuclid">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/jeuclid/files/3.1.x/3.1.9/jeuclid-3.1.9-distribution.zip/download"
+      libName="jeuclid"
+      libVersion="3.1.9"
+      classpath="jeuclid.all.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.jeuclid.loaded" value="true"/>
+
+</project>

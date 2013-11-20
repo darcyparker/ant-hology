@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.diffx"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.diffx.dir" file="${ant.file.ant-hology.pathdefs.diffx}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+
+  <!-- See http://weborganic.org/diffx.html -->
+  <!-- See https://code.google.com/p/wo-diffx/ -->
+  <!-- See http://pageseeder.org/apidocs/diffx/latest/index.html -->
+  <!-- See https://code.google.com/p/wo-diffx/w/list -->
+  <path id="diffx.classpath">
+    <pathelement location="${ant-hology.lib.dir}/diffx-0.7.4/diffx-0.7.4.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.diffx.loaded" value="true"/>
+
+</project>

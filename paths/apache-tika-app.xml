@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-tika-app"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-tika-app.dir" file="${ant.file.ant-hology.pathdefs.apache-tika-app}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Note, this property is used by task "tika-extractXML" defined in ${ant-hology.taskdefs.dir}/java-tika-extractXML.xml-->
+  <property name="ant-hology.pathdefs.apache-tika-app.jarfile" value="${ant-hology.lib.dir}/apache-tika-app-1.4/tika-app-1.4.jar"/>
+
+  <!-- See https://tika.apache.org/ -->
+  <path
+    id="apache-tika-app.classpath"
+    path="${ant-hology.pathdefs.apache-tika-app.jarfile}"
+    />
+
+  <property name="ant-hology.pathdefs.apache-tika-app.loaded" value="true"/>
+
+</project>

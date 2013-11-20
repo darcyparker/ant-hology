@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.xslt-saxonHEtagsoup"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+  <!-- preset xslt task that uses saxonHE and tagsoup parser -->
+  <!--Note: Sometimes CatalogProperties.xml is not found when using system's global ant install.-->
+  <!--In this case, it is best to ./bin/ant which points to `${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant`-->
+
+  <dirname property="ant-hology.taskdefs.xslt-saxonHEtagsoup.dir" file="${ant.file.ant-hology.taskdefs.xslt-saxonHEtagsoup}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/tagsoup.xml" unless:set="ant-hology.pathdefs.tagsoup.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonHE"
+    pathRefId="saxonHE.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.tagsoup"
+    pathRefId="tagsoup.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.saxonHE"/>
+      <isset property="ant-hology.availableLibraries.tagsoup"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <presetdef
+    name="xslt-saxonHEtagsoup"
+    description="xslt-saxonHEtagsoup is a preset defintion for ant's xslt task configured for saxonHE XSLT processor, tagsoup html parser for src input, and xerces and xmlcatalog for xsl input."
+    if:set="_requiredAvailable"
+    >
+    <xslt processor="trax">
+      <classpath>
+        <path refid="saxonHE.classpath"/>
+        <path refid="tagsoup.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+
+      <sysproperty
+        key="javax.xml.transform.TransformerFactory"
+        value="net.sf.saxon.TransformerFactoryImpl"/>
+
+      <sysproperty
+        key="org.xml.sax.driver"
+        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+      <sysproperty
+        key="javax.xml.parsers.DocumentBuilderFactory"
+        value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+      <sysproperty
+        key="javax.xml.parsers.SAXParserFactory"
+        value="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+      <sysproperty
+        key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+        value="org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+        <!--See `lib/saxonHE9-5-1-2J/resources/ -->
+        <!--     saxon9-5-1-2source/net/sf/saxon/lib/FeatureKeys.java` -->
+        <!--for attribute key/value pairs. -->
+
+        <!--<attribute-->
+          <!--name="http://saxon.sf.net/feature/configuration-file"-->
+          <!--value="c:/saxon/config.xml"/>-->
+
+        <!--ignoreSAXSourceParser is necessary so parsers defined below are used
+            instead of ones passed by ant-->
+        <attribute
+          name="http://saxon.sf.net/feature/ignoreSAXSourceParser"
+          value="true"/>
+
+        <!--sourceParserClass corresponds to command line -x option-->
+        <attribute
+          name="http://saxon.sf.net/feature/sourceParserClass"
+          value="org.ccil.cowan.tagsoup.Parser"/>
+
+        <!--styleParserClass corresponds to command line -y option-->
+        <attribute
+          name="http://saxon.sf.net/feature/styleParserClass"
+          value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+
+        <!--uriResolverClass corresponds to the command line -r option-->
+        <attribute
+          name="http://saxon.sf.net/feature/uriResolverClass"
+          value="org.apache.xml.resolver.tools.CatalogResolver"/>
+
+        <!--version-warning corresponds to the command line -versionmsg option-->
+        <attribute
+          name="http://saxon.sf.net/feature/version-warning"
+          value="false"/>
+
+        <attribute
+          name="http://saxon.sf.net/feature/validation"
+          value="false"/>
+
+        <!--allow-external-functions corresponds to the command line -ext option-->
+        <attribute
+          name="http://saxon.sf.net/feature/allow-external-functions"
+          value="true"/>
+
+        <!--linenumbering corresponds to the command line -l option-->
+        <attribute
+          name="http://saxon.sf.net/feature/linenumbering"
+          value="true"/>
+
+      </factory>
+    </xslt>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.xslt-saxonHEtagsoup.loaded" value="true"/>
+
+</project>

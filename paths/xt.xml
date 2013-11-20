@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xt"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xt.dir" file="${ant.file.ant-hology.pathdefs.xt}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://www.blnz.com/xt/index.html -->
+  <path
+    id="xt.classpath"
+    path="${ant-hology.lib.dir}/xt-20051206/xt20051206.jar"
+    />
+
+  <property name="ant-hology.pathdefs.xt.loaded" value="true"/>
+
+</project>

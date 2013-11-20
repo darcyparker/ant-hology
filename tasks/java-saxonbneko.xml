@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.java-saxonbneko"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.java-saxonbneko.dir" file="${ant.file.ant-hology.taskdefs.java-saxonbneko}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonb.xml" unless:set="ant-hology.pathdefs.saxonb.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/nekohtml.xml" unless:set="ant-hology.pathdefs.nekohtml.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonb"
+    pathRefId="saxonb.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.nekohtml"
+    pathRefId="nekohtml.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.saxonb"/>
+      <isset property="ant-hology.availableLibraries.nekohtml"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <macrodef
+    name="java-saxonbneko"
+    description="The java-saxonbneko macro is an alternative to ant's xslt task that uses the saxonb XSLT processor and uses the nekohtml parser for the src input."
+    if:set="_requiredAvailable"
+    >
+    <attribute
+      name="xsl"
+      description="The XSL style sheet."
+      />
+    <!--@{srcfile} and @{destfile} are optional but typically @{srcfile} or <files/> would be-->
+    <!--required.  One case where @{srcfile} and <files/> would not be required is if an-->
+    <!--@{initialtemplate} was specified and it did not make references to a source file.-->
+    <!--(The @{initialtemplate} could pull data from doc(), collection() or unparsed-text().-->
+    <attribute
+      name="srcdir"
+      default=""
+      description="Destination directory for output."/>
+    <attribute
+      name="srcfile"
+      default=""
+      description="The source input. This is optional."
+      />
+    <attribute
+      name="destfile"
+      default=""
+      description="The output of the XSL transform. This is optional."
+      />
+    <attribute
+      name="destdir"
+      default=""
+      description="Destination directory for output."/>
+    <element
+      name="files"
+      description="Input files to transform."
+      optional="true"
+      />
+    <element
+      name="inputToOutputMapper"
+      description="Mapper for input file to output file name/path transform."
+      optional="true"
+      />
+    <attribute
+      name="initialtemplate"
+      default=""
+      description="Initial XSLT template to start in."
+      />
+    <attribute
+      name="initialmode"
+      default=""
+      description="Initial XSLT template mode to start in."
+      />
+    <attribute
+      name="reloadstylesheet"
+      default="false"
+      description="If true, reload and compile stylesheet for each transform. By default, it is false. (When false, it will use same compiled transform for each input)."
+      />
+    <!--<element-->
+      <!--name="parameters"-->
+      <!--description="Input parameters for the XSL style sheet"-->
+      <!--optional="true"/>-->
+    <attribute
+      name="options"
+      description="Additional command line options for saxon. For example, stylesheet parameters could be passed."
+      default=""/>
+    <attribute name="failonerror" default="true" />
+
+    <sequential>
+      <echo>Transforming with saxonb XSLT processor using nekohtml parser for src</echo>
+      <local name="_classpath"/>
+      <pathconvert property="_classpath">
+        <path refid="saxonb.classpath"/>
+        <path refid="nekohtml.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </pathconvert>
+
+      <!--_reloadStylesheet is necessary because I need if:set and unless:set-->
+      <!--The attribute @{reloadStylesheet} is always set-->
+      <local name="_reloadStylesheet"/>
+      <condition property="_reloadStylesheet">
+        <equals arg1="@{reloadstylesheet}" arg2="true"/>
+      </condition>
+
+      <local name="_filesCount"/>
+      <local name="_filesEmptyAndHaveSrcAndHaveDest"/>
+      <resourcecount property="_filesCount">
+        <resources>
+          <!--Must wrap in generic resources element because sometimes <files/> is empty-->
+          <files/>
+        </resources>
+      </resourcecount>
+      <!--<echo>filesCount=${_filesCount} file(s)</echo>-->
+      <local name="_haveFiles"/>
+      <condition property="_haveFiles">
+        <not><equals arg1="${_filesCount}" arg2="0"/></not>
+      </condition>
+
+      <local name="_src"/>
+      <property name="_src" location="@{srcfile}" if:blank="@{srcdir}" unless:blank="@{srcfile}"/>
+      <!--Note: _src will not be set if already set, so it does not need to be stated in next case-->
+      <!--Also: unless:blank intentionally does not have / because the test is whether both are defined-->
+      <property name="_src" location="@{srcdir}/@{srcfile}" unless:blank="@{srcdir}@{srcfile}"/>
+      <!--<echo>_src=${_src}</echo>-->
+      <local name="_isSrcAvailable"/>
+      <available property="_isSrcAvailable" file="${_src}" type="file" if:set="_src"/>
+      <local name="_notSrcAvailableAndNoFiles"/>
+      <condition property="_notSrcAvailableAndNoFiles">
+        <!--by deMorgan's theorm-->
+        <!--!_srcAvailable and !_haveFiles == !(_srcAvailable or _haveFiles)-->
+        <not>
+          <or>
+            <isset property="_isSrcAvailable"/>
+            <isset property="_haveFiles"/>
+          </or>
+        </not>
+      </condition>
+
+      <!--Note: It is not necessarily an error to not have ${_src} and not have <files/>-->
+      <!--One case where ${_src} and <files/> would not be required is if an-->
+      <!--@{initialtemplate} was specified and it did not make references to a source file.-->
+      <!--(The @{initialtemplate} could pull data from doc(), collection() or unparsed-text().-->
+
+      <local name="_dest"/>
+      <property name="_dest" location="@{destfile}" if:blank="@{destdir}" unless:blank="@{destfile}"/>
+      <!--Note: _dest will not be set if already set, so it does not need to be stated in next case-->
+      <!--Also: unless:blank intentionally does not have / because the test is whether both are defined-->
+      <property name="_dest" location="@{destdir}/@{destfile}" unless:blank="@{destdir}@{destfile}"/>
+      <!--<echo>_dest=${_dest}</echo>-->
+      <!--Note: test ${_dest} inside <sequential if:set="_filesEmptyAndHaveSrcAndHaveDest">-->
+
+      <!--This sequential is for the case when user defines <files/>-->
+      <sequential if:set="_haveFiles">
+        <!--<echo>Transforming ${_filesCount} file(s).</echo>-->
+        <!--Extract just the _xslrelativepath-->
+        <local name="_xslrelativepath"/>
+        <property name="_xslrelativepath" location="@{xsl}" relative="true"/>
+
+        <!--Compile the XSL once so it doesn't have to be compiled for each file in <files/>-->
+        <!--Output compiled stylesheet to ${ant-hology.temp.dir}/${_xslrelativepath}.compiled-->
+        <!--Note: This is for saxonb.  net.sf.saxon.Compile is not available for saxonHE-->
+        <echo unless:set="_reloadStylesheet">Compiling stylesheet @{xsl} to ${ant-hology.temp.dir}/${_xslrelativepath}.compiled</echo>
+        <echo if:set="_reloadStylesheet">Not pre-compiling stylesheet. @{xsl} will be compiled for each transform.</echo>
+        <delete file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
+        <mkdir dir="${ant-hology.temp.dir}/${_xslrelativepath}/.." unless:set="_reloadStylesheet"/>
+        <exec executable="java" failonerror="@{failonerror}" unless:set="_reloadStylesheet">
+          <arg value="-cp"/>
+          <arg value="${_classpath}"/>
+          <arg value="-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+          <arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+          <arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+          <arg value="net.sf.saxon.Compile"/>
+          <!--Note, the -y and -r parameters for net.sf.saxon.Compile do not use the-->
+          <!--":" separator instead the value is the following arg-->
+          <arg value="-y"/>
+          <arg value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-r"/>
+          <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg file="@{xsl}"/>
+          <arg file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled"/>
+        </exec>
+        <apply executable="java" parallel="false" failonerror="@{failonerror}">
+          <files/>
+          <inputToOutputMapper/>
+          <arg value="-cp"/>
+          <arg value="${_classpath}"/>
+          <arg value="-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+          <arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+          <arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+          <arg value="net.sf.saxon.Transform"/>
+          <arg value="-versionmsg:off"/>
+          <arg value="-l:on"/>
+          <arg value="-x:org.cyberneko.html.parsers.SAXParser"/>
+          <arg value="-y:org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-r:org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg prefix="-it:" value="@{initialtemplate}" unless:blank="@{initialtemplate}"/>
+          <arg prefix="-im:" value="@{initialmode}" unless:blank="@{initialmode}"/>
+          <arg prefix="-c:" file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
+          <arg prefix="-xsl:" file="@{xsl}" if:set="_reloadStylesheet"/>
+          <srcfile prefix="-s:"/>
+          <targetfile prefix="-o:"/>
+          <arg line="@{options}"/>
+        </apply>
+        <!--Finally discard the compiled stylesheet-->
+        <delete file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
+      </sequential>
+      <!--Otherwise there is just a single transform-->
+      <!--  Note: With a single transform, ${_src} and ${_dest} may not be set.-->
+      <!--  This would occur in the special case where an @{initialtemplate} is specified-->
+      <!--  and the stylesheet does not reference the src input stream.-->
+      <sequential unless:set="_haveFiles">
+        <exec executable="java" failonerror="@{failonerror}">
+          <arg value="-cp"/>
+          <arg value="${_classpath}"/>
+          <arg value="-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+          <arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+          <arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+          <arg value="net.sf.saxon.Transform"/>
+          <arg value="-versionmsg:off"/>
+          <arg value="-l:on"/>
+          <arg value="-x:org.cyberneko.html.parsers.SAXParser"/>
+          <arg value="-y:org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-r:org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg prefix="-it:" value="@{initialtemplate}" unless:blank="@{initialtemplate}"/>
+          <arg prefix="-im:" value="@{initialmode}" unless:blank="@{initialmode}"/>
+          <arg prefix="-xsl:" file="@{xsl}"/>
+          <arg prefix="-s:" file="${_src}" if:set="_src"/>
+          <arg prefix="-o:" file="${_dest}" if:set="_dest"/>
+          <arg line="@{options}"/>
+        </exec>
+      </sequential>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.java-saxonbneko.loaded" value="true"/>
+
+</project>

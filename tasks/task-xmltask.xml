@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-xmltask"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-xmltask.dir" file="${ant.file.ant-hology.taskdefs.task-xmltask}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmltask.xml" unless:set="ant-hology.pathdefs.xmltask.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmltask"
+    pathRefId="xmltask.classpath"
+    />
+
+  <!-- See http://www.oopsconsultancy.com/software/xmltask/ -->
+  <!-- See http://sourceforge.net/projects/xmltask/ -->
+  <taskdef
+    name="xmltask"
+    classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+    if:set="ant-hology.availableLibraries.xmltask"
+    >
+    <classpath>
+      <path refid="xmltask.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-xmltask.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-batik"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-batik"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-batik.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-batik}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.ant-hology.jdk_JAVA_HOME.xml" unless:set="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xalan.xml" unless:set="ant-hology.getLibraryDefs.apache-xalan.loaded"/>
+  <!--Not necessary to load logging, or rhino getters because these are in necessary libs and already loaded-->
+
+  <import file="${ant-hology.pathdefs.dir}/apache-batik.xml" unless:set="ant-hology.pathdefs.apache-batik.loaded"/>
+
+  <!-- See http://xmlgraphics.apache.org/batik/ -->
+  <target
+    name="ant-hology.get.apache-batik"
+    description="Installs apache-batik library"
+    depends="
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-xalan
+    "
+    unless="ant-hology.availableLibraries.apache-batik">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.apache-batik"
+      pathRefId="apache-batik.all.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-batik"
+      >
+      <echo>Installing apache-batik, version 1.7</echo>
+
+      <!--Remove existing install if present-->
+      <delete dir="${ant-hology.lib.dir}/apache-batik-1.7"/>
+
+      <!--get src-->
+      <delete file="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+      <get
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-src-1.7.zip"
+        dest="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/batik-src-1.7.zip"
+        dest="${ant-hology.lib.dir}"/>
+      <delete file="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+
+      <!--get jars-->
+      <delete file="${ant-hology.lib.dir}/batik-1.7.zip"/>
+      <get
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-1.7.zip"
+        dest="${ant-hology.lib.dir}/batik-1.7.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/batik-1.7.zip"
+        dest="${ant-hology.lib.dir}"/>
+      <delete file="${ant-hology.lib.dir}/batik-1.7.zip"/>
+
+      <!--Rename directory to follow library naming convention-->
+      <move file="${ant-hology.lib.dir}/batik-1.7" tofile="${ant-hology.lib.dir}/apache-batik-1.7"/>
+
+      <!--Apply the batik-rasterizer-patch so the rasterizer task can be built-->
+      <!--Using a patch that is similar to https://issues.apache.org/bugzilla/attachment.cgi?id=22944 -->
+      <!--Command used to create patch:-->
+      <!--  Note: A double hyphen is not allowed in xml comment. So replace == with a double hyphen -->
+      <!--  diff -rupN ==strip-trailing-cr apache-batik-1.7/ apache-batik-1.7-new/ > apache-batik-1.7-patch.txt -->
+      <!--Note: I temporarily change the line endings, because I don't want <CR> endings inside files in this git-->
+      <!-- repo.  The patch file was created without the <CR> endings (strip-trailling-cr was used).-->
+      <fail message="Could not find ${ant-hology.patches.dir}/batik-rasterizer-patch.txt. This is required to patch batik so the rasterizer ant task can be built.">
+        <condition>
+          <not>
+            <available
+              file="${ant-hology.patches.dir}/apache-batik-1.7-patch.txt"
+              type="file"/>
+          </not>
+        </condition>
+      </fail>
+      <fixcrlf
+        srcdir="${ant-hology.lib.dir}/apache-batik-1.7"
+        includes="contrib/rasterizertask/build.bat"
+        eol="lf"
+        />
+      <!--By default patch does not work on windows if patch file does not have CR-LF line endings.-->
+      <!--See "Installation and Usage" information here about this limitation: http://gnuwin32.sourceforge.net/packages/patch.htm -->
+      <!--To work around this, pass the ==binary== argument to patch. Unfortunately the ant patch task does not-->
+      <!--have support for this.  So on windows, I am using exec task to run patch.exe.-->
+      <patch
+        unless:set="ant-hology.OS.onWindows"
+        patchfile="${ant-hology.patches.dir}/apache-batik-1.7-patch.txt"
+        dir="${ant-hology.lib.dir}/apache-batik-1.7"
+        strip="1"
+        backups="true"
+        failonerror="true"/>
+      <echo if:set="ant-hology.onWindows">Starting Patch. This requires GNU patch to be installed and in %PATH%.</echo>
+      <exec
+        dir="${ant-hology.lib.dir}/apache-batik-1.7"
+        executable="patch.exe"
+        failonerror="true"
+        if:set="ant-hology.OS.onWindows"
+        >
+        <arg value="--binary"/> <!--Necessary since the patch file has unix line endings.-->
+        <arg value="-b"/> <!--make backup files-->
+        <arg value="--strip=1"/> <!--strip first dir from path in patch-->
+        <arg prefix="--input=" value="${ant-hology.patches.dir}\apache-batik-1.7-patch.txt"/> <!--input patch file-->
+        <arg prefix="--directory=" value="${ant-hology.lib.dir}\apache-batik-1.7"/> <!--dir to apply patch-->
+      </exec>
+      <fixcrlf
+        srcdir="${ant-hology.lib.dir}/apache-batik-1.7"
+        includes="contrib/rasterizertask/build.bat"
+        eol="crlf"/>
+      <chmod file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.sh" perm="ugo+xr"/>
+      <chmod file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.bat" perm="ugo+xr"/>
+
+      <!--Build the ant rasterizer task-->
+      <!--Unfortunately the ant task can't be used because the classpath needs adjustment.-->
+      <!--Using the build.bat or build.sh instead.-->
+      <property.set.ant-hology.jdk_JAVA_HOME/>
+      <local name="_jdkJAVAHOME_and_onWindows"/>
+      <condition property="_jdkJAVAHOME_and_onWindows">
+        <and>
+          <isset property="ant-hology.jdk_JAVA_HOME"/>
+          <isset property="ant-hology.OS.onWindows"/>
+        </and>
+      </condition>
+      <exec
+        dir="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask"
+        executable="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.sh"
+        failonerror="true"
+        unless:set="ant-hology.OS.onWindows"
+        if:set="ant-hology.jdk_JAVA_HOME"
+        >
+        <!--Sometimes $JAVA_HOME is not set, so set it explicitly to a JDK-->
+        <env key="JAVA_HOME" value="${ant-hology.jdk_JAVA_HOME}"/>
+        <!--if $ANT_HOME is not set, then the build.sh uses ant-1.6.5-->
+        <env key="ANT_HOME" value="${ant.home}"/>
+        <arg line="jar"/>
+      </exec>
+      <exec
+        dir="${ant-hology.lib.dir}\apache-batik-1.7\contrib\rasterizertask"
+        executable="${ant-hology.lib.dir}\apache-batik-1.7\contrib\rasterizertask/build.bat"
+        failonerror="true"
+        if:set="_jdkJAVAHOME_and_onWindows"
+        >
+        <!--Sometimes $JAVA_HOME is not set, so set it explicitly to a JDK-->
+        <env key="JAVA_HOME" value="${ant-hology.jdk_JAVA_HOME}"/>
+        <!--if $ANT_HOME is not set, then the build.bat uses ant-1.6.5-->
+        <env key="ANT_HOME" value="${ant.home}"/>
+        <arg line="jar"/>
+      </exec>
+      <fail
+        message="Could not find a JDK."
+        unless:set="ant-hology.jdk_JAVA_HOME"/>
+
+      <!--Copy jar file to apache-batik-1.7 root folder if built successfully-->
+      <fail message="Could not find ${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar. The build must have failed.">
+        <condition>
+          <not>
+            <available
+              file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar"
+              type="file"/>
+          </not>
+        </condition>
+      </fail>
+      <copy
+        file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar"
+        tofile="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizertask.jar"/>
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.apache-batik"
+        pathRefId="apache-batik.all.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='apache-batik.all.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-batik"/>
+          </not>
+        </condition>
+      </fail>
+      <!--TODO: Consider loading taskdefs that use batik (such as SVGRasterizerTask) after install-->
+      <echo>apache-batik, version 1.7 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-batik.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-xerces"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-xerces"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-xerces.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-xerces}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xml-external.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+
+  <!-- See http://xerces.apache.org/xerces2-j/ -->
+  <target
+    name="ant-hology.get.apache-xerces"
+    description="Installs apache-xerces library"
+    depends="ant-hology.get.apache-commons-xml-external"
+    unless="ant-hology.availableLibraries.apache-xerces">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.mirrors.lucidnetworks.net//xerces/j/binaries/Xerces-J-bin.2.11.0.zip"
+      libName="apache-xerces"
+      libVersion="2.11.0"
+      classpath="apache-xerces.classpath"
+      originalDestDir="xerces-2_11_0"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-xerces.loaded" value="true"/>
+
+</project>

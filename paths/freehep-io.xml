@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.freehep-io"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.freehep-io.dir" file="${ant.file.ant-hology.pathdefs.freehep-io}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <path id="freehep-io.classpath">
+    <pathelement location="${ant-hology.lib.dir}/freehep-io-2.2.2/freehep-io-2.2.2.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.freehep-io.loaded" value="true"/>
+
+</project>

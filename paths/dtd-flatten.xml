@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.dtd-flatten"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.dtd-flatten.dir" file="${ant.file.ant-hology.pathdefs.dtd-flatten}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://wiki.fasterxml.com/DtdFlattenHome -->
+  <path id="dtd-flatten.classpath">
+    <pathelement location="${ant-hology.lib.dir}/dtd-flatten-3.2.9/dtd-flatten-3.2.9.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.dtd-flatten.loaded" value="true"/>
+
+</project>

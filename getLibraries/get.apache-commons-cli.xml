@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-cli"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-cli"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-cli.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-cli}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-cli.xml" unless:set="ant-hology.pathdefs.apache-commons-cli.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-cli/ -->
+  <target
+    name="ant-hology.get.apache-commons-cli"
+    description="Installs apache-commons-cli library"
+    unless="ant-hology.availableLibraries.apache-commons-cli">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://mirror.cogentco.com/pub/apache//commons/cli/binaries/commons-cli-1.2-bin.zip"
+      originalDestDir="commons-cli-1.2"
+      libName="apache-commons-cli"
+      libVersion="1.2"
+      classpath="apache-commons-cli.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-cli.loaded" value="true"/>
+
+</project>

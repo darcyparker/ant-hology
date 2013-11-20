@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xmlunit"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xmlunit.dir" file="${ant.file.ant-hology.pathdefs.xmlunit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://xmlunit.sourceforge.net/ -->
+  <path
+    id="xmlunit.classpath"
+    path="${ant-hology.lib.dir}/xmlunit-1.5/lib/xmlunit-1.5.jar"
+    />
+
+  <property name="ant-hology.pathdefs.xmlunit.loaded" value="true"/>
+
+</project>

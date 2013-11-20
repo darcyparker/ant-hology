@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.xp"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.xp.dir" file="${ant.file.ant-hology.pathdefs.xp}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://www.jclark.com/xml/xp/index.html -->
+  <path
+    id="xp.classpath"
+    path="${ant-hology.lib.dir}/xp/xp.jar"
+    />
+
+  <property name="ant-hology.pathdefs.xp.loaded" value="true"/>
+
+</project>

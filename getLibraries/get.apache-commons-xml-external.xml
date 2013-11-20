@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-xml-external"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-xml-external"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-xml-external.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-xml-external}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xml-external.xml" unless:set="ant-hology.pathdefs.apache-commons-xml-external.loaded"/>
+
+  <!-- See https://xerces.apache.org/xml-commons/ -->
+  <target
+    name="ant-hology.get.apache-commons-xml-external"
+    description="Installs apache-commons-xml-external library"
+    unless="ant-hology.availableLibraries.apache-commons-xml-external">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://archive.apache.org/dist/xml/commons/xml-commons-external-1.4.01-bin.zip"
+      originalDestDir="xml-commons-external-1.4.01"
+      libName="apache-commons-xml-external"
+      libVersion="1.4.01"
+      classpath="apache-commons-xml-external.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-xml-external.loaded" value="true"/>
+
+</project>

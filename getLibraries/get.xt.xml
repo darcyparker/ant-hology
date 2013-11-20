@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xt"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xt"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.xt.dir" file="${ant.file.ant-hology.getLibraryDefs.xt}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xt.xml" unless:set="ant-hology.pathdefs.xt.loaded"/>
+
+  <!-- See http://www.blnz.com/xt/index.html -->
+  <!-- See http://www.blnz.com/xt/xt-20051206/index.html -->
+  <target
+    name="ant-hology.get.xt"
+    description="Installs xt library."
+    unless="ant-hology.availableLibraries.xt">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.xt"
+      pathRefId="xt.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.xt"
+      >
+      <echo>Installing xt, version 20051206</echo>
+      <delete dir="${ant-hology.lib.dir}/xt-20051206"/>
+      <mkdir dir="${ant-hology.lib.dir}/xt-20051206"/>
+      <get
+        src="http://www.blnz.com/xt/xt-20051206/lib/xt20051206.jar"
+        dest="${ant-hology.lib.dir}/xt-20051206/xt20051206.jar"/>
+      <!--Note, have to get src from different location because of bad link at blnz.com-->
+      <get
+        src="http://gentoo.netnitco.net/distfiles/xt-20051206-src.zip"
+        dest="${ant-hology.lib.dir}/xt-20051206-src.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/xt-20051206-src.zip"
+        dest="${ant-hology.lib.dir}"/>
+      <delete file="${ant-hology.lib.dir}/xt-20051206-src.zip"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.xt"
+        pathRefId="xt.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='xt.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.xt"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>xt, version 20051206 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xt.loaded" value="true"/>
+
+</project>

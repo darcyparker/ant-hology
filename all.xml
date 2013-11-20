@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.all"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!-- import all macros and preset definitions -->
+  <import file="commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/allLibs.xml" unless:set="ant-hology.getLibraryDefs.allLibs.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/alltasks.xml" unless:set="ant-hology.taskdefs.alltasks.loaded"/>
+
+  <property name="ant-hology.all.loaded" value="true"/>
+
+</project>

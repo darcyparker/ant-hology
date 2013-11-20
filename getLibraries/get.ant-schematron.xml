@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.ant-schematron"
+  basedir="."
+  default="ant-hology.getLibraryDefs.ant-schematron"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.ant-schematron.dir" file="${ant.file.ant-hology.getLibraryDefs.ant-schematron}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/ant-schematron.xml" unless:set="ant-hology.pathdefs.ant-schematron.loaded"/>
+
+  <!-- See http://www.schematron.com/implementation.html -->
+  <!-- See http://broadcast.oreilly.com/2010/04/announcing-schematron-for-ant.html -->
+  <!-- See https://code.google.com/p/schematron/ -->
+  <target
+    name="ant-hology.get.ant-schematron"
+    description="Installs ant-schematron library"
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver
+    "
+    unless="ant-hology.availableLibraries.ant-schematron">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.ant-schematron"
+      pathRefId="ant-schematron.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.ant-schematron"
+      >
+      <echo>Installing ant-schematron, version 2010-04-14</echo>
+      <delete dir="${ant-hology.lib.dir}/ant-schematron-2010-04-14"/>
+      <mkdir dir="${ant-hology.lib.dir}/ant-schematron-2010-04-14"/>
+      <get
+        src="https://schematron.googlecode.com/files/ant-schematron-2010-04-14.jar"
+        dest="${ant-hology.lib.dir}/ant-schematron-2010-04-14/ant-schematron-2010-04-14.jar"/>
+      <get
+        src="https://schematron.googlecode.com/files/Using_Schematron_for_Ant.pdf"
+        dest="${ant-hology.lib.dir}/ant-schematron-2010-04-14/Using_Schematron_for_Ant.pdf"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.ant-schematron"
+        pathRefId="ant-schematron.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='ant-schematron.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.ant-schematron"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>ant-schematron, version 2010-04-14 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.ant-schematron.loaded" value="true"/>
+
+</project>

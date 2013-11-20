@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.xslt-saxonb"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+  <!-- preset xslt task that uses saxonb -->
+
+  <!--On some systems, the installed ant does not work.  But ./bin/ant works. Example:-->
+  <!-- ../ant-hology/bin/ant -lib ../ant-hology/lib/apache-commons-xmlresolver-1.2/resolver.jar -lib ../XMLCatalog/ test-xslt-saxonb -->
+
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.5 -->
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.6 -->
+
+  <dirname property="ant-hology.taskdefs.xslt-saxonb.dir" file="${ant.file.ant-hology.taskdefs.xslt-saxonb}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonb.xml" unless:set="ant-hology.pathdefs.saxonb.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxon-ant.xml" unless:set="ant-hology.pathdefs.saxon-ant.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonb"
+    pathRefId="saxonb.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxon-ant"
+    pathRefId="saxon-ant.classpath"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.saxonb"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+      <isset property="ant-hology.availableLibraries.saxon-ant"/>
+    </and>
+  </condition>
+
+  <taskdef
+    name="saxon-ant-xslt"
+    classname="net.sf.saxon.ant.AntTransform"
+    if:set="_requiredAvailable"
+    >
+      <classpath>
+        <path refid="saxonb.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+        <path refid="saxon-ant.classpath"/>
+      </classpath>
+  </taskdef>
+
+  <!--This task works without passing -lib to ant, however it doesn't work with xmlcatalog-->
+  <presetdef
+    name="xslt-saxon9"
+    if:set="_requiredAvailable"
+    >
+    <saxon-ant-xslt
+      lineNumbering="true"
+      >
+      <classpath>
+        <path refid="saxonb.classpath"/>
+        <path refid="xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+      <xmlcatalog refid="xmlcatalog.catalog"/>
+    </saxon-ant-xslt>
+  </presetdef>
+
+  <presetdef
+    name="xslt-saxonb"
+    if:set="_requiredAvailable"
+    >
+    <xslt processor="trax">
+      <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.5 -->
+      <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.6 -->
+      <!--xslt, style and junit tasks appear to ignore some classpath entries-->
+      <!--In particular, it seems to loose reference to the resolver.jar and ${xmlcatalog.dir}-->
+      <!--So even if resolver.jar and the ${xmlcatalog.dir} are in the classpath-->
+      <!--definition, they are not loaded/found.-->
+      <!--Solution is to start ant with the -lib argument for both resolver.jar and-->
+      <!--${xmlcatalog.dir}-->
+      <!--Another solution is to not use xslt task and intead use javavm task to use saxon-->
+
+      <!--Note, problem is solved with saxonHE by setting-->
+      <!--<attribute-->
+      <!--  name="http://saxon.sf.net/feature/ignoreSAXSourceParser"-->
+      <!--  value="true"/>-->
+
+      <!--See https://issues.apache.org/bugzilla/show_bug.cgi?id=49271-->
+      <classpath>
+        <path refid="saxonb.classpath"/>
+        <path refid="xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+
+      <xmlcatalog refid="xmlcatalog.catalog"/>
+
+      <sysproperty
+        key="org.xml.sax.driver"
+        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+      <sysproperty
+        key="javax.xml.parsers.DocumentBuilderFactory"
+        value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+      <sysproperty
+        key="javax.xml.parsers.SAXParserFactory"
+        value="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+      <sysproperty
+        key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+        value="org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+        <!--See `jars/saxonb9-1-0-8j/resources/ -->
+        <!--     saxonb9-1-0-8source/net/sf/saxon/FeatureKeys.java` -->
+        <!--for attribute key/value pairs. -->
+
+        <!--Consider using configuration file to configure uriresolver etc..-->
+        <!--<attribute-->
+          <!--name="http://saxon.sf.net/feature/configuration-file"-->
+          <!--value="c:/saxon/config.xml"/>-->
+
+        <!--Not available in saxonb 9.1.0.8-->
+        <!--ignoreSAXSourceParser is necessary so parsers defined below are used
+            instead of ones passed by ant-->
+        <!--<attribute-->
+          <!--name="http://saxon.sf.net/feature/ignoreSAXSourceParser"-->
+          <!--value="true"/>-->
+
+        <!--sourceParserClass corresponds to command line -x option-->
+        <attribute
+          name="http://saxon.sf.net/feature/sourceParserClass"
+          value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+
+        <!--styleParserClass corresponds to command line -y option-->
+        <attribute
+          name="http://saxon.sf.net/feature/styleParserClass"
+          value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+
+        <!--Not available in saxonb 9.1.0.8-->
+        <!--uriResolverClass corresponds to the command line -r option-->
+        <!--<attribute-->
+          <!--name="http://saxon.sf.net/feature/uriResolverClass"-->
+          <!--value="org.apache.xml.resolver.tools.CatalogResolver"/>-->
+
+        <!--version-warning corresponds to the command line -versionmsg option-->
+        <attribute
+          name="http://saxon.sf.net/feature/version-warning"
+          value="false"/>
+
+        <attribute
+          name="http://saxon.sf.net/feature/validation"
+          value="false"/>
+
+        <!--allow-external-functions corresponds to the command line -ext option-->
+        <attribute
+          name="http://saxon.sf.net/feature/allow-external-functions"
+          value="true"/>
+
+        <!--linenumbering corresponds to the command line -l option-->
+        <attribute
+          name="http://saxon.sf.net/feature/linenumbering"
+          value="true"/>
+
+      </factory>
+    </xslt>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.xslt-saxonb.loaded" value="true"/>
+
+</project>

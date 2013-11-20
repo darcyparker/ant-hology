@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxonbResources"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxonbResources"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxonbResources.dir" file="${ant.file.ant-hology.getLibraryDefs.saxonbResources}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonb.xml" unless:set="ant-hology.getLibraryDefs.saxonb.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.saxonbResources"
+    description="Installs saxonb Resources in saxonb library install folder."
+    depends="ant-hology.get.saxonb"
+    unless="ant-hology.availableLibraries.saxonbResources">
+
+    <condition
+      property="ant-hology.availableLibraries.saxonbResources"
+      unless:set="ant-hology.availableLibraries.saxonbResources"
+      >
+      <and>
+        <available
+          file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources"
+          type="dir"/>
+        <available
+          file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/source-userdoc"
+          type="dir"/>
+        <available
+          file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source"
+          type="dir"/>
+      </and>
+    </condition>
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.saxonbResources"
+      >
+      <echo>Installing saxonb 9.1.0.8j resources</echo>
+      <delete dir="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources"/>
+      <get
+        src="http://sourceforge.net/projects/saxon/files/Saxon-B/9.1.0.7/saxon-resources9-1-0-1.zip/download"
+        dest="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon-resources9-1-0-1.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon-resources9-1-0-1.zip"
+        dest="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/source-userdoc.zip"
+        dest="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/source-userdoc"/>
+      <get
+        src="http://sourceforge.net/projects/saxon/files/Saxon-B/9.1.0.8/saxonb9-1-0-8source.zip/download"
+        dest="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source.zip"
+        dest="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source"/>
+      <delete file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon-resources9-1-0-1.zip"/>
+      <delete file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/source-userdoc.zip"/>
+      <delete file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source.zip"/>
+
+      <!--Test if installation was successful.-->
+      <condition property="ant-hology.availableLibraries.saxonbResources">
+        <and>
+          <available
+            file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources"
+            type="dir"/>
+          <available
+            file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/source-userdoc"
+            type="dir"/>
+          <available
+            file="${ant-hology.lib.dir}/saxonb-9.1.0.8j/resources/saxonb9-1-0-8source"
+            type="dir"/>
+        </and>
+      </condition>
+      <fail message="Installation failed. Expected resources dirs under saxonb-9.1.0.8j dir not present.">
+        <!--Note, condition inside fail task doesn't support '@property' so it is defined in previous task-->
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.saxonbResources"/>
+          </not>
+        </condition>
+
+      </fail>
+      <echo>saxonb v9.1.0.8j resources installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxonbResources.loaded" value="true"/>
+
+</project>

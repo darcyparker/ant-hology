@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.jchardet"
+  basedir="."
+  default="ant-hology.getLibraryDefs.jchardet"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.jchardet.dir" file="${ant.file.ant-hology.getLibraryDefs.jchardet}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/jchardet.xml" unless:set="ant-hology.pathdefs.jchardet.loaded"/>
+
+  <!-- http://jchardet.sourceforge.net -->
+  <!--Used by htmlparser 1.4-->
+  <target
+    name="ant-hology.get.jchardet"
+    description="Installs jchardet library."
+    unless="ant-hology.availableLibraries.jchardet">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/jchardet/files/jchardet/1.1/jchardet-1.1.zip/download"
+      libName="jchardet"
+      libVersion="1.1"
+      classpath="jchardet.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.jchardet.loaded" value="true"/>
+
+</project>

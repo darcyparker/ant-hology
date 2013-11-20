@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.xslt-oraxsl"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+  <!-- preset xslt task that uses oraxsl -->
+
+  <!--On some systems, the installed ant does not work.  But ./bin/ant works. Example:-->
+  <!-- ../ant-hology/bin/ant -lib ../ant-hology/lib/apache-commons-xmlresolver-1.2/resolver.jar -lib ../XMLCatalog/ test-xslt-oraxsl -->
+
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.5 -->
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.6 -->
+
+  <dirname property="ant-hology.taskdefs.xslt-oraxsl.dir" file="${ant.file.ant-hology.taskdefs.xslt-oraxsl}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.taskdefs.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/oracle-xmlparser.xml" unless:set="ant-hology.pathdefs.oracle-xmlparser.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.oracle-xmlparser"
+    pathRefId="oracle-xmlparser.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.oracle-xmlparser"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <presetdef
+    name="xslt-oraxsl"
+    if:set="_requiredAvailable"
+    >
+    <xslt processor="trax">
+
+      <classpath>
+        <path refid="oracle-xmlparser.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+
+      <sysproperty
+        key="org.xml.sax.driver"
+        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+      <!--oraxsl doesn't work with the following system properties-->
+      <!--<sysproperty-->
+        <!--key="javax.xml.parsers.DocumentBuilderFactory"-->
+        <!--value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>-->
+      <!--<sysproperty-->
+        <!--key="javax.xml.parsers.SAXParserFactory"-->
+        <!--value="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>-->
+      <!--<sysproperty-->
+        <!--key="org.apache.xerces.xni.parser.XMLParserConfiguration"-->
+        <!--value="org.apache.xerces.parsers.XIncludeParserConfiguration"/>-->
+
+      <xmlcatalog refid="xmlcatalog.catalog"/>
+
+      <factory name="oracle.xml.jaxp.JXSAXTransformerFactory">
+
+      </factory>
+    </xslt>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.xslt-oraxsl.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.jtidy"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.jtidy.dir" file="${ant.file.ant-hology.pathdefs.jtidy}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://jtidy.sourceforge.net/ -->
+  <path
+    id="jtidy.classpath"
+    path="${ant-hology.lib.dir}/jtidy-r938/jtidy-r938.jar"
+    />
+
+  <property name="ant-hology.pathdefs.jtidy.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-xmlresolver"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-xmlresolver.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-xmlresolver}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://projects.apache.org/projects/xml_commons_resolver.html -->
+  <path
+    id="apache-commons-xmlresolver.classpath"
+    location="${ant-hology.lib.dir}/apache-commons-xmlresolver-1.2/resolver.jar"
+    />
+
+  <property name="ant-hology.pathdefs.apache-commons-xmlresolver.loaded" value="true"/>
+
+</project>

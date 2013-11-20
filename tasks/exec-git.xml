@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.exec-git"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.exec-git.dir" file="${ant.file.ant-hology.taskdefs.exec-git}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Simple wrapper for git command.-->
+
+  <macrodef
+    name="exec-git"
+    description="A simple wrapper for the git command"
+    >
+    <attribute
+      name="dir"
+      description="the directory in which the git command will be executed"
+      />
+    <attribute
+      name="options"
+      description="options to pass to git executable"
+      default=""/>
+    <attribute
+      name="failonerror"
+      default="true"
+      />
+
+    <sequential>
+      <!--Convert attributes to paths for os-->
+      <local name="_dir"/>
+      <property
+        name="_dir"
+        location="@{dir}"
+        />
+      <exec executable="git" dir="${_dir}" searchpath="true" failonerror="@{failonerror}">
+        <arg line="@{options}"/>
+      </exec>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.exec-git.loaded" value="true"/>
+
+</project>

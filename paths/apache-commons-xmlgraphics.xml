@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-xmlgraphics"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-xmlgraphics.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-xmlgraphics}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://xmlgraphics.apache.org/commons/ -->
+  <path id="apache-commons-xmlgraphics.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-xmlgraphics-1.5/build/xmlgraphics-commons-1.5.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-commons-xmlgraphics.loaded" value="true"/>
+
+</project>

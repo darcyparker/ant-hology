@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.jing"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.jing.dir" file="${ant.file.ant-hology.pathdefs.jing}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <property name="ant-hology.jing.jarfiles" location="${ant-hology.lib.dir}/jing-20091111/bin"/>
+
+  <!-- See http://www.thaiopensource.com/relaxng/jing-ant.html -->
+  <!-- See https://code.google.com/p/jing-trang/ -->
+  <path id="jing.classpath">
+    <pathelement location="${ant-hology.jing.jarfiles}/jing.jar"/>
+    <pathelement location="${ant-hology.jing.jarfiles}/isorelax.jar"/>
+    <path refid="saxonHE.classpath"/>
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-commons-xmlresolver.classpath"/>
+    <path refid="xmlcatalog.classpath"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.jing.loaded" value="true"/>
+
+</project>

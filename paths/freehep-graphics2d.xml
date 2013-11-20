@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.freehep-graphics2d"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.freehep-graphics2d.dir" file="${ant.file.ant-hology.pathdefs.freehep-graphics2d}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <path id="freehep-graphics2d.classpath">
+    <pathelement location="${ant-hology.lib.dir}/freehep-graphics2d-2.2.1/freehep-graphics2d-2.2.1.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.freehep-graphics2d.loaded" value="true"/>
+
+</project>

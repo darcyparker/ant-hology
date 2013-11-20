@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.freehep-io"
+  basedir="."
+  default="ant-hology.getLibraryDefs.freehep-io"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.freehep-io.dir" file="${ant.file.ant-hology.getLibraryDefs.freehep-io}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/freehep-io.xml" unless:set="ant-hology.pathdefs.freehep-io.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <target
+    name="ant-hology.get.freehep-io"
+    description="Installs freehep-io library"
+    unless="ant-hology.availableLibraries.freehep-io">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.freehep-io"
+      pathRefId="freehep-io.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.freehep-io"
+      >
+      <echo>Installing freehep-io, version 2.2.2</echo>
+      <delete dir="${ant-hology.lib.dir}/freehep-io-2.2.2"/>
+      <mkdir dir="${ant-hology.lib.dir}/freehep-io-2.2.2"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-io/2.2.2/freehep-io-2.2.2.jar"
+        dest="${ant-hology.lib.dir}/freehep-io-2.2.2/freehep-io-2.2.2.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.freehep-io"
+        pathRefId="freehep-io.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='freehep-io.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.freehep-io"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>freehep-io, version 2.2.2 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.freehep-io.loaded" value="true"/>
+
+</project>

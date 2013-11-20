@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-httpcomponents"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-httpcomponents.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-httpcomponents}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-codec.xml" unless:set="ant-hology.pathdefs.apache-commons-codec.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-cli.xml" unless:set="ant-hology.pathdefs.apache-commons-cli.loaded"/>
+
+  <!-- See https://hc.apache.org/ -->
+  <path id="apache-commons-httpcomponents.classpath">
+    <path refid="apache-commons-codec.classpath"/>
+    <path refid="apache-commons-logging.classpath"/>
+    <path refid="apache-commons-cli.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-httpcomponents-4.3/lib/httpcore-4.3.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-httpcomponents-4.3/lib/httpclient-4.3.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-httpcomponents-4.3/lib/httpmime-4.3.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-httpcomponents-4.3/lib/fluent-hc-4.3.jar"/>
+    <!--httpclient-cache-4.3.jar-->
+    <!--httpcore-ab-4.3.jar-->
+    <!--httpcore-nio-4.3.jar-->
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-commons-httpcomponents.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.dtd-flatten"
+  basedir="."
+  default="ant-hology.getLibraryDefs.dtd-flatten"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.dtd-flatten.dir" file="${ant.file.ant-hology.getLibraryDefs.dtd-flatten}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/dtd-flatten.xml" unless:set="ant-hology.pathdefs.dtd-flatten.loaded"/>
+
+  <!-- See http://wiki.fasterxml.com/DtdFlattenHome -->
+  <target
+    name="ant-hology.get.dtd-flatten"
+    description="Installs dtd-flatten library"
+    unless="ant-hology.availableLibraries.dtd-flatten">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.dtd-flatten"
+      pathRefId="dtd-flatten.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.dtd-flatten"
+      >
+      <echo>Installing dtd-flatten, version 3.2.9</echo>
+      <delete dir="${ant-hology.lib.dir}/dtd-flatten-3.2.9"/>
+      <mkdir dir="${ant-hology.lib.dir}/dtd-flatten-3.2.9"/>
+      <get
+        src="http://woodstox.codehaus.org/tools/dtd-flatten-3.2.9.jar"
+        dest="${ant-hology.lib.dir}/dtd-flatten-3.2.9/dtd-flatten-3.2.9.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.dtd-flatten"
+        pathRefId="dtd-flatten.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='dtd-flatten.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.dtd-flatten"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>dtd-flatten, version 3.2.9 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.dtd-flatten.loaded" value="true"/>
+
+</project>

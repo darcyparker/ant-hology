@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.ant-schematron"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.ant-schematron.dir" file="${ant.file.ant-hology.pathdefs.ant-schematron}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://www.schematron.com/implementation.html -->
+  <!-- See http://broadcast.oreilly.com/2010/04/announcing-schematron-for-ant.html -->
+  <!-- See https://code.google.com/p/schematron/ -->
+  <path
+    id="ant-schematron.classpath"
+    path="${ant-hology.lib.dir}/ant-schematron-2010-04-14/ant-schematron-2010-04-14.jar"
+    />
+
+  <property name="ant-hology.pathdefs.ant-schematron.loaded" value="true"/>
+
+</project>

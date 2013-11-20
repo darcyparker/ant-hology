@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.env-js"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.env-js.dir" file="${ant.file.ant-hology.pathdefs.env-js}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+
+  <!-- See http://www.envjs.com/ -->
+  <!-- See http://github.com/thatcher/env-js -->
+  <path id="env-js.required">
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/console.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/css.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/dom.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/event.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/html.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/johnson.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/johnson.rb"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/node.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/parser.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/rhino.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/rubyracer.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/rubyracer.rb"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/spydermonkey.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/spydermonkey.py"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/timer.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/window.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/xhr.js"/>
+
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/core.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/johnson.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/node.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/rhino.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/rubyracer.js"/>
+    <pathelement location="${ant-hology.lib.dir}/env-js/envjs/platform/spydermonkey.js"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.env-js.loaded" value="true"/>
+
+</project>

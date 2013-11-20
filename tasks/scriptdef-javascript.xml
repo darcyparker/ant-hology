@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.scriptdef-javascript"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.scriptdef-javascript.dir" file="${ant.file.ant-hology.taskdefs.scriptdef-javascript}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-bsf-2.4.0.xml" unless:set="ant-hology.pathdefs.apache-commons-bsf-2.4.0.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/rhino.xml" unless:set="ant-hology.pathdefs.rhino.loaded"/>
+
+  <!--Store scriptdef-javascript.classpath separately so default <classpath> can-->
+  <!--be extended if needed by some scripts-->
+  <path
+    id="scriptdef-javascript.classpath"
+    >
+    <path refid="rhino.classpath"/>
+    <path refid="apache-commons-bsf-2.4.0.classpath"/>
+    <!--Logging is required to use self.log in javascript-->
+    <path refid="apache-commons-logging.classpath"/>
+  </path>
+
+  <presetdef
+    name="scriptdef-javascript"
+    description="scriptdef-javascriptdef is a preset definition for a scriptdef task configured for javascriptdef."
+    >
+    <scriptdef language="javascript" manager="bsf">
+      <classpath>
+        <path refid="scriptdef-javascript.classpath"/>
+      </classpath>
+    </scriptdef>
+  </presetdef>
+
+
+  <property name="ant-hology.taskdefs.scriptdef-javascript.loaded" value="true"/>
+
+</project>

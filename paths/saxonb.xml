@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.saxonb"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.saxonb.dir" file="${ant.file.ant-hology.pathdefs.saxonb}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <path id="saxonb.classpath">
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-dom.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-dom4j.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-jdom.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-s9api.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-sql.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-xom.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-xpath.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9-xqj.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/saxonb-9.1.0.8j/saxon9.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.saxonb.loaded" value="true"/>
+
+</project>

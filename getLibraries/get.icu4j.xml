@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.icu4j"
+  basedir="."
+  default="ant-hology.getLibraryDefs.icu4j"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.icu4j.dir" file="${ant.file.ant-hology.getLibraryDefs.icu4j}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/icu4j.xml" unless:set="ant-hology.pathdefs.icu4j.loaded"/>
+
+  <!-- See http://site.icu-project.org/ -->
+  <!--Used by htmlparser 1.4-->
+  <target
+    name="ant-hology.get.icu4j"
+    description="Installs icu4j library"
+    unless="ant-hology.availableLibraries.icu4j">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.icu4j"
+      pathRefId="icu4j.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.icu4j"
+      >
+      <echo>Installing icu4j, version 51.2</echo>
+      <delete dir="${ant-hology.lib.dir}/icu4j-51.2"/>
+      <mkdir dir="${ant-hology.lib.dir}/icu4j-51.2"/>
+      <get
+        src="http://download.icu-project.org/files/icu4j/51.2/icu4j-51_2.jar"
+        dest="${ant-hology.lib.dir}/icu4j-51.2/icu4j-51_2.jar"/>
+      <get
+        src="http://download.icu-project.org/files/icu4j/51.2/icu4j-charset-51_2.jar"
+        dest="${ant-hology.lib.dir}/icu4j-51.2/icu4j-charset-51_2.jar"/>
+      <get
+        src="http://download.icu-project.org/files/icu4j/51.2/icu4j-localespi-51_2.jar"
+        dest="${ant-hology.lib.dir}/icu4j-51.2/icu4j-localespi-51_2.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.icu4j"
+        pathRefId="icu4j.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='icu4j.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.icu4j"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>icu4j, version 51.2 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.icu4j.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.java-tika-extractXML"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.java-tika-extractXML.dir" file="${ant.file.ant-hology.taskdefs.java-tika-extractXML}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-tika-app.xml" unless:set="ant-hology.pathdefs.apache-tika-app.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-tika-app"
+    pathRefId="apache-tika-app.classpath"
+    />
+
+  <presetdef
+    name="tika-extractXML"
+    description="A simple preset definition for extracting XML from files such as PDFs, word, and excel with tika-app."
+    if:set="ant-hology.availableLibraries.apache-tika-app"
+    >
+    <!--Useful for converting PDFs, excel, word and numerous other types of-->
+    <!--files... to xml format-->
+    <!--usage:-->
+    <!--<tika-extractXML input="${input-file}" output="sample.xml"/>-->
+    <java jar="${ant-hology.pathdefs.apache-tika-app.jarfile}" fork="true" failonerror="true">
+      <classpath>
+          <path refid="apache-tika-app.classpath"/>
+      </classpath>
+      <arg value="-x"/>
+    </java>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.java-tika-extractXML.loaded" value="true"/>
+
+</project>

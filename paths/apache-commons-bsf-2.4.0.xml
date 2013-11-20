@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-bsf-2.4.0"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-bsf-2.4.0.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-bsf-2.4.0}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--See http://commons.apache.org/proper/commons-bsf/ -->
+  <path id="apache-commons-bsf-2.4.0.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-commons-bsf-2.4.0/lib/bsf.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-commons-bsf-2.4.0.loaded" value="true"/>
+
+</project>

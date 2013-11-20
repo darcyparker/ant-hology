@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-commons-io"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-commons-io.dir" file="${ant.file.ant-hology.pathdefs.apache-commons-io}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-io/ -->
+  <path
+    id="apache-commons-io.classpath"
+    path="${ant-hology.lib.dir}/apache-commons-io-2.4/commons-io-2.4.jar"
+    />
+
+  <property name="ant-hology.pathdefs.apache-commons-io.loaded" value="true"/>
+
+</project>

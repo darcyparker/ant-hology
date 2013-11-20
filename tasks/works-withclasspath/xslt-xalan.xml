@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.xslt-xalan"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+  <!-- preset xslt task that uses xalan -->
+
+  <!--On some systems, the installed ant does not work.  But ./bin/ant works. Example:-->
+  <!-- ../ant-hology/bin/ant -lib ../ant-hology/lib/apache-commons-xmlresolver-1.2/resolver.jar -lib ../XMLCatalog/ test-xslt-xalan -->
+
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.5 -->
+  <!-- See: http://ant.apache.org/faq.html#delegating-classloader-1.6 -->
+
+  <dirname property="ant-hology.taskdefs.xslt-xalan.dir" file="${ant.file.ant-hology.taskdefs.xslt-xalan}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xalan.xml" unless:set="ant-hology.pathdefs.apache-xalan.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xalan"
+    pathRefId="apache-xalan.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.apache-xalan"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <presetdef
+    name="xslt-xalan"
+    if:set="_requiredAvailable"
+    >
+    <xslt processor="trax">
+      <!--See: http://ant.apache.org/faq.html#delegating-classloader-1.5-->
+      <!--See: http://ant.apache.org/faq.html#delegating-classloader-1.6-->
+      <!--xslt, style and junit tasks appear to ignore some classpath entries-->
+      <!--In particular, it seems to loose reference to the resolver.jar and ${xmlcatalog.dir}-->
+      <!--So even if resolver.jar and the ${xmlcatalog.dir} are in the classpath-->
+      <!--definition, they are not loaded/found.-->
+      <!--Solution is to start ant with the -lib argument for both resolver.jar and-->
+      <!--${xmlcatalog.dir}-->
+      <!--Another solution is to not use xslt task and intead use javavm task to use xalan-->
+
+      <classpath>
+        <path refid="apache-xalan.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+
+      <xmlcatalog refid="xmlcatalog.catalog"/>
+
+      <sysproperty
+        key="org.xml.sax.driver"
+        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+      <sysproperty
+        key="javax.xml.parsers.DocumentBuilderFactory"
+        value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+      <sysproperty
+        key="javax.xml.parsers.SAXParserFactory"
+        value="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+      <sysproperty
+        key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+        value="org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+
+      <factory name="org.apache.xalan.processor.TransformerFactoryImpl">
+        <!--http://xalan.apache.org/xalan-j/features.html#factoryattribute-->
+        <!--http://xalan.apache.org/xalan-j/apidocs/org/apache/xalan/processor/TransformerFactoryImpl.html-->
+
+        <attribute
+          name="http://xml.apache.org/xalan/features/optimize"
+          value="true"/>
+
+        <!--source-location corresponds to the command line -L option-->
+        <attribute
+          name="http://xml.apache.org/xalan/properties/source-location"
+          value="true"/>
+
+      </factory>
+    </xslt>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.xslt-xalan.loaded" value="true"/>
+
+</project>

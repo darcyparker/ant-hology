@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.saxon-ant"
+  basedir="."
+  default="ant-hology.getLibraryDefs.saxon-ant"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.saxon-ant.dir" file="${ant.file.ant-hology.getLibraryDefs.saxon-ant}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxon-ant.xml" unless:set="ant-hology.pathdefs.saxon-ant.loaded"/>
+
+  <!-- See http://saxon.sourceforge.net/ -->
+  <!-- See http://www.saxonica.com/documentation9.1/using-xsl/xsltfromant.html -->
+  <target
+    name="ant-hology.get.saxon-ant"
+    description="Installs saxon-ant library."
+    unless="ant-hology.availableLibraries.saxon-ant">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/saxon/files/saxon%20ant%20task/9.1/saxon-ant9-1.zip/download"
+      libName="saxon-ant"
+      libVersion="9.1"
+      classpath="saxon-ant.classpath"
+      unzipToDestDir="true"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.saxon-ant.loaded" value="true"/>
+
+</project>

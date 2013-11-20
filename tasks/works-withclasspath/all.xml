@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.works-withclasspath.all"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!--imports all ant-hology tasks (macrodefs, presetdefs, scriptdefs...) that work only if -lib passed to ant.-->
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="xslt-oraxsl.xml" unless:set="ant-hology.taskdefs.xslt-oraxsl.loaded"/>
+  <import file="xslt-saxonb.xml" unless:set="ant-hology.taskdefs.xslt-saxonb.loaded"/>
+  <import file="xslt-xalan.xml" unless:set="ant-hology.taskdefs.xslt-xalan.loaded"/>
+  <import file="xslt-xt.xml" unless:set="ant-hology.taskdefs.xslt-xt.loaded"/>
+
+  <property name="ant-hology.taskdefs.works-withclasspath.all.loaded" value="true"/>
+
+</project>

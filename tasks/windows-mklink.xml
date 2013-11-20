@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.windows-mklink"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.windows-mklink.dir" file="${ant.file.ant-hology.taskdefs.windows-mklink}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/script-javascript.xml" unless:set="ant-hology.taskdefs.script-javascript.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/WindowsElevationPowerToys.xml"/>
+
+  <!--Task to create links on windows using mklink command.-->
+  <!--Because mklink only works if you run as administrator, using the Windows Elevation Power Tools-->
+  <!--Task must be available on unix because it is used some targets are for both unix windows.-->
+  <!--Task has no effect on unix though-->
+  <macrodef
+    name="windows-mklink"
+    description="windows-mklink is a macrodef that uses Windows' Elevation Power Toys to elevate to administrator privilages and create a link using mklink.exe command."
+    >
+    <attribute
+      name="source"
+      description="The source for link. If source is a directory, then mklink /d will be used."
+      />
+    <attribute
+      name="target"
+      description="The target for link."
+      />
+    <attribute
+      name="overwrite"
+      description="The target will be overwritten if true."
+      default="true"
+      />
+    <attribute
+      name="failonerror"
+      default="true"
+      />
+
+    <!--Do nothing if not windows-->
+    <sequential unless:set="ant-hology.OS.onWindows"/>
+    <sequential if:set="ant-hology.OS.onWindows">
+      <areAllAvailable
+        property="ant-hology.availableLibraries.WindowsElevationPowerToys"
+        pathRefId="WindowsElevationPowerToys.requiredFiles"
+        />
+      <fail
+        unless:set="ant-hology.availableLibraries.WindowsElevationPowerToys"
+        message="Windows Elevation Power Toys could not be found. Install with ant target &quot;ant-hology.get.WindowsElevationPowerToys&quot;"/>
+
+      <local name="_sourcePath"/>
+      <local name="_targetPath"/>
+      <local name="_sourcePathIsDir"/>
+      <local name="_targetPathIsDir"/>
+      <local name="_targetPathAlreadyExistsAndOnWindowsAndHaveElevation"/>
+      <local name="_mklinkDirOptionString"/>
+
+      <!--Convert strings to abs paths. Otherwise links could be bad.-->
+      <!--This also converts path separator / to \ if necessary-->
+      <property
+        name="_sourcePath"
+        location="@{source}"
+        />
+      <property
+        name="_targetPath"
+        location="@{target}"
+        />
+
+      <!--mklink command requires /d option if the source is a directory-->
+      <available
+        property="_sourcePathIsDir"
+        file="${_sourcePath}"
+        type="dir"
+        />
+      <property name="_mklinkDirOptionString" value="/d"
+        if:set="_sourcePathIsDir"/>
+      <property name="_mklinkDirOptionString" value=""
+        unless:set="_sourcePathIsDir"/>
+
+      <available
+        property="_targetPathIsDir"
+        file="${_sourcePath}"
+        type="dir"
+        />
+
+      <available
+        property="_targetPathAlreadyExistsAndOnWindowsAndHaveElevation"
+        file="${_sourcePath}"
+        />
+
+      <echo message="Creating link with window's `mklink` command."/>
+      <echo message="  @source=&quot;${_sourcePath}&quot;"/>
+      <echo message="  @target=&quot;${_targetPath}&quot;"/>
+      <echo message="**Notice****************************************************************"/>
+      <echo message="*                                                                      *"/>
+      <echo message="* mklink requires adminstrator access. You may be prompted to approve. *"/>
+      <echo message="*                                                                      *"/>
+      <echo message="************************************************************************"/>
+
+      <!--Delete target if @{overwrite} is true. The first case is for a file. The-->
+      <!--second case is for a dir.  The second case does not require unless:set...-->
+      <!--If it was a file, it will already be deleted and second delete will do-->
+      <!--nothing.  If was a dir, and other conditions pass, then it will delete.-->
+      <delete
+        if:true="@{overwrite}"
+        unless:set="_targetPathIsDir"
+        file="${_targetPath}"/>
+      <delete
+        if:true="@{overwrite}"
+        dir="${_targetPath}"/>
+
+      <exec
+        executable="cmd.exe"
+        failonerror="@{failonerror}"
+        >
+        <arg value="/c"/>
+        <!--Note the following is and must be a single argument passed to cmd.exe.-->
+        <!--So it is passed as @value attribute.  The string in @value will be-->
+        <!--escaped by ant properly.  Note: This command has a cmd.exe inside it-->
+        <!--because mklink is an internal command.  The inner cmd.exe only must-->
+        <!--have 1 argument after the "/c" argument. This is why it is wrapped in-->
+        <!--&quot;.  However the inner &quot; around the attributes to mklink must-->
+        <!--be escaped. This is why there are three &quot; Tested and works if-->
+        <!--${_sourcePath} and/or ${_targetPath} has spaces-->
+        <arg value="${ant-hology.pathdefs.WindowsElevationPowerToys.destDir}\elevate.cmd cmd.exe /c &quot;mklink ${_mklinkDirOptionString} &quot;&quot;&quot;${_targetPath}&quot;&quot;&quot; &quot;&quot;&quot;${_sourcePath}&quot;&quot;&quot;"/>
+        <!--The following includes a pause - which is helpful for testing/debugging-->
+        <!--<arg value="${ant-hology.pathdefs.WindowsElevationPowerToys.destDir}\elevate.cmd cmd.exe /c &quot;mklink ${_mklinkDirOptionString} &quot;&quot;&quot;${_targetPath}&quot;&quot;&quot; &quot;&quot;&quot;${_sourcePath}&quot;&quot;&quot; &amp; pause &quot;"/>-->
+      </exec>
+
+      <!--Note, the mklink command is a separate process-->
+      <!--The following waits up to 30 seconds for the link to exist. If it-->
+      <!--doesn't exist after 30 seconds, it fails-->
+      <!--To be safe, the ant task won't proceed until the link exists or the 30 sec timeout occurs.-->
+      <local name="_timedout"/>
+      <waitfor maxwait="30" maxwaitunit="second" timeoutproperty="_timedout">
+        <!--Note, <available/> condition doesn't work with Windows [SYMLINK] file or dir-->
+        <!--So this scriptcondition is used.-->
+        <!--<available file="${_targetPath}" type="file"/>-->
+        <!--See https://ant.apache.org/manual/Tasks/conditions.html#scriptcondition -->
+        <scriptcondition
+          language="javascript"
+          manager="bsf"
+          value="false"
+          description="Tests to see if ${_target} link exists and points to ${_source}."
+          src="${ant-hology.taskdefs.dir}/windows-mklink-targetlinkexistscondition.min.js">
+          <!--src="${ant-hology.taskdefs.dir}/windows-mklink-targetlinkexistscondition.js">-->
+          <!--FYI: minified with google closure compiler-->
+          <!--Of course minification is not necessary... but trying it out.-->
+          <classpath>
+            <path refid="scriptdef-javascript.classpath"/>
+          </classpath>
+        </scriptcondition>
+      </waitfor>
+      <fail
+        if:set="_timedout"
+        message="Error: The link was not created. Did you grant administrator rights when prompted?"
+        />
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.windows-mklink.loaded" value="true"/>
+</project>

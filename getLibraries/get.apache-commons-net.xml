@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-net"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-net"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-net.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-net}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-net.xml" unless:set="ant-hology.pathdefs.apache-commons-net.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-net/ -->
+  <target
+    name="ant-hology.get.apache-commons-net"
+    description="Installs apache-commons-net library"
+    unless="ant-hology.availableLibraries.apache-commons-net">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.spinellicreations.com//commons/net/binaries/commons-net-3.3-bin.zip"
+      originalDestDir="commons-net-3.3"
+      libName="apache-commons-net"
+      libVersion="3.3"
+      classpath="apache-commons-net.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-net.loaded" value="true"/>
+
+</project>

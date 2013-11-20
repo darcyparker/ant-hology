@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.junit"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.junit.dir" file="${ant.file.ant-hology.pathdefs.junit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://www.junit.org/ -->
+  <!-- required to build xmlunit -->
+  <path id="junit.classpath">
+    <pathelement location="${ant-hology.lib.dir}/junit-4.11/junit-4.11.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.junit.loaded" value="true"/>
+
+</project>

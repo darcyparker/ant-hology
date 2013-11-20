@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-SVGRasterize"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-SVGRasterize.dir" file="${ant.file.ant-hology.taskdefs.task-SVGRasterize}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.taskdefs.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-batik.xml" unless:set="ant-hology.pathdefs.apache-batik.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-batik"
+    pathRefId="apache-batik.all.classpath"
+    />
+
+  <!--See http://xmlgraphics.apache.org/batik/tools/rasterizer.html#task -->
+  <taskdef
+    name="SVGRasterizerTask"
+    classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"
+    if:set="ant-hology.availableLibraries.apache-batik"
+    >
+    <classpath>
+      <path refid="apache-batik.anttasks.rasterizertask.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <!--Doesn't work with xerces even though it is defined in the taskdef's classpath-->
+  <!--Strange because xerces is in the <path refid="apache-batik.anttasks.rasterizertask.classpath"/>-->
+  <!--If xerces is to be used, then the xercesImpl.jar must be added to ant's classpath-->
+  <!--Example Command:-->
+  <!--bin/ant -lib lib/apache-xerces-2_11_0/xercesImpl.jar test-batik-rasterize-->
+  <presetdef
+    name="SVGRasterize"
+    description="SVGRasterize is a preset defintion configured for rasterizing SVG images."
+    if:set="ant-hology.availableLibraries.apache-batik"
+    >
+    <SVGRasterizerTask
+      classname="jaxp">
+      <!--classname="org.apache.xerces.parsers.SAXParser">-->
+    </SVGRasterizerTask>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.task-SVGRasterize.loaded" value="true"/>
+
+</project>

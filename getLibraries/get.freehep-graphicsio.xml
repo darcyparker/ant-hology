@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.freehep-graphicsio"
+  basedir="."
+  default="ant-hology.getLibraryDefs.freehep-graphicsio"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.freehep-graphicsio.dir" file="${ant.file.ant-hology.getLibraryDefs.freehep-graphicsio}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/freehep-graphicsio.xml" unless:set="ant-hology.pathdefs.freehep-graphicsio.loaded"/>
+
+  <!--See http://java.freehep.org/-->
+  <!--Required by jeuclid-->
+  <target
+    name="ant-hology.get.freehep-graphicsio"
+    description="Installs freehep-graphicsio library"
+    unless="ant-hology.availableLibraries.freehep-graphicsio">
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.freehep-graphicsio"
+      pathRefId="freehep-graphicsio.classpath"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.freehep-graphicsio"
+      >
+      <echo>Installing freehep-graphicsio, version 2.2.1</echo>
+      <delete dir="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1"/>
+      <mkdir dir="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio/2.2.1/freehep-graphicsio-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-emf/2.2.1/freehep-graphicsio-emf-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-emf-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-pdf/2.2.1/freehep-graphicsio-pdf-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-pdf-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-ps/2.2.1/freehep-graphicsio-ps-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-ps-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-swf/2.2.1/freehep-graphicsio-swf-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-swf-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-tests/2.2.1/freehep-graphicsio-tests-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-tests-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-svg/2.2.1/freehep-graphicsio-svg-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-svg-2.2.1.jar"/>
+      <get
+        src="http://search.maven.org/remotecontent?filepath=org/freehep/freehep-graphicsio-java/2.2.1/freehep-graphicsio-java-2.2.1.jar"
+        dest="${ant-hology.lib.dir}/freehep-graphicsio-2.2.1/freehep-graphicsio-java-2.2.1.jar"/>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.freehep-graphicsio"
+        pathRefId="freehep-graphicsio.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='freehep-graphicsio.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.freehep-graphicsio"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>freehep-graphicsio, version 2.2.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.freehep-graphicsio.loaded" value="true"/>
+
+</project>

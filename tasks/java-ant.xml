@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.java-ant"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.java-ant.dir" file="${ant.file.ant-hology.taskdefs.java-ant}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.ant-hology.jdk_JAVA_HOME.xml" unless:set="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded"/>
+
+  <macrodef
+    name="java-ant"
+    description="This macro is similar to ant task, but it uses the java task so the classpath can be augmented."
+    >
+    <attribute
+      name="antfile"
+      description="The buildfile to use"/>
+    <attribute
+      name="dir"
+      description="Directory to run ant in."/>
+    <attribute
+      name="target"
+      default=""
+      description="Ant target to execute"/>
+    <element
+      name="additional-classpath"
+      description="Element with additional path-like structures to add to classpath."
+      optional="yes"
+      />
+    <attribute
+      name="anthome"
+      default="${ant.home}"
+      description="Ant home directory. Default is the current ant's ${ant.home}."/>
+    <attribute
+      name="antlibrarydir"
+      default="${ant.library.dir}"
+      description="Ant library directory. Default is the current ant's ${ant.library.dir}."/>
+    <attribute
+      name="failonerror"
+      default="true" />
+
+    <sequential>
+      <!--Convert attributes to paths for os-->
+      <local name="_antfile"/>
+      <property
+        name="_antfile"
+        location="@{antfile}"
+        />
+      <local name="_dir"/>
+      <property
+        name="_dir"
+        location="@{dir}"
+        />
+      <local name="_anthome"/>
+      <property
+        name="_anthome"
+        location="@{anthome}"
+        />
+      <local name="_antlibrarydir"/>
+      <property
+        name="_antlibrarydir"
+        location="@{antlibrarydir}"
+        />
+
+      <echo>Starting java-ant.</echo>
+      <echo>  antfile=${_antfile}</echo>
+      <echo>  dir=${_dir}</echo>
+      <echo>  target=@{target}</echo>
+      <property.set.ant-hology.jdk_JAVA_HOME/>
+      <java
+        jvm="${ant-hology.jdk_JAVA_HOME}/bin/java"
+        dir="${_dir}"
+        classname="org.apache.tools.ant.Main"
+        fork="true"
+        failonerror="@{failonerror}"
+        if:set="ant-hology.jdk_JAVA_HOME"
+        >
+        <sysproperty key="ant.home" value="${_anthome}"/>
+        <classpath>
+          <fileset dir="${ant-hology.jdk_JAVA_HOME}/lib">
+            <include name="**/*.jar"/>
+          </fileset>
+          <fileset dir="${_antlibrarydir}">
+            <include name="**/*.jar"/>
+          </fileset>
+          <additional-classpath/>
+        </classpath>
+        <arg value="@{target}"/>
+        <arg value="-f"/>
+        <arg value="${_antfile}"/>
+      </java>
+      <echo>Finished java-ant.</echo>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.java-ant.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xom"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xom"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.xom.dir" file="${ant.file.ant-hology.getLibraryDefs.xom}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xom.xml" unless:set="ant-hology.pathdefs.xom.loaded"/>
+
+  <!-- See http://xom.nu/ -->
+  <!--Used by htmlparser 1.4-->
+  <target
+    name="ant-hology.get.xom"
+    description="Installs xom library."
+    unless="ant-hology.availableLibraries.xom">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://www.cafeconleche.org/XOM/xom-1.2.10.zip"
+      libName="xom"
+      libVersion="1.2.10"
+      originalDestDir="XOM"
+      classpath="xom.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xom.loaded" value="true"/>
+
+</project>

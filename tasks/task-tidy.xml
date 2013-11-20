@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-tidy"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-tidy.dir" file="${ant.file.ant-hology.taskdefs.task-tidy}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jtidy.xml" unless:set="ant-hology.pathdefs.jtidy.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.jtidy"
+    pathRefId="jtidy.classpath"
+    />
+
+  <!-- See http://jtidy.sourceforge.net/apidocs/org/w3c/tidy/ant/JTidyTask.html -->
+  <!-- See http://jtidy.sourceforge.net/apidocs/org/w3c/tidy/Configuration.html for properties -->
+  <taskdef
+    name="tidy"
+    classname="org.w3c.tidy.ant.JTidyTask"
+    if:set="ant-hology.availableLibraries.jtidy"
+    >
+    <classpath>
+      <path refid="jtidy.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-tidy.loaded" value="true"/>
+
+</project>

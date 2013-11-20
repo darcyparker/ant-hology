@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.tagsoup"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.tagsoup.dir" file="${ant.file.ant-hology.pathdefs.tagsoup}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://mercury.ccil.org/~cowan/XML/tagsoup/ -->
+  <path
+    id="tagsoup.classpath"
+    path="${ant-hology.lib.dir}/tagsoup-1.2.1/tagsoup-1.2.1.jar"
+    />
+
+  <property name="ant-hology.pathdefs.tagsoup.loaded" value="true"/>
+
+</project>

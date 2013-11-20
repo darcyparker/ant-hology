@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.xmlvalidate-wellformed-xerces"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <!-- preset xmlvalidate task configured to test if XML is wellformed -->
+
+  <dirname property="ant-hology.taskdefs.xmlvalidate-wellformed-xerces.dir" file="${ant.file.ant-hology.taskdefs.xmlvalidate-wellformed-xerces}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"/>
+
+  <presetdef
+    name="xmlvalidate-wellformed-xerces"
+    description="preset xmlvalidate task configured to test if XML is wellformed"
+    if:set="ant-hology.availableLibraries.apache-xerces"
+    >
+    <xmlvalidate
+      failonerror="true"
+      lenient="true"
+      warn="true"
+      classname="org.apache.xerces.parsers.SAXParser">
+
+      <classpath>
+        <path refid="apache-xerces.classpath"/>
+      </classpath>
+
+      <!--See features here:-->
+      <!--http://www.saxproject.org/apidoc/org/xml/sax/package-summary.html#package_description-->
+      <!--http://xerces.apache.org/xerces2-j/features.html-->
+      <attribute
+        name="http://xml.org/sax/features/external-general-entities"
+        value="false"/>
+
+      <attribute
+        name="http://xml.org/sax/features/external-parameter-entities"
+        value="false"/>
+
+      <attribute
+        name="http://xml.org/sax/features/lexical-handler/parameter-entities"
+        value="false"/>
+
+      <!--namespaces - default is true-->
+      <!--<attribute-->
+        <!--name="http://xml.org/sax/features/namespaces"-->
+        <!--value="true"/>-->
+
+      <!--namespace-prefixes - default is false-->
+      <!--<attribute-->
+        <!--name="http://xml.org/sax/features/namespace-prefixes"-->
+        <!--value="false"/>-->
+
+      <!--resolve-dtd-uris - default is true-->
+      <!--<attribute-->
+        <!--name="http://xml.org/sax/features/resolve-dtd-uris"-->
+        <!--value="true"/>-->
+
+      <!--string-interning - Not supported by xerces-->
+      <!--<attribute-->
+        <!--name="http://xml.org/sax/features/string-interning"-->
+        <!--value="false"/>-->
+
+      <!--unicode-normalization-checking - default is false-->
+      <!--<attribute-->
+        <!--name="http://xml.org/sax/features/unicode-normalization-checking"-->
+        <!--value="false"/>-->
+
+      <attribute
+        name="http://xml.org/sax/features/use-entity-resolver2"
+        value="false"/>
+
+      <attribute
+        name="http://xml.org/sax/features/validation"
+        value="false"/>
+
+      <attribute
+        name="http://apache.org/xml/features/validation/schema"
+        value="false"/>
+
+      <attribute
+        name="http://apache.org/xml/features/validation/unparsed-entity-checking"
+        value="false"/>
+
+      <attribute
+        name="http://apache.org/xml/features/validation/unparsed-entity-checking"
+        value="false"/>
+
+      <attribute
+        name="http://apache.org/xml/features/nonvalidating/load-dtd-grammar"
+        value="false"/>
+
+      <attribute
+        name="http://apache.org/xml/features/nonvalidating/load-external-dtd"
+        value="false"/>
+
+    </xmlvalidate>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.xmlvalidate-wellformed-xerces.loaded" value="true"/>
+
+</project>

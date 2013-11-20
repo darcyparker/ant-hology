@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.calabash"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.calabash.dir" file="${ant.file.ant-hology.pathdefs.calabash}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-fop.xml" unless:set="ant-hology.pathdefs.apache-fop.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jing.xml" unless:set="ant-hology.pathdefs.jing.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlunit.xml" unless:set="ant-hology.pathdefs.xmlunit.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/msv.xml" unless:set="ant-hology.pathdefs.msv.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/metadata-extractor.xml" unless:set="ant-hology.pathdefs.metadata-extractor.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/tagsoup.xml" unless:set="ant-hology.pathdefs.tagsoup.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/htmlparser.xml" unless:set="ant-hology.pathdefs.htmlparser.loaded"/>
+
+  <!-- See http://xmlcalabash.com/ -->
+  <!-- See https://en.wikipedia.org/wiki/XProc -->
+  <path id="calabash.classpath">
+    <path refid="saxonHE.classpath"/>
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-commons-xmlresolver.classpath"/>
+    <path refid="xmlcatalog.classpath"/>
+    <path refid="apache-fop.classpath"/>
+    <path refid="jing.classpath"/>
+    <path refid="xmlunit.classpath"/>
+    <path refid="msv.classpath"/>
+    <path refid="metadata-extractor.classpath"/>
+    <path refid="tagsoup.classpath"/>
+    <path refid="htmlparser.classpath"/>
+    <pathelement location="${ant-hology.lib.dir}/calabash-1.0.13-95/calabash.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.calabash.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.mathmlToPng"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.mathmlToPng.dir" file="${ant.file.ant-hology.taskdefs.mathmlToPng}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-mmlconverter.xml" unless:set="ant-hology.taskdefs.task-mmlconverter.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.jeuclid"
+    pathRefId="jeuclid.all.classpath"
+    />
+
+  <!-- See http://jeuclid.sourceforge.net/usage.html -->
+  <presetdef
+    name="mathmlToPng"
+    description="mathmlToPng is a preset definition for converting mathml to a PNG image."
+    if:set="ant-hology.availableLibraries.jeuclid"
+    >
+    <mmlconverter
+      type="image/png"
+      fontSize="14.0"
+      scriptMinSize="14.0"
+      antiAlias="true"
+      mfracKeepScriptLevel="true"
+      fontsSansSerif="Verdana, Helvetica, Arial, Arial Unicode MS, Lucida Sans Unicode, Lucida Sans, Lucida Grande, DejaVu Sans, DejaVuSans, Bitstream Vera Sans, Luxi Sans, FreeSans, sansserif"
+      fontsSerif="constantina, cambria, times, times new roman, lucida bright, dejavu serif, dejavuserif, bitstream vera serif, luxi serif, freeserif, serif"
+      fontsMonospaced="Andale Mono, Courier, Courier Mono, Courier New, Lucida Sans Typewriter, DejaVu Sans Mono, DejaVuSansMono, Bitstream Vera Sans Mono, Luxi Mono, FreeMono, monospaced"
+      fontsScript="eusm10, cmsy10, math5, mathematica5, savoye let, brush script mt, zapfino, apple chancery, edwardian script itc, lucida handwriting, monotype corsiva, santa fe let"
+      fontsFraktur="eufm10, mathematica6, fettefraktur, fette fraktur, euclid fraktur, lucida blackletter, blackmoor let"
+      fontsDoublestruck="msbm10, mathematica7, caslon open face, caslon openface, cloister open face, academy engraved let, colonna mt, imprint mt shadow"
+      />
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.mathmlToPng.loaded" value="true"/>
+
+</project>

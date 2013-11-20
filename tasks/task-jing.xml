@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-jing"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-jing.dir" file="${ant.file.ant-hology.taskdefs.task-jing}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jing.xml" unless:set="ant-hology.pathdefs.jing.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.jing"
+    pathRefId="jing.classpath"
+    />
+
+  <!-- See http://www.thaiopensource.com/relaxng/jing-ant.html -->
+  <taskdef
+    name="jing"
+    classname="com.thaiopensource.relaxng.util.JingTask"
+    if:set="ant-hology.availableLibraries.jing"
+    >
+    <classpath>
+      <path refid="jing.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <property name="ant-hology.taskdefs.task-jing.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-fop"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-fop.dir" file="${ant.file.ant-hology.pathdefs.apache-fop}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xml-external.xml" unless:set="ant-hology.pathdefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlgraphics.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlgraphics.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-io.xml" unless:set="ant-hology.pathdefs.apache-commons-io.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-logging.xml" unless:set="ant-hology.pathdefs.apache-commons-logging.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-batik.xml" unless:set="ant-hology.pathdefs.apache-batik.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-avalon-framework.xml" unless:set="ant-hology.pathdefs.apache-avalon-framework.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jeuclid.xml" unless:set="ant-hology.pathdefs.jeuclid.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/fop/ -->
+  <path id="apache-fop.classpath">
+    <!-- Add xml-apis.jar first -->
+    <!-- See http://xmlgraphics.apache.org/batik/faq.html#batik-fails-with-fop-on-org.w3c.xxx -->
+    <!-- Add <path refid="apache-commons-xml-external.classpath"> first when using fop -->
+    <path refid="apache-commons-xml-external.classpath"/>
+
+    <path refid="apache-commons-xmlgraphics.classpath"/>
+    <path refid="apache-commons-io.classpath"/>
+    <path refid="apache-commons-logging.classpath"/>
+
+    <!--Batik classpaths - calling out separate paths because there is some overlap with fop-->
+    <!--  Note, apache-batik.dependencies.classpath already includes the following: -->
+    <!--    <path refid="apache-xerces.classpath"/>-->
+    <!--    <path refid="apache-xalan.classpath"/>-->
+    <!--    <path refid="rhino.classpath"/>-->
+    <path refid="apache-batik.dependencies.classpath"/>
+    <path refid="apache-batik.core.classpath"/>
+
+    <path refid="apache-avalon-framework.classpath"/>
+    <path refid="jeuclid.core.classpath"/>
+
+    <pathelement location="${ant-hology.lib.dir}/apache-fop-1.1/build/fop.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-fop.loaded" value="true"/>
+
+</project>

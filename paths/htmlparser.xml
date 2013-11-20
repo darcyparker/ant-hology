@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.htmlparser"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.htmlparser.dir" file="${ant.file.ant-hology.pathdefs.htmlparser}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/icu4j.xml" unless:set="ant-hology.pathdefs.icu4j.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/jchardet.xml" unless:set="ant-hology.pathdefs.jchardet.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xom.xml" unless:set="ant-hology.pathdefs.xom.loaded"/>
+
+  <!-- See http://about.validator.nu/htmlparser/ -->
+  <path id="htmlparser.classpath">
+    <pathelement location="${ant-hology.lib.dir}/htmlparser-1.4/htmlparser-1.4.jar"/>
+    <path refid="icu4j.classpath"/>
+    <path refid="jchardet.classpath"/>
+    <path refid="xom.classpath"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.htmlparser.loaded" value="true"/>
+
+</project>

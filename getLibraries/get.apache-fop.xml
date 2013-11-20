@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-fop"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-fop"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-fop.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-fop}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/windows-mklink.xml" unless:set="ant-hology.taskdefs.windows-mklink.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <!--Not necessary to load apache-commons-logging getter because these are in necessary libs and already loaded-->
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xml-external.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xml-external.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlgraphics.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-io.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-io.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-batik.xml" unless:set="ant-hology.getLibraryDefs.apache-batik.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-avalon-framework.xml" unless:set="ant-hology.getLibraryDefs.apache-avalon-framework.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.jeuclid.xml" unless:set="ant-hology.getLibraryDefs.jeuclid.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/apache-fop.xml" unless:set="ant-hology.pathdefs.apache-fop.loaded"/>
+
+  <!-- See http://fop.apache.org/fop-j/index.html -->
+  <target
+    name="ant-hology.get.apache-fop"
+    description="Installs apache-fop library"
+    depends="
+    ant-hology.get.apache-commons-xml-external,
+    ant-hology.get.apache-commons-xmlgraphics,
+    ant-hology.get.apache-commons-io,
+    ant-hology.get.apache-batik,
+    ant-hology.get.apache-avalon-framework,
+    ant-hology.get.jeuclid,
+    ant-hology.get.WindowsElevationPowerToys
+    "
+    unless="ant-hology.availableLibraries.apache-fop">
+
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://www.poolsaboveground.com/apache/xmlgraphics/fop/binaries/fop-1.1-bin.zip"
+      originalDestDir="fop-1.1"
+      libName="apache-fop"
+      libVersion="1.1"
+      classpath="apache-fop.classpath"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-fop"
+      >
+      <!--Add execute permission fop script and link it to the bin dir-->
+      <chmod file="${ant-hology.lib.dir}/apache-fop-1.1/fop" perm="ugo+xr"/>
+      <sequential if:true="${ant-hology.useBinDir}">
+        <symlink
+          if:set="ant-hology.OS.onUnix"
+          link="${ant-hology.bin.dir}/fop"
+          resource="${ant-hology.lib.dir}/apache-fop-1.1/fop"
+          overwrite="true"/>
+        <chmod
+          if:set="ant-hology.OS.onUnix"
+          file="${ant-hology.bin.dir}/fop"
+          perm="ugo+xr"/>
+
+        <!--The following tasks have no effect on unix-->
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-fop-1.1/fop"
+          target="${ant-hology.bin.dir}/fop"
+          overwrite="true"
+          failonerror="true"
+          />
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-fop-1.1/fop.bat"
+          target="${ant-hology.bin.dir}/fop.bat"
+          overwrite="true"
+          failonerror="true"
+          />
+        <windows-mklink
+          source="${ant-hology.lib.dir}/apache-fop-1.1/fop.cmd"
+          target="${ant-hology.bin.dir}/fop.cmd"
+          overwrite="true"
+          failonerror="true"
+          />
+      </sequential>
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.apache-fop"
+        pathRefId="apache-fop.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='apache-fop.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-fop"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>apache-fop, version 1.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-fop.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-batik-resources"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-batik-resources"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-batik-resources.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-batik-resources}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-batik.xml" unless:set="ant-hology.getLibraryDefs.apache-batik.loaded"/>
+
+  <!-- See http://xmlgraphics.apache.org/batik/ -->
+  <target
+    name="ant-hology.get.apache-batik-resources"
+    description="Installs apache-batik documentation"
+    depends="ant-hology.get.apache-batik"
+    unless="ant-hology.availableLibraries.apache-batik-resources">
+
+    <condition
+      property="ant-hology.availableLibraries.apache-batik-resources"
+      unless:set="ant-hology.availableLibraries.apache-batik-resources"
+      >
+      <and>
+        <available
+          file="${ant-hology.lib.dir}/apache-batik-1.7/docs"
+          type="dir"/>
+        <!--Just testing one file-->
+        <available
+          file="${ant-hology.lib.dir}/apache-batik-1.7/docs/index.html"
+          type="file"/>
+      </and>
+    </condition>
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.apache-batik-resources"
+      >
+      <echo>Installing apache-batik-resources, version 1.7</echo>
+
+      <!--get docs-->
+      <delete file="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
+      <delete dir="${ant-hology.lib.dir}/batik-1.7/docs"/>
+      <mkdir dir="${ant-hology.lib.dir}/batik-1.7/docs"/>
+      <get
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-docs-1.7.zip"
+        dest="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
+      <unzip
+        src="${ant-hology.lib.dir}/batik-docs-1.7.zip"
+        dest="${ant-hology.lib.dir}/apache-batik-1.7/docs"/>
+      <delete file="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
+      <!--Test if installation was successful.-->
+      <condition property="ant-hology.availableLibraries.apache-batik-resources">
+        <and>
+          <available
+            file="${ant-hology.lib.dir}/apache-batik-1.7/docs"
+            type="dir"/>
+          <!--Just testing one file-->
+          <available
+            file="${ant-hology.lib.dir}/apache-batik-1.7/docs/index.html"
+            type="file"/>
+        </and>
+      </condition>
+      <fail message="Installation failed. Expected resources dirs under saxonHE-9.5.1.2 dir not present.">
+        <!--Note, condition inside fail task doesn't support '@property' so it is defined in previous task-->
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.apache-batik-resources"/>
+          </not>
+        </condition>
+
+      </fail>
+      <echo>apache-batik resources dir installed successfully under apache-batik version 1.7.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-batik-resources.loaded" value="true"/>
+
+</project>

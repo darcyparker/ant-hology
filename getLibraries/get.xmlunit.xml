@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.xmlunit"
+  basedir="."
+  default="ant-hology.getLibraryDefs.xmlunit"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.xmlunit.dir" file="${ant.file.ant-hology.getLibraryDefs.xmlunit}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlunit.xml" unless:set="ant-hology.pathdefs.xmlunit.loaded"/>
+
+  <!-- See http://xmlunit.sourceforge.net/ -->
+  <target
+    name="ant-hology.get.xmlunit"
+    description="Installs xmlunit library."
+    unless="ant-hology.availableLibraries.xmlunit">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://sourceforge.net/projects/xmlunit/files/xmlunit%20for%20Java/XMLUnit%20for%20Java%201.5/xmlunit-1.5-bin.zip/download"
+      libName="xmlunit"
+      libVersion="1.5"
+      classpath="xmlunit.classpath"
+      />
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.xmlunit.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-schematron"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-schematron.dir" file="${ant.file.ant-hology.taskdefs.task-schematron}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/ant-schematron.xml" unless:set="ant-hology.pathdefs.ant-schematron.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.ant-schematron"
+    pathRefId="ant-schematron.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonHE"
+    pathRefId="saxonHE.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.saxonHE"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+      <isset property="ant-hology.availableLibraries.ant-schematron"/>
+    </and>
+  </condition>
+
+  <!-- See http://www.schematron.com/resource/Using_Schematron_for_Ant.pdf -->
+  <!-- See https://code.google.com/p/schematron/ -->
+  <!-- See http://www.schematron.com/ -->
+  <!-- See http://broadcast.oreilly.com/2010/04/announcing-schematron-for-ant.html -->
+  <taskdef
+    name="schematron"
+    classname="com.schematron.ant.SchematronTask"
+    if:set="ant-hology.availableLibraries.ant-schematron"
+    >
+    <classpath>
+      <path refid="saxonHE.classpath"/>
+      <path refid="apache-xerces.classpath"/>
+      <path refid="apache-commons-xmlresolver.classpath"/>
+      <path refid="xmlcatalog.classpath"/>
+      <path refid="ant-schematron.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <presetdef
+    name="schematron-validate"
+    description="schematron-validate is a preset definition for configured schematron task."
+    if:set="ant-hology.availableLibraries.ant-schematron"
+    >
+    <schematron failonerror="true">
+      <sysproperty
+        key="org.xml.sax.driver"
+        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+      <sysproperty
+        key="javax.xml.transform.TransformerFactory"
+        value="net.sf.saxon.TransformerFactoryImpl"/>
+    </schematron>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.task-schematron.loaded" value="true"/>
+
+</project>

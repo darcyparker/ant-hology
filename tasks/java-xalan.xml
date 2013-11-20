@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.java-xalan"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.java-xalan.dir" file="${ant.file.ant-hology.taskdefs.java-xalan}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xalan.xml" unless:set="ant-hology.pathdefs.apache.xalan.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xalan"
+    pathRefId="apache-xalan.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.apache-xalan"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <macrodef
+    name="java-xalan"
+    description="The java-xalan macro is an alternative to ant's xslt task that uses xalan XSLT processor."
+    if:set="_requiredAvailable"
+    >
+    <attribute
+      name="xsl"
+      description="The XSL style sheet."
+      />
+    <attribute
+      name="srcdir"
+      default=""
+      description="Destination directory for output."/>
+    <attribute
+      name="srcfile"
+      default=""
+      description="The source input. This is optional."
+      />
+    <attribute
+      name="destfile"
+      default=""
+      description="The output of the XSL transform. This is optional."
+      />
+    <attribute
+      name="destdir"
+      default=""
+      description="Destination directory for output."/>
+    <element
+      name="files"
+      description="Input files to transform."
+      optional="true"
+      />
+    <element
+      name="inputToOutputMapper"
+      description="Mapper for input file to output file name/path transform."
+      optional="true"
+      />
+    <!--<element-->
+      <!--name="parameters"-->
+      <!--description="Input parameters for the XSL style sheet"-->
+      <!--optional="true"/>-->
+    <attribute
+      name="options"
+      description="Additional command line options for saxon. For example, stylesheet parameters could be passed."
+      default=""/>
+    <attribute name="failonerror" default="true" />
+
+    <sequential>
+      <echo>Transforming with xalan XSLT processor using xerces parser and XMLCatalog</echo>
+      <local name="_classpath"/>
+      <pathconvert property="_classpath">
+        <path refid="apache-xalan.classpath"/>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </pathconvert>
+
+      <local name="_filesCount"/>
+      <local name="_filesEmptyAndHaveSrcAndHaveDest"/>
+      <resourcecount property="_filesCount">
+        <resources>
+          <!--Must wrap in generic resources element because sometimes <files/> is empty-->
+          <files/>
+        </resources>
+      </resourcecount>
+      <!--<echo>filesCount=${_filesCount} file(s)</echo>-->
+      <local name="_haveFiles"/>
+      <condition property="_haveFiles">
+        <not><equals arg1="${_filesCount}" arg2="0"/></not>
+      </condition>
+
+      <local name="_src"/>
+      <property name="_src" location="@{srcfile}" if:blank="@{srcdir}" unless:blank="@{srcfile}"/>
+      <!--Note: _src will not be set if already set, so it does not need to be stated in next case-->
+      <!--Also: unless:blank intentionally does not have / because the test is whether both are defined-->
+      <property name="_src" location="@{srcdir}/@{srcfile}" unless:blank="@{srcdir}@{srcfile}"/>
+      <!--<echo>_src=${_src}</echo>-->
+      <local name="_isSrcAvailable"/>
+      <available property="_isSrcAvailable" file="${_src}" type="file" if:set="_src"/>
+      <local name="_notSrcAvailableAndNoFiles"/>
+      <condition property="_notSrcAvailableAndNoFiles">
+        <!--by deMorgan's theorm-->
+        <!--!_srcAvailable and !_haveFiles == !(_srcAvailable or _haveFiles)-->
+        <not>
+          <or>
+            <isset property="_isSrcAvailable"/>
+            <isset property="_haveFiles"/>
+          </or>
+        </not>
+      </condition>
+      <fail if="_notSrcAvailableAndNoFiles" message="Error: &lt;files/&gt; was not defined, and @{srcdir}/@{srcfile} is not set or not available."/>
+
+      <local name="_dest"/>
+      <property name="_dest" location="@{destfile}" if:blank="@{destdir}" unless:blank="@{destfile}"/>
+      <!--Note: _dest will not be set if already set, so it does not need to be stated in next case-->
+      <!--Also: unless:blank intentionally does not have / because the test is whether both are defined-->
+      <property name="_dest" location="@{destdir}/@{destfile}" unless:blank="@{destdir}@{destfile}"/>
+      <!--<echo>_dest=${_dest}</echo>-->
+      <!--Note: test ${_dest} inside <sequential if:set="_filesEmptyAndHaveSrcAndHaveDest">-->
+
+      <!--This sequential is for the case when user defines <files/>-->
+      <sequential if:set="_haveFiles">
+        <!--<echo>Transforming ${_filesCount} file(s).</echo>-->
+        <!--Extract just the _xslrelativepath-->
+        <local name="_xslrelativepath"/>
+        <property name="_xslrelativepath" location="@{xsl}" relative="true"/>
+
+        <apply executable="java" parallel="false" failonerror="@{failonerror}">
+          <files/>
+          <inputToOutputMapper/>
+          <arg value="-cp"/>
+          <arg value="${_classpath}"/>
+          <arg value="-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+          <arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+          <arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+          <arg value="org.apache.xalan.xslt.Process"/>
+          <arg value="-L"/>
+          <arg value="-ENTITYRESOLVER"/>
+          <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg value="-URIRESOLVER"/>
+          <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg value="-XSL"/>
+          <arg file="@{xsl}"/>
+          <arg value="-IN"/>
+          <srcfile/>
+          <arg value="-OUT"/>
+          <targetfile/>
+          <arg line="@{options}"/>
+        </apply>
+      </sequential>
+      <!--Otherwise there is just a single transform-->
+      <sequential if:set="_isSrcAvailable" unless:set="_haveFiles">
+        <exec executable="java" failonerror="@{failonerror}">
+          <arg value="-cp"/>
+          <arg value="${_classpath}"/>
+          <arg value="-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+          <arg value="-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"/>
+          <arg value="-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+          <arg value="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration"/>
+          <arg value="org.apache.xalan.xslt.Process"/>
+          <arg value="-L"/>
+          <arg value="-ENTITYRESOLVER"/>
+          <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg value="-URIRESOLVER"/>
+          <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
+          <arg value="-XSL"/>
+          <arg file="@{xsl}"/>
+          <arg value="-IN" if:set="_src"/>
+          <arg file="${_src}" if:set="_src"/>
+          <arg value="-OUT" if:set="_dest"/>
+          <arg file="${_dest}" if:set="_dest"/>
+          <arg line="@{options}"/>
+        </exec>
+      </sequential>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.java-xalan.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.apache-avalon-framework"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.apache-avalon-framework.dir" file="${ant.file.ant-hology.pathdefs.apache-avalon-framework}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://excalibur.apache.org/framework/ -->
+  <path id="apache-avalon-framework.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-avalon-framework-4.2.0/jars/avalon-framework-4.2.0.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-avalon-framework-4.2.0/jars/avalon-framework-api-4.2.0.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-avalon-framework-4.2.0/jars/avalon-framework-impl-4.2.0.jar"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.apache-avalon-framework.loaded" value="true"/>
+
+</project>

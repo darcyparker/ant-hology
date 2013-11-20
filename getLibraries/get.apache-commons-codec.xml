@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-codec"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-codec"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-codec.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-codec}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-codec.xml" unless:set="ant-hology.pathdefs.apache-commons-codec.loaded"/>
+
+  <!-- See http://commons.apache.org/proper/commons-codec/ -->
+  <target
+    name="ant-hology.get.apache-commons-codec"
+    description="Installs apache-commons-codec library"
+    unless="ant-hology.availableLibraries.apache-commons-codec">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.mirrors.lucidnetworks.net//commons/codec/binaries/commons-codec-1.8-bin.zip"
+      originalDestDir="commons-codec-1.8"
+      libName="apache-commons-codec"
+      libVersion="1.8"
+      classpath="apache-commons-codec.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-codec.loaded" value="true"/>
+
+</project>

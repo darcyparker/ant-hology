@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-commons-xmlgraphics"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-commons-xmlgraphics"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-commons-xmlgraphics}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlgraphics.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlgraphics.loaded"/>
+
+  <!-- See http://xmlgraphics.apache.org/commons/ -->
+  <target
+    name="ant-hology.get.apache-commons-xmlgraphics"
+    description="Installs apache-commons-xmlgraphics library"
+    unless="ant-hology.availableLibraries.apache-commons-xmlgraphics">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://apache.spinellicreations.com/xmlgraphics/commons/binaries/xmlgraphics-commons-1.5-bin.zip"
+      originalDestDir="xmlgraphics-commons-1.5"
+      libName="apache-commons-xmlgraphics"
+      libVersion="1.5"
+      classpath="apache-commons-xmlgraphics.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.loaded" value="true"/>
+
+</project>

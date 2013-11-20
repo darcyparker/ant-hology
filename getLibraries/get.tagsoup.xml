@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.tagsoup"
+  basedir="."
+  default="ant-hology.getLibraryDefs.tagsoup"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.tagsoup.dir" file="${ant.file.ant-hology.getLibraryDefs.tagsoup}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/tagsoup.xml" unless:set="ant-hology.pathdefs.tagsoup.loaded"/>
+
+  <!-- See http://mercury.ccil.org/~cowan/XML/tagsoup/ -->
+  <target
+    name="ant-hology.get.tagsoup"
+    description="Installs tagsoup library."
+    unless="ant-hology.availableLibraries.tagsoup">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://home.ccil.org/~cowan/XML/tagsoup/tagsoup-1.2.1-src.zip"
+      libName="tagsoup"
+      libVersion="1.2.1"
+      classpath="tagsoup.classpath"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.tagsoup"
+      >
+      <get
+        src="http://home.ccil.org/~cowan/XML/tagsoup/tagsoup-1.2.1.jar"
+        dest="${ant-hology.lib.dir}/tagsoup-1.2.1/tagsoup-1.2.1.jar"/>
+      <areAllAvailable
+        property="ant-hology.availableLibraries.tagsoup"
+        pathRefId="tagsoup.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='tagsoup.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.tagsoup"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>tagsoup, version 1.2.1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.tagsoup.loaded" value="true"/>
+
+</project>

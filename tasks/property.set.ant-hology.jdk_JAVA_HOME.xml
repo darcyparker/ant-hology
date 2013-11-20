@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.dir" file="${ant.file.ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <macrodef
+    name="property.set.ant-hology.jdk_JAVA_HOME"
+    description="property.set.ant-hology.jdk_JAVA_HOME is a macro defintion that looks for an installed Java JDK on Windows, Linux and OS X. If found, it sets the property ant-hology.jdk_JAVA_HOME."
+    >
+    <sequential>
+      <!--Note: In the tests below, testing for presence of tools.jar because -->
+      <!--      it distinguishes JDK from a JRE-->
+
+      <!--First consider $JAVA_HOME environment variable-->
+      <!--<echo>$JAVA_HOME=${ant-hology.env.JAVA_HOME}</echo>-->
+      <condition
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="ant-hology.jdk_JAVA_HOME"
+        value="${ant-hology.env.JAVA_HOME}">
+        <and>
+          <isset property="ant-hology.env.JAVA_HOME"/>
+          <length string="${ant-hology.env.JAVA_HOME}" when="greater" length="0"/>
+          <available file="${ant-hology.env.JAVA_HOME}" type="dir"/>
+          <available file="${ant-hology.env.JAVA_HOME}/lib/tools.jar" type="file"/>
+        </and>
+      </condition>
+
+      <!--Next, try using ${java.home}.-->
+      <!--<echo>java.home=${java.home}</echo>-->
+      <condition
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="ant-hology.jdk_JAVA_HOME"
+        value="${java.home}">
+        <and>
+          <available file="${java.home}" type="dir"/>
+          <available file="${java.home}/lib/tools.jar" type="file"/>
+        </and>
+      </condition>
+      <!--Try one folder below ${java.home} because ${java.home} may be pointing to the jre-->
+      <!--folder inside a jdk folder.-->
+      <condition
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="ant-hology.jdk_JAVA_HOME"
+        value="${java.home}/..">
+        <and>
+          <available file="${java.home}" type="dir"/>
+          <available file="${java.home}/lib/tools.jar" type="file"/>
+        </and>
+      </condition>
+      <!--<echo if:set="ant-hology.jdk_JAVA_HOME">ant-hology.jdk_JAVA_HOME=${ant-hology.jdk_JAVA_HOME}</echo>-->
+
+      <local name="_temp_jdk_JAVA_HOME"/>
+
+      <!--Next try: if OS is Darwin/mac, use /usr/libexec/java_home command to get JAVA_HOME-->
+      <local name="_onMac_AND_libexec_java_home"/>
+      <condition
+        if:set="ant-hology.OS.onMac"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="_onMac_AND_libexec_java_home"
+        >
+        <available file="/usr/libexec/java_home" type="file"/>
+      </condition>
+      <exec
+        if:set="_onMac_AND_libexec_java_home"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="/usr/libexec/java_home"
+        failonerror="true"
+        outputproperty="_temp_jdk_JAVA_HOME"
+        />
+      <!--Next try: if OS is Darwin/mac, and could not find /usr/libexec/java_home command -->
+      <condition
+        if:set="ant-hology.OS.onMac"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="_temp_jdk_JAVA_HOME"
+        value="/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home"
+        >
+        <and>
+          <not> <isset property="_temp_jdk_JAVA_HOME"/> </not>
+          <available file="/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home" type="dir"/>
+        </and>
+      </condition>
+      <!--<echo if:set="ant-hology.OS.onMac">_temp_whichjava=${_temp_whichjava}</echo>-->
+
+      <!--Next try: if OS is unix and not mac-->
+      <local name="_temp_whichjava"/>
+      <local name="_temp_readlinkjava"/>
+      <exec
+        if:set="ant-hology.OS.onUnixandNotMac"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="which"
+        failonerror="true"
+        outputproperty="_temp_whichjava">
+        <arg value="java"/>
+      </exec>
+      <!--<echo if:set="ant-hology.OS.onUnixandNotMac">_temp_whichjava=${_temp_whichjava}</echo>-->
+
+      <!--Note, the following exec assumes gnu readlink. Darwin and likely other-->
+      <!--distributions may use BSD readlink where -f is not available or-->
+      <!--different. In future, feature detection via something like-->
+      <!--`readlink - -help | grep gnu` may be necesssary-->
+      <exec
+        if:set="ant-hology.OS.onUnixandNotMac"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="readlink"
+        failonerror="true"
+        outputproperty="_temp_readlinkjava">
+        <arg value="-f"/>
+        <arg value="${_temp_whichjava}"/>
+      </exec>
+      <!--<echo if:set="ant-hology.OS.onUnixandNotMac">_temp_readlinkjava=${_temp_readlinkjava}</echo>-->
+      <exec
+        if:set="ant-hology.OS.onUnixandNotMac"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="sed"
+        failonerror="true"
+        inputstring="${_temp_readlinkjava}"
+        outputproperty="_temp_jdk_JAVA_HOME">
+        <arg line="'s:\(/jre\)\?/bin/java$::'"/>
+      </exec>
+      <!--<echo if:set="ant-hology.OS.onUnixandNotMac">_temp_jdk_JAVA_HOME=${_temp_jdk_JAVA_HOME}</echo>-->
+
+      <!--Next try: if Windows look in registry-->
+      <!--See https://gist.github.com/darcyparker/7121448 -->
+      <local name="_temp_Windows_JDK_CurrentVersion"/>
+      <exec
+        if:set="ant-hology.OS.onWindows"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="cmd.exe"
+        failonerror="true"
+        outputproperty="_temp_Windows_JDK_CurrentVersion">
+        <arg value="/c"/>
+        <!--Note the following is and must be a single argument passed to cmd.exe.  So it is passed as @value attribute.-->
+        <!--It will be escaped appropriately by ant. If it was passed with @line-->
+        <!--attribute, then ant would pass separate arguments after splitting the-->
+        <!--@line string based on whitespace.-->
+        <arg value="for /f &quot;usebackq tokens=2*&quot; %i in (`reg query &quot;HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Development Kit&quot; /s ^| find &quot;CurrentVersion&quot;`) do @echo %j"/>
+      </exec>
+      <!--<echo if:set="_temp_Windows_JDK_CurrentVersion">_temp_Windows_JDK_CurrentVersion=${_temp_Windows_JDK_CurrentVersion}</echo>-->
+      <exec
+        if:set="ant-hology.OS.onWindows"
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        executable="cmd.exe"
+        failonerror="true"
+        outputproperty="_temp_jdk_JAVA_HOME">
+        <arg value="/c"/>
+        <!--Note the following is and must be a single argument passed to cmd.exe.  So it is passed as @value attribute.-->
+        <!--It will be escaped appropriately by ant. If it was passed with @line-->
+        <!--attribute, then ant would pass separate arguments after splitting the-->
+        <!--@line string based on whitespace.-->
+        <arg value="for /f &quot;usebackq tokens=2*&quot; %i in (`reg query &quot;HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Development Kit\${_temp_Windows_JDK_CurrentVersion}&quot; /s ^| find &quot;JavaHome&quot;`) do @echo %j"/>
+      </exec>
+      <!--<echo if:set="ant-hology.OS.onWindows">_temp_jdk_JAVA_HOME=${_temp_jdk_JAVA_HOME}</echo>-->
+
+      <!--Finally, if _temp_jdk_JAVA_HOME is set, define ant-hology.jdk_JAVA_HOME iff it appears to be pointing to a JDK-->
+      <condition
+        unless:set="ant-hology.jdk_JAVA_HOME"
+        property="ant-hology.jdk_JAVA_HOME"
+        value="${_temp_jdk_JAVA_HOME}">
+        <and>
+          <isset property="_temp_jdk_JAVA_HOME"/>
+          <length string="${_temp_jdk_JAVA_HOME}" when="greater" length="0"/>
+          <available file="${_temp_jdk_JAVA_HOME}" type="dir"/>
+          <available file="${_temp_jdk_JAVA_HOME}/lib/tools.jar" type="file"/>
+        </and>
+      </condition>
+
+      <echo if:set="ant-hology.jdk_JAVA_HOME">ant-hology.jdk_JAVA_HOME=${ant-hology.jdk_JAVA_HOME}</echo>
+      <echo unless:set="ant-hology.jdk_JAVA_HOME">Could not find a JDK to set ${ant-hology.jdk_JAVA_HOME}.</echo>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded" value="true"/>
+
+</project>
