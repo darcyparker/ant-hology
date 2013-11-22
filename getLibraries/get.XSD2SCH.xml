@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.XSD2SCH"
+  basedir="."
+  default="ant-hology.getLibraryDefs.XSD2SCH"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.XSD2SCH.dir" file="${ant.file.ant-hology.getLibraryDefs.XSD2SCH}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt1.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt1.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt2.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt2.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.ant-schematron.xml" unless:set="ant-hology.getLibraryDefs.ant-schematron.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/XSD2SCH.xml" unless:set="ant-hology.pathdefs.XSD2SCH.loaded"/>
+
+  <!-- See https://code.google.com/p/schematron/#XSD_to_Schematron_Converter -->
+  <target
+    name="ant-hology.get.XSD2SCH"
+    description="Installs XSD schema to Schematron converter"
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver,
+    ant-hology.get.iso-schematron-xslt1,
+    ant-hology.get.iso-schematron-xslt2,
+    ant-hology.get.ant-schematron
+    "
+    unless="ant-hology.availableLibraries.XSD2SCH">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://schematron.googlecode.com/files/XSD2SCH-2010-03-11.zip"
+      libName="XSD2SCH"
+      libVersion="2010-03-11"
+      classpath="XSD2SCH.required"
+      unzipToDestDir="true"
+      />
+    <delete includeEmptyDirs="true">
+      <fileset dir="${ant-hology.lib.dir}/XSD2SCH-2010-03-11" includes="**/CVS/" defaultexcludes="false"/>
+    </delete>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.XSD2SCH.loaded" value="true"/>
+
+</project>

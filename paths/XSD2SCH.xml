@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.XSD2SCH"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.XSD2SCH.dir" file="${ant.file.ant-hology.pathdefs.XSD2SCH}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://code.google.com/p/schematron/#XSD_to_Schematron_Converter -->
+  <path id="XSD2SCH.required">
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/build-small.xml"/>
+
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/2007-08-29-schematron-to-standard.xslt"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/compress.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/datatypes.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/expand.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/flatten.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/include.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/SVRLReportRender.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/tempstuff.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/xhtml2sch.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/xsd2sch.xsl"/>
+
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/2007-08-29-stdex.xslt"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex.css"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex_back.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex_front.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/XSD2SCH-2010-03-11/xslt/9573-11-a1/stdex_toc.xsl"/>
+
+  </path>
+
+  <property name="ant-hology.pathdefs.XSD2SCH.loaded" value="true"/>
+
+</project>

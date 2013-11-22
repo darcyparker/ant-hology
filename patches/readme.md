@@ -12,3 +12,20 @@ windows and unix-like systems.
 # in my git repo.
 diff -rupN --strip-trailing-cr apache-batik-1.7/ apache-batik-1.7-new/ > apache-batik-1.7-patch.txt
 ```
+
+#Files added to libraries
+
+The following aren't really patches. Instead they are extra files that are being
+added to libraries.
+##iso_schematron_terminator_xsl*.xsl
+
+Implementation of Schematron validation that terminates with the first error
+detected.
+
+##iso_schematron_text_xslt*.xsl
+Implementation of Schematron validation that reports in text only, optionally
+with paths in a prefix form.
+
+##Combining Schematron with other XML Schema languages.html
+
+This is useful documentation that is no longer online.

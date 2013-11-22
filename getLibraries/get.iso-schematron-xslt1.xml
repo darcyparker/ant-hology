@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.iso-schematron-xslt1"
+  basedir="."
+  default="ant-hology.getLibraryDefs.iso-schematron-xslt1"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.iso-schematron-xslt1.dir" file="${ant.file.ant-hology.getLibraryDefs.iso-schematron-xslt1}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/iso-schematron-xslt1.xml" unless:set="ant-hology.pathdefs.iso-schematron-xslt1.loaded"/>
+
+  <!-- See https://code.google.com/p/schematron/#ISO_Schematron -->
+  <!-- See http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html -->
+  <target
+    name="ant-hology.get.iso-schematron-xslt1"
+    description="Installs XSD schema to Schematron converter"
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver
+    "
+    unless="ant-hology.availableLibraries.iso-schematron-xslt1">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://schematron.googlecode.com/files/iso-schematron-xslt1.zip"
+      libName="iso-schematron-xslt1"
+      libVersion=""
+      classpath="iso-schematron-xslt1.required"
+      unzipToDestDir="true"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.iso-schematron-xslt1"
+      >
+      <copy todir="${ant-hology.lib.dir}/iso-schematron-xslt1">
+        <resources>
+          <file file="${ant-hology.patches.dir}/iso_schematron_terminator_xslt1.xsl"/>
+          <file file="${ant-hology.patches.dir}/iso_schematron_text_xslt1.xsl"/>
+          <file file="${ant-hology.patches.dir}/Combining Schematron with other XML Schema languages.html"/>
+        </resources>
+      </copy>
+      <fixcrlf
+        srcDir="${ant-hology.lib.dir}/iso-schematron-xslt1"
+        eol="lf"
+        includes="**/*"/>
+      <areAllAvailable
+        property="ant-hology.availableLibraries.iso-schematron-xslt1"
+        pathRefId="iso-schematron-xslt1.required"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='iso-schematron-xslt1.required'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.iso-schematron-xslt1"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>iso-schematron-xslt1 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.iso-schematron-xslt1.loaded" value="true"/>
+
+</project>

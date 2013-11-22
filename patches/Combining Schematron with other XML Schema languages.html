@@ -1,0 +1,1642 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href="http://www.topologi.com/resources/schtrn_xsd_paper.html"><div style="background:#fff;border:1px solid #999;margin:-1px -1px 0;padding:0;"><div style="background:#ddd;border:1px solid #999;color:#000;font:13px arial,sans-serif;font-weight:normal;margin:12px;padding:8px;text-align:left">This is Google&#39;s cache of <a href="http://www.topologi.com/resources/schtrn_xsd_paper.html" style="text-decoration:underline;color:#00c">http://www.topologi.com/resources/schtrn_xsd_paper.html</a>. It is a snapshot of the page as it appeared on Nov 6, 2013 04:18:52 GMT. The <a href="http://www.topologi.com/resources/schtrn_xsd_paper.html" style="text-decoration:underline;color:#00c">current page</a> could have changed in the meantime. <a href="http://support.google.com/websearch/bin/answer.py?hl=en&amp;p=cached&amp;answer=1687222" style="text-decoration:underline;color:#00c">Learn more</a><br>Tip: To quickly find your search term on this page, press <b>Ctrl+F</b> or <b>⌘-F</b> (Mac) and use the find bar.<br><br><div style="float:right"><a href="http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html&strip=1" style="text-decoration:underline;color:#00c">Text-only version</a></div>
+<div>&nbsp;</div></div></div><div style="position:relative">
+<html><head>
+		<meta http-equiv="content-type" content="text/html"><title>Combining Schematron with other XML Schema languages</title>
+
+			<style type="text/css">
+			<!--
+P, TR, TD, BODY, OL, UL {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-SIZE: 14px
+}
+.title {
+        COLOR: #000000; FONT-FAMILY: Times, Helvetica, Verdana, sans-serif; FONT-WEIGHT: bold; FONT-SIZE: 36px
+}
+.heading1 {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-WEIGHT: bold; FONT-SIZE: 24px
+}
+.heading2 {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-WEIGHT: bold; FONT-STYLE: italic; FONT-SIZE: 18px
+}
+.heading3 {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.element {
+        COLOR: #000000; FONT-FAMILY: Courier New, Courier, Monaco, serif; FONT-SIZE: 14px
+}
+.keyword {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.attribute {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-STYLE: italic; FONT-SIZE: 14px;
+}
+.footnote {
+        COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Verdana, sans-serif; FONT-STYLE: italic; FONT-SIZE: 12px;
+}
+.greytable {
+        HEIGHT: 25px; BACKGROUND-COLOR: #E6E6E6; COLOR: #000000; FONT-FAMILY: Courier New, Courier, Monaco, serif; FONT-SIZE: 14px
+}
+-->
+			</style></head>
+	<body bgcolor="#ffffff">
+		<a name="Title"></a><center><p><span class="title">Combining Schematron with other
+XML Schema languages</span></p></center>
+		<p>By <a href="mailto:erobertsson@allette.com.au">Eddie Robertsson</a><br>June 10, 2002<br/>
+    Updated to ISO Schematron, Rick Jelliffe, 2010</p>
+
+		<a name="Abstract"></a><span class="heading1">Abstract</span>
+      <p>This article shows how Schematron can be combined with other XML Schema
+languages to create powerful validation possibilities for business applications.</p>
+
+		<a name="TOC"></a><span class="heading1">Table of contents</span>
+		<p><a href="#Introduction">Introduction</a><br>
+		<a href="#Introduction_to_Schematron">Introduction to Schematron</a><br>
+		    <a href="#Schematron_hierarchy">Schematron hierarchy</a><br>
+		        <a href="#Assertions">Assertions</a><br>
+		        <a href="#Rules">Rules</a><br>
+		        <a href="#Patterns">Patterns</a><br>
+		    <a href="#Schematron_processing">Schematron processing</a><br>
+		<a href="#Embedded_Schematron_Rules_W3C">Embedded Schematron Rules in W3C XML Schema</a><br>
+		    <a href="#2Dependant_attributes">Dependant attributes</a><br>
+		    <a href="#2Interleaving_of_elements">Interleaving of elements</a><br>
+		    <a href="#2Co-occurrence_constraints">Co-occurrence constraints</a><br>
+		    <a href="#2Dependancy">Dependancy between XML documents</a><br>
+		<a href="#Embedded_Schematron_Rules_RNG">Embedded Schematron Rules in RELAX-NG</a><br>
+		    <a href="#3Co-occurrence_constraints">Co-occurrence constraints</a><br>
+		    <a href="#3Dependancy">Dependancy between XML documents</a><br>
+		<a href="#Processing">Processing</a><br>
+		<a href="#Summary">Summary</a><br>
+		<a href="#Acknowledgements">Acknowledgements</a></p>
+
+		<a name="Introduction"></a><span class="heading1">Introduction</span>
+		<p>After the W3C ratified <a href="http://www.w3.org/XML/Schema">W3C XML Schema</a> as a full recommendation on May
+2nd 2001 it has become clear that this is the most used XML Schema language in the
+development community. Many believed that W3C XML Schema would solve most problems encountered with
+validation of XML documents but this is not the case and in fact was never the goal of W3C XML Schema. In the purpose section
+of the <a href="http://www.w3.org/TR/xmlschema-1/#intro-purpose">specification</a> it is clearly stated that:</p>
+		<p><i>"However, the language defined by this specification does not
+attempt to provide all the facilities that might be needed by any application.
+Some applications may require constraint capabilities not expressible in
+this language, and so may need to perform their own additional validations."</i></p>
+		<p>When W3C XML Schema is not powerful enough there are other options for
+developers. One of the options is to find a different XML Schema language that can express all the needed constraints
+and <a href="http://www.oasis-open.org/committees/relax-ng/">RELAX-NG</a> has become increasingly popular due to its simplicity and expressive
+power. In many areas RELAX-NG is more powerful than W3C XML Schema but there are
+still areas where both of these languages fall short. One such area is the ability
+to express constraints between components in an XML document which are known as co-occurence
+constraints.</p>
+		<p>The best XML Schema language for expressing co-occurence constraints is <a href="http://www.schematron.com">ISO Schematron</a>.
+
+Schematron is a rule-based schema language and although you can define structure using Schematron
+it can often be a bit cumbersome. However, since defining structure in both
+W3C XML Schema and RELAX-NG is easy, the perfect solution would be to combine the schema languages.
+This way we can use each language for what it is best at, define structure with
+W3C XML Schema or RELAX-NG and define co-occurence constraints with Schematron. (Note: This paper was written before the ISO standard for Schematron
+was created, and so referred to an earlier version now obsolete, see <a href="http://www.ascc.net/xml/resource/schematron/">Schematron</a>.)</p>
+		<p>This article will provide an explanation and several examples of how
+Schematron rules can easily be embedded within W3C XML Schemas and RELAX-NG to perform
+validation tasks not possible in W3C XML Schema or RELAX-NG alone.</p>
+		<p>The following four areas, which W3C XML Schema does not fully address, will be covered in the section
+<a href="#Embedded_Schematron_Rules_W3C">Embedded Schematron Rules in W3C XML Schema</a>:</p>
+		<ul>
+		<li><p><span class="heading3">Dependant attributes</span><br>
+		The W3C XML Schema allows attributes to be declared on elements and
+the occurrence of the attributes can be controlled to be either optional
+or required. However, in some cases this is not enough and what is really
+needed is to define that the attributes have some form of dependency between
+them, for example that one of two attributes must appear but not both.</p>
+		</li><li><p><span class="heading3">Interleaving of elements</span>
+		The introduction of the <span class="keyword">all</span> group was a feature that many were waiting
+for. The idea is that it allows the child elements in the
+group to appear in any order. Unfortunately the <span class="keyword">all</span> group is not as useful
+as many had hoped because of some restrictions put on the declaration to
+simplify validation.</p>
+		</li><li><p><span class="heading3">Co-occurrence constraints</span>
+		A co-occurrence constraint is a constraint between components in an
+XML instance document. W3C XML Schema has limited support for this through
+the identity constraint functionality, which can specify that one element
+or attribute's value should refer to another element or attribute. In many
+cases this is not enough and it would be useful to express constraints like,
+for example, that if an element <span class="element">State</span> has the value of NSW then
+the element
+<span class="element">Country</span> must be Australia. Another example would be that if attribute
+<span class="attribute">currentTime</span>="3am"
+on element <span class="element">Calendar</span> then attribute <span class="attribute">currentState</span>
+on element <span class="element">Person</span> should
+be 'Sleeping' unless element <span class="element">Calendar</span>'s attribute <span class="attribute">currentDay</span>="Friday"
+in
+which case attribute <span class="attribute">currentState</span> should be 'At party'.</p>
+		</li><li><p><span class="heading3">Dependancy between XML documents</span>
+		Most XML Schema languages lack functions for applying constraints between
+XML instance documents. In many cases this is useful and it could for example
+be that one document contains a database with specific items and then other
+documents refer to these items. In this case it would be very useful to validate
+the each item referenced actually exist in the database document.</p>
+		</li></ul>
+		<p>The first two of the above examples (Dependant attributes and Interleaving of
+elements) are handled by RELAX-NG without having to rely on embedded Schematron rules.
+However, when it comes to defining advanced co-occurence constraints and dependancies
+between XML documents RELAX-NG also falls short and some examples of how this can
+be achieved will be shown in the section
+<a href="#Embedded_Schematron_Rules_RNG">Embedded Schematron Rules in RELAX-NG</a>
+</p>
+
+
+		<a name="Introduction_to_Schematron"><span class="heading1">Introduction to Schematron</span>
+		</a><p><a name="Introduction_to_Schematron">The Schematron schema language differs from most other
+XML schema languages in that it is a rule-based language that uses path-expressions
+instead of grammars. This means that instead of creating a grammar for an
+XML document a Schematron schema will make assertions applied to a specific
+context within the document. If the assertion fails, a diagnostic message
+that is supplied by the author of the schema can be displayed.</a></p>
+<a name="Introduction_to_Schematron">		</a><p><a name="Introduction_to_Schematron">One advantages of taking this rule-based approach is that in many
+cases the Schematron rules can easily be created by modifying the wanted
+constraint written in plain English. For example, a simple content model
+can in plain English be written like this: "The <span class="element">Person</span> element should
+in the XML instance document have an attribute <span class="attribute">Title</span> and contain
+the elements <span class="element">Name</span> and <span class="element">Sex</span>
+in that order. If the value of the <span class="attribute">Title</span> attribute is 'Mr'
+then the value of the <span class="element">Sex</span> element must be 'Male'".</a></p>
+<a name="Introduction_to_Schematron">		</a><p><a name="Introduction_to_Schematron">In this sentence the context in which the assertions should be applied
+are clearly stated as the <span class="element">Person</span> element while we have four different
+assertions:</a></p>
+<a name="Introduction_to_Schematron">		</a><p></p>
+<a name="Introduction_to_Schematron">		</a><ol>
+<a name="Introduction_to_Schematron">			<li>The context element (<span class="element">Person</span>) should have an attribute <span class="attribute">Title</span>
+			</li><li>The context element should contain two child elements, <span class="element">Name</span>
+and <span class="element">Sex</span>
+			</li><li>The child element <span class="element">Name</span> should appear before the child element
+<span class="element">Sex</span>
+			</li><li>If attribute <span class="attribute">Title</span> has the value 'Mr' then the element
+<span class="element">Sex</span> must have
+the value 'Male'
+		</li></a></ol>
+<a name="Introduction_to_Schematron">		</a><p></p>
+<a name="Introduction_to_Schematron">		</a><p><a name="Introduction_to_Schematron">In order to implement the path-expressions used in the rules in Schematron,
+the </a><a href="http://www.w3.org/TR/xpath">W3C XPath language</a> (XPath) is used with various extensions provided by <a href="http://www.w3.org/TR/xslt">XSLT</a>
+(Extensible Stylesheet Language Transformations). Since the path-expressions
+are built on top of XPath and XSLT it is also trivial to implement Schematron
+using XSLT, which is shown in the section <a href="#Schematron_processing">Schematron processing</a>
+below.</p>
+		<p>It has already been mentioned that Schematron makes various assertions
+based on a specific context in a document. Both the assertions and the context
+make up two of the four layers in Schematron's fixed four-layer hierarchy
+that consists of <span class="keyword">phases</span> (top-level), <span class="keyword">patterns</span>, <span class="keyword">rules</span> (defines the context)
+and <span class="keyword">assertions</span>.</p>
+		<a name="Schematron_hierarchy"><span class="heading2">Schematron hierarchy</span>
+		</a><p><a name="Schematron_hierarchy">In this introduction only three of these layers (<span class="keyword">patterns</span>, <span class="keyword">rules</span> and
+<span class="keyword">assertions</span>) will be covered since these are most important for using embedded
+Schematron rules in W3C XML Schemas and RELAX-NG. For a full description of the Schematron
+schema language see the Schematron </a><del><a href="http://www.ascc.net/xml/resource/schematron/Schematron2000.html">specification</a></del>  <a href="http://www.iso.org/PubliclyAvailableStandards">International Standard</a>.</p>
+		<p>In short the three layers covered in this section are constructed so
+that each assertion is grouped into rules and each rule defines a context.
+Each rule is then grouped into patterns, which are given a name that is displayed
+together with the error message (there is really more to patterns than just
+a grouping mechanism but for this introduction this is sufficient).</p>
+		<p>The example in the introduction specified a very simple content model (see below)
+that will be used to explain the three layers in the hierarchy.</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">&lt;Person Title="Mr"&gt;<br>
+						   &lt;Name&gt;Eddie&lt;/Name&gt;<br>
+						   &lt;Sex&gt;Male&lt;/Sex&gt;<br>
+						&lt;/Person&gt;<br>
+						</span>
+					</p>
+				</td>
+			</tr>
+		</tbody></table>
+		<p></p>
+		<a name="Assertions"><span class="heading3">Assertions</span>
+		</a><p><a name="Assertions">The bottom layer in the hierarchy is the assertions, which are used
+to specify the constraints that should be checked within a specific context
+of the XML instance document. In a Schematron schema the typical element used to define assertions is, <span class="element">assert</span>.
+The <span class="element">assert</span> element has a <span class="attribute">test</span>
+attribute, which is a modified </a><a href="http://www.w3.org/TR/xpath#section-Expressions">XPath expression</a>
+<sup><a href="#fotnot1">1</a></sup> . In the above example there was four assertions made on the
+document in order to specify the content model, namely:</p>
+		<p></p>
+		<ol>
+			<li>The context element (<span class="element">Person</span>) should have an attribute <span class="attribute">Title</span>
+			</li><li>The context element should contain two child elements, <span class="element">Name</span>
+and <span class="element">Sex</span>
+			</li><li>The child element <span class="element">Name</span> should appear before the child element
+<span class="element">Sex</span>
+			</li><li>If attribute <span class="attribute">Title</span> has the value 'Mr' then the element
+<span class="element">Sex</span> must have the value 'Male'
+		</li></ol>
+		<p></p>
+		<p>Written using Schematron assertions this would be:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;assert test="@Title"&gt;The element Person must have a Title attribute.&lt;/assert&gt;<br>
+&lt;assert test="count(*) = 2 and count(Name) = 1 and count(Sex)= 1"&gt;The element
+Person should have the child elements Name and Sex.&lt;/assert&gt;<br>
+&lt;assert test="*[1] = Name"&gt;The element Name must appear before element Sex.&lt;/assert&gt;<br>
+&lt;assert test="(@Title = 'Mr' and Sex = 'Male') or @Title != 'Mr'"&gt;If the Title
+is "Mr" then the sex of the person must be "Male".&lt;/assert&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+		<p>For people familiar with XPath these assertions are easy to understand
+but even for people with limited experience using XPath this is rather straightforward.
+The first assertion simply tests for the occurrence of an attribute <span class="attribute">Title</span>.
+The second assertion tests that the total number of children is equal to
+two and that there is one <span class="element">Name</span> element and one <span class="element">Sex</span>
+element. The third
+assertion tests that the first child element is <span class="element">Name</span> and the last
+assertion
+test that if the <span class="attribute">Title</span> is 'Mr' then the sex of the
+person must be 'Male'.</p>
+		<p>If the condition in the <span class="attribute">test</span> attribute is not fulfilled
+the content
+of the assertion element will be displayed to the user. So, for example,
+if the third condition was broken (*[1] = <span class="element">Name</span>) then the following
+message
+would be displayed:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+		The element <span class="element">Name</span> must appear before element <span class="element">Sex</span>.
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+		<p>Each of the above assertions has a condition that is evaluated but the assertion does
+not define where in the
+XML instance document this condition should be checked. For example, the first assertion test
+for the occurrence of the
+attribute <span class="attribute">Title</span> but it is not specified on which element in
+the XML instance document this assertion should be applied.
+The next layer in the hierarchy, the <span class="keyword">rules</span>, specifies this location (the context of the assertion).</p>
+
+<a name="Rules"><span class="heading3">Rules</span>
+</a><p><a name="Rules">The rules in Schematron are declared by using the <span class="element">rule</span> element
+and the <span class="element">rule</span> element has a <span class="attribute">context</span> attribute. The value of the <span class="attribute">context</span>
+attribute is the same modified XPath expression as for the <span class="attribute">test</span>
+attribute on the assertions. Like the name suggest, the
+<span class="attribute">context</span> attribute is used to specify the context in the XML
+instance document where the assertions should be applied.
+In the above example the context was specified to be the <span class="element">Person</span> element
+and a Schematron rule with the <span class="element">Person</span> element as
+context would simply be:</a></p>
+<a name="Rules">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+	&lt;rule context="Person"&gt;&lt;/rule&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Rules">Since the rules are used to group together all the assertions that share the same context
+the rules are designed so
+that the assertions are declared as children of the <span class="element">rule</span> element.
+For the above example this means that the complete
+Schematron rule would be:</a></p>
+<a name="Rules">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+	&lt;rule context="Person"&gt;<br>
+		   &lt;assert test="@Title"&gt;The element Person must have
+a Title attribute.&lt;/assert&gt;<br>
+		   &lt;assert test="count(*) = 2 and count(Name) = 1 and count(Sex) =
+1"&gt;The element Person should have the child elements Name and Sex.&lt;/assert&gt;<br>
+		   &lt;assert test="*[1] = Name"&gt;The element Name must appear
+before element Age.&lt;/assert&gt;<br>
+		   &lt;assert test="(@Title = 'Mr' and Sex = 'Male') or @Title != 'Mr'"&gt;If
+the Title is "Mr" then the sex of the person must be "Male".&lt;/assert&gt;<br>
+	&lt;/rule&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Rules">This means that all the assertions in the rule will be tested on every <span class="element">Person</span>
+element in the XML instance document. If
+the context should not be all the <span class="element">Person</span> elements it is easy to
+change the XPath to define a more restricted context.
+The value <span class="element">Database/Person</span> would for example set the context to
+be all the <span class="element">Person</span> elements that have the element <span class="element">Database</span>
+as its parent.</a></p>
+<a name="Patterns"><span class="heading3">Patterns</span>
+</a><p><a name="Patterns">The third layer in the hierarchy is the pattern, declared using the <span class="element">pattern</span>
+element, which is used to group together
+different rules. The <span class="element">pattern</span> element also has a <span class="attribute">name</span>
+attribute that will be displayed in the output when the pattern
+is checked. For the above assertions you could for example have two patterns, one for checking
+the structure and one
+for checking the co-occurrence constraint. Since patterns group together different rules Schematron
+is designed so
+that groups are declared as children of the <span class="element">pattern</span>
+element. This
+means that the above example, using the two patterns,
+would look like this:</a></p>
+<a name="Patterns">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;pattern name="Check structure"&gt;<br>
+	   &lt;rule context="Person"&gt;<br>
+		      &lt;assert test="@Title"&gt;The element Person
+must have a Title attribute.&lt;/assert&gt;<br>
+		      &lt;assert test="count(*) = 2 and count(Name) =
+1 and count(Sex) = 1"&gt;The element Person should have the child elements Name
+and Sex.&lt;/assert&gt;<br>
+		      &lt;assert test="*[1] = Name"&gt;The element
+Name must appear before element Age.&lt;/assert&gt;<br>
+	   &lt;/rule&gt;<br>
+&lt;/pattern&gt;<br>
+&lt;pattern name="Check co-occurrence constraints"&gt;<br>
+	   &lt;rule context="Person"&gt;<br>
+		      &lt;assert test="(@Title = 'Mr' and Sex = 'Male')
+or @Title != 'Mr'"&gt;If the Title is "Mr" then the sex of the person must be
+"Male".&lt;/assert&gt;<br>
+	   &lt;/rule&gt;<br>
+&lt;/pattern&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Patterns">The name of the pattern will always be displayed in the output regardless of whether the
+assertions fail or succeed
+and if the assertion fails the output will also contain the content of the assertion element.
+However, there is also
+additional information displayed together with the assertion text to help the user locate the
+source of the failed
+assertion. For example, if the co-occurrence constraint above was violated by having Title='Mr'
+and Sex='Female' then
+the following diagnostic would be generated by Schematron:</a></p>
+<a name="Patterns">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+From pattern "Check structure": <br>
+<br>
+From pattern "Check co-occurence constraints": <br>
+        Assertion fails: "If the Title is "Mr" then the sex of
+the person must be "Male"."  at <br>
+              /Person[1] <br>
+                 &lt;Person Title="Mr"&gt;...&lt;/&gt;
+<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Patterns">So, the pattern names are always displayed while the assertion text is only displayed when
+the assertion fails. The additional information starts with an XPath that shows
+the location of
+the context element in the instance document (in this case the first <span class="element">Person</span>
+element) and then on a new line the
+start tag of the context element is displayed.</a></p>
+<p><a name="Patterns">The assertion to test the co-occurrence constraint is not trivial and in fact this rule
+could be written in a simpler
+way by using an </a><a href="http://www.w3.org/TR/xpath#predicates">XPath predicate</a> when selecting the context. Instead of having the context
+set to all <span class="element">Person</span>
+elements the co-occurrence constraint can be simplified by only specifying the context to be
+all the <span class="element">Person</span> elements
+that have the attribute <span class="attribute">Title</span>='Mr'. If the rule was specified
+using this technique the co-occurrence constraint
+could be described like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;rule context="Person[@Title='Mr']"&gt;<br>
+	   &lt;assert test="Sex = 'Male'"&gt;If the Title is "Mr"
+then the sex of the person must be "Male".&lt;/assert&gt;<br>
+&lt;/rule&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>So, by moving some of the logic from the assertion to the specification of the context the complexity
+of the rule has been decreased.
+This is a technique that often is very useful when writing Schematron schemas.</p>
+<p>This concludes this introduction about patterns and now all that is left to do is to wrap
+the patterns in the
+Schematron schema in a <span class="element">schema</span> element and specify that all the Schematron elements used should
+be defined in the
+Schematron namespace, <del><span class="attribute">http://www.ascc.net/xml/schematron</span></del> <span class="attribute">http://purl.oclc.org/dsdl/schematron</span>. This
+means that the complete Schematron schema for the
+example would be:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+	   &lt;sch:pattern name="Check structure"&gt;<br>
+		      &lt;sch:rule context="Person"&gt;<br>
+			         &lt;sch:assert test="@Title"&gt;The
+element Person must have a Title attribute&lt;/sch:assert&gt;<br>
+			         &lt;sch:assert test="count(*)
+= 2 and count(Name) = 1 and count(Sex) = 1"&gt;The element Person should have
+the child elements Name and Sex.&lt;/sch:assert&gt;<br>
+			         &lt;sch:assert test="*[1] = Name"&gt;The
+element Name must appear before element Sex.&lt;/sch:assert&gt;<br>
+		      &lt;/sch:rule&gt;<br>
+	   &lt;/sch:pattern&gt;<br>
+	   &lt;sch:pattern name="Check co-occurrence constraints"&gt;<br>
+		      &lt;sch:rule context="Person"&gt;<br>
+			         &lt;sch:assert test="(@Title
+= 'Mr' and Sex = 'Male') or @Title != 'Mr'"&gt;If the Title is "Mr" then the
+sex of the person must be "Male".&lt;/sch:assert&gt;<br>
+		      &lt;/sch:rule&gt;<br>
+	   &lt;/sch:pattern&gt;<br>
+&lt;/sch:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>Schematron can also be used to validate XML instance documents that use namespaces.
+Each namespace used in the XML instance document should be declared in the Schematron schema.
+The element used to declare namespaces are the <span class="element">ns</span> element which should
+appear as a child of the <span class="element">schema</span> element. The <span class="element">ns</span>
+element has two attributes, <span class="attribute">uri</span> and <span class="attribute">prefix</span>,
+which are used to define the namespace uri and the namespace prefix. So, if the XML instance document in the
+example had been defined in the namespace <span class="attribute">www.topologi.com/example</span> then the
+Schematron schema would look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+	   &lt;sch:ns uri="www.topologi.com/example" prefix="ex"/&gt;<br>
+	   &lt;sch:pattern name="Check structure"&gt;<br>
+		      &lt;sch:rule context="ex:Person"&gt;<br>
+			         &lt;sch:assert test="@Title"&gt;The
+element Person must have a Title attribute&lt;/sch:assert&gt;<br>
+			         &lt;sch:assert test="count(ex:*)
+= 2 and count(ex:Name) = 1 and count(ex:Sex) = 1"&gt;The element Person should have
+the child elements Name and Sex.&lt;/sch:assert&gt;<br>
+			         &lt;sch:assert test="ex:*[1] = ex:Name"&gt;The
+element Name must appear before element Sex.&lt;/sch:assert&gt;<br>
+		      &lt;/sch:rule&gt;<br>
+	   &lt;/sch:pattern&gt;<br>
+	   &lt;sch:pattern name="Check co-occurrence constraints"&gt;<br>
+		      &lt;sch:rule context="ex:Person"&gt;<br>
+			         &lt;sch:assert test="(@Title
+= 'Mr' and ex:Sex = 'Male') or @Title != 'Mr'"&gt;If the Title is "Mr" then the
+sex of the person must be "Male".&lt;/sch:assert&gt;<br>
+		      &lt;/sch:rule&gt;<br>
+	   &lt;/sch:pattern&gt;<br>
+&lt;/sch:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>Note that all XPath expressions that test element values now include the namespace prefix <span class="attribute">ex</span>.</p>
+
+
+<a name="Schematron_processing"><span class="heading2">Schematron processing</span>
+</a><p><a name="Schematron_processing">One of the major advantages with Schematron is that you do not need a specially written
+Schematron processor in order
+to validate the XML instance documents. Since Schematron is built using XPath and XSLT functions
+all you need is an
+XSLT processor. The Schematron processing then works in two steps (see Figure 1):
+</a></p>
+<a name="Schematron_processing">		</a><ol>
+<a name="Schematron_processing">			<li>The Schematron schema is first turned
+into a validating XSLT stylesheet by transforming it with an XSLT stylesheet initially
+provided by Academica Sinica Computing Centre. These stylesheets (schematron-basic.xsl,
+schematron-message.xsl and schematron-report.xsl) can be found at the </li></a><del><a href="http://www.ascc.net/xml/schematron/1.5/">Schematron website</a></del> <a href="http://www.schematron.com">Schematron.com website</a> and the different stylesheets generate different output.
+For example, the
+schematron-basic.xsl is used to generate simple text output like in the example above.
+			<li>This validating stylesheet is then used on the XML instance document and the result
+will be a report that is based on the rules and assertions in the original Schematron schema.
+		</li></ol>
+<center>
+  <img src="../images/Figure1.jpg" border="0">
+</center>
+<p>This means that it is very easy to set up a Schematron processor because the only
+thing needed is an XSLT
+processor together with one of the Schematron stylesheets. Here is an example of how to validate
+the example used
+above where the XML instance document is called Person.xml and the Schematron schema is called
+Person.sch. The
+example use <a href="http://saxon.sourceforge.net/">Saxon</a> as an XSLT processor:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+C:\&gt;saxon -o validate_person.xsl Person.sch schematron-basic.xsl<br>
+<br>
+C:\&gt;saxon Person.xml validate_person.xsl<br>
+<br>
+From pattern "Check structure": <br>
+<br>
+From pattern "Check co-occurrence constraints": <br>
+        Assertion fails: "If the Title is "Mr" then the sex of
+the person must be "Male"." at <br>
+              /Person[1] <br>
+                 &lt;Person Title="Mr"&gt;...&lt;/&gt;
+<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+
+<a name="Embedded_Schematron_Rules_W3C"><span class="heading1">Embedded Schematron Rules
+in W3C XML Schema</span>
+	</a><p><a name="Embedded_Schematron_Rules_W3C">One really good thing about W3C XML Schema is that it is very easy to extend and
+one way to do so is to use the annotation functions. The <span class="element">annotation</span> element can have two child elements, namely <span class="element">documentation</span>
+and <span class="element">appinfo</span>. The <span class="element">documentation</span> element is mainly intended to provide humans with information about the schema
+while the <span class="element">appinfo</span> element is intended for applications. The <span class="element">appinfo</span> element is defined so that it can have any well-formed
+XML content from any namespace. Since a Schematron rule use XML syntax this is the perfect place to embed
+rules from Schematron.</a></p>
+<a name="Embedded_Schematron_Rules_W3C">	</a><p><a name="Embedded_Schematron_Rules_W3C">Almost all elements defined by the W3C XML Schema specification can have the <span class="element">annotation</span>
+child element and the most logic place to put the Schematron rules are on the element declaration where the Schematron
+rule applies. This means that the W3C XML Schema element declaration and the Schematron rule that apply to the element
+are declared in the same place. However, since the Schematron rule add more code to the already verbose W3C XML
+Schema, you can just as easy include all the Schematron rules in, for example, the <span class="element">annotation</span> element for the <span class="element">schema</span>
+element itself. This may improve readability of the schema by concentrating the Schematron rules at the beginning of
+the W3C XML Schema.</a></p>
+<a name="Embedded_Schematron_Rules_W3C">	</a><p><a name="Embedded_Schematron_Rules_W3C">Here is a very simple W3C XML Schema that only define one element:</a></p>
+<a name="Embedded_Schematron_Rules_W3C">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Root" type="xs:string"&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Embedded_Schematron_Rules_W3C">Now, if a Schematron rule should have the <span class="element">Root</span> element as its context this rule could be
+added as an embedded
+Schematron rule within the <span class="element">appinfo</span> element of the declaration like this:
+</a></p>
+<a name="Embedded_Schematron_Rules_W3C">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Root" type="xs:string"&gt;<br>
+		      &lt;xs:annotation&gt;<br>
+			         &lt;xs:appinfo&gt;<br>
+				            &lt;sch:pattern
+name="Test constraints on the Root element" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					               &lt;sch:rule
+context="Root"&gt;<br>
+						                  &lt;sch:assert
+test="test-condition"&gt;Error message when the assertion condition is broken...&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+				            &lt;/sch:pattern&gt;<br>
+			         &lt;/xs:appinfo&gt;<br>
+		      &lt;/xs:annotation&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="Embedded_Schematron_Rules_W3C">As can be seen from the example all embedded Schematron rules must be added on the pattern
+level and all Schematron
+elements must be declared in the Schematron namespace, <del>http://www.ascc.net/xml/schematron</del> http://purl.oclc.org/dsdl/schematron.
+The rules are embedded on
+a pattern level because this way the pattern name will be included in the output which helps
+identify which rule was
+broken if there is a validation problem in the XML instance document.</a></p>
+<p><a name="Embedded_Schematron_Rules_W3C">Now that we know how to write Schematron schemas and we have seen an example of an embedded
+Schematron rule in a
+W3C XML Schema we can have a look at how to solve the different problems stated in the introduction.</a></p>
+
+
+<a name="2Dependant_attributes"><span class="heading2">Dependant attributes</span>
+</a><p><a name="2Dependant_attributes">To illustrate we will use an example where we have a <span class="element">socket</span> element
+with two attributes <span class="attribute">hostName</span> and <span class="attribute">hostAddress</span>.
+
+The requirement is that these two attributes are mutually exclusive so that if one is present
+the other cannot be
+present and vice versa. It is also required that at least of the attributes must appear.</a></p>
+<p><a name="2Dependant_attributes">W3C XML Schema will be used to declare the <span class="element">socket</span> element and
+also that the <span class="element">socket</span> element can have two attributes,
+<span class="attribute">hostName</span> and <span class="attribute">hostAddress</span>. The
+closest we can get to the above constraint in W3C XML Schema is to declare both
+attributes as optional since neither <span class="attribute">hostName</span> nor <span class="attribute">hostAddress</span>
+is required. This schema could look like the following:</a></p>
+<a name="2Dependant_attributes">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="socket"&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:attribute name="hostName"
+type="xs:string" use="optional"/&gt;<br>
+			         &lt;xs:attribute name="hostAddress"
+type="xs:string" use="optional"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Dependant_attributes">A Schematron rule can now be embedded on the <span class="element">socket</span> element
+to add the extra constraints. In this case the constraint is divided into two assertions, which allows for a separate error
+message for each assertion:</a></p>
+<a name="2Dependant_attributes">		</a><ol>
+<a name="2Dependant_attributes">			<li>Both <span class="attribute">host</span>Name and <span class="attribute">hostAddress</span>
+cannot be present at the same time
+			</li><li>At least one of <span class="attribute">hostName</span> and <span class="attribute">hostAddress</span>
+must be present
+		</li></a></ol>
+<p><a name="2Dependant_attributes">The W3C XML Schema with an embedded Schematron rule for this example would look like this:</a></p>
+<a name="2Dependant_attributes">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="socket"&gt;<br>
+		      &lt;xs:annotation&gt;<br>
+			         &lt;xs:appinfo&gt;<br>
+				            &lt;sch:pattern
+name="Mutually exclusive attributes on the socket element" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					               &lt;sch:rule
+context="socket"&gt;<br>
+						                  &lt;sch:report
+test="@hostName and @hostAddress"&gt;On a socket element only one of the attributes
+hostName and hostAddress are allowed, not both.&lt;/sch:report&gt;<br>
+						                  &lt;sch:assert
+test="@hostName | @hostAddress"&gt;One of the attributes hostName or hostAddress
+must be present on the socket element&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+				            &lt;/sch:pattern&gt;<br>
+			         &lt;/xs:appinfo&gt;<br>
+		      &lt;/xs:annotation&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:attribute name="hostName"
+type="xs:string" use="optional"/&gt;<br>
+			         &lt;xs:attribute name="hostAddress"
+type="xs:string" use="optional"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Dependant_attributes">This schema would validate that the following two instance documents are valid</a></p>
+<a name="2Dependant_attributes">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;socket hostAddress="192.168.200.76"/&gt;<br>
+<br>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;socket hostName="pc100"/&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Dependant_attributes">while the following two instance documents are invalid:</a></p>
+<a name="2Dependant_attributes">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;socket hostAddress="192.168.200.76" hostName="pc100"/&gt;<br>
+<br>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;socket/&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+
+<a name="2Interleaving_of_elements"><span class="heading2">Interleaving of elements</span>
+</a><p><a name="2Interleaving_of_elements">The constraints put on the <span class="keyword">all</span> group that each element declared in its content must have
+its <span class="attribute">maxOccurs</span> attribute
+fixed to 1 simplifies the processing but limits the usefulness. For example, the following
+content model is not
+allowed:
+</a></p>
+<a name="2Interleaving_of_elements">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+	&lt;xs:element name="Root"&gt;<br>
+		   &lt;xs:complexType&gt;<br>
+			      &lt;xs:all&gt;<br>
+				         &lt;xs:element name="child1"
+type="xs:string" minOccurs="5" maxOccurs="5"/&gt;<br>
+				         &lt;xs:element name="child2"
+type="xs:string" minOccurs="2" maxOccurs="2"/&gt;<br>
+				         &lt;xs:element name="child3"
+type="xs:string" minOccurs="0"/&gt;<br>
+				         &lt;xs:element name="child4"
+type="xs:string" minOccurs="3" maxOccurs="7"/&gt;<br>
+			      &lt;/xs:all&gt;<br>
+		   &lt;/xs:complexType&gt;<br>
+	&lt;/xs:element&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+<p><a name="2Interleaving_of_elements">By changing the <span class="keyword">all</span> group to a <span class="keyword">choice</span> group and by
+making the <span class="keyword">choice</span> group itself optional and repeatable
+a content model where
+the different child elements can appear in any order are created. If, for example all the <span class="element">child1</span> elements should be
+grouped together in the instance document, the <span class="attribute">minOccurs</span> constraint
+can be kept as it is. If the child elements do
+not have to be grouped together the <span class="attribute">minOccurs</span> constraint can
+be set to 1 to allow for a full mixture of the elements:</a></p>
+<a name="2Interleaving_of_elements">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+	&lt;xs:element name="Root"&gt;<br>
+		   &lt;xs:complexType&gt;<br>
+			      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;<br>
+				         &lt;xs:element name="child1"
+type="xs:string" minOccurs="1" maxOccurs="5"/&gt;<br>
+				         &lt;xs:element name="child2"
+type="xs:string" minOccurs="1" maxOccurs="2"/&gt;<br>
+				         &lt;xs:element name="child3"
+type="xs:string" minOccurs="0"/&gt;<br>
+				         &lt;xs:element name="child4"
+type="xs:string" minOccurs="1" maxOccurs="7"/&gt;<br>
+			      &lt;/xs:choice&gt;<br>
+		   &lt;/xs:complexType&gt;<br>
+	&lt;/xs:element&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Interleaving_of_elements">Unfortunately this also removes the occurrence constraints on the children. Sometimes this
+is not a very important
+requirement and if that is the case the above will probably be sufficient. If, however, the occurrence
+constraints on the child elements are important
+it is trivial to add a Schematron rule to check this. The following schema will illustrate:</a></p>
+<a name="2Interleaving_of_elements">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+	&lt;xs:element name="Root"&gt;<br>
+		   &lt;xs:annotation&gt;<br>
+			      &lt;xs:appinfo&gt;<br>
+				         &lt;sch:pattern name="Extended_all"
+xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					            &lt;sch:rule context="Root"&gt;<br>
+						               &lt;sch:assert
+test="count(child1) = 5"&gt;You must have exactly 5 child1 elements.&lt;/sch:assert&gt;<br>
+						               &lt;sch:assert
+test="count(child2) = 2"&gt;You must have exactly 2 child2 elements.&lt;/sch:assert&gt;<br>
+						               &lt;sch:assert
+test="count(child3) &amp;lt;= 1"&gt;You can only have one child3 element.&lt;/sch:assert&gt;<br>
+						               &lt;sch:assert
+test="count(child4) &amp;gt;= 3 and count(child4) &amp;lt;= 7"&gt;You must have at
+least 3 child4 elements but you can&#8217;t have more than 7.&lt;/sch:assert&gt;<br>
+					            &lt;/sch:rule&gt;<br>
+				         &lt;/sch:pattern&gt;<br>
+			      &lt;/xs:appinfo&gt;<br>
+		   &lt;/xs:annotation&gt;<br>
+		   &lt;xs:complexType&gt;<br>
+			      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;<br>
+				         &lt;xs:element name="child1"
+type="xs:string" minOccurs="1" maxOccurs="5"/&gt;<br>
+				         &lt;xs:element name="child2"
+type="xs:string" minOccurs="1" maxOccurs="2"/&gt;<br>
+				         &lt;xs:element name="child3"
+type="xs:string" minOccurs="0"/&gt;<br>
+				         &lt;xs:element name="child4"
+type="xs:string" minOccurs="1" maxOccurs="7"/&gt;<br>
+			      &lt;/xs:choice&gt;<br>
+		   &lt;/xs:complexType&gt;<br>
+	&lt;/xs:element&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Interleaving_of_elements">This schema would validate a true mixture of all the child elements. If the child elements
+should be grouped together
+the only change would be to preserve the <span class="attribute">minOccurs</span> constraint
+on each child element (5 for <span class="element">child1</span>, 2 for <span class="element">child2</span>
+and 3
+for <span class="element">child4</span>). However, since <span class="element">child4</span>'s
+occurrence is a range a new Schematron rule is needed to assert that all <span class="element">child4</span>
+
+elements are grouped together. The new schema would look like this:</a></p>
+<a name="2Interleaving_of_elements">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Root"&gt;<br>
+		      &lt;xs:annotation&gt;<br>
+			         &lt;xs:appinfo&gt;<br>
+				            &lt;sch:pattern
+name="Extended_all" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					               &lt;sch:rule
+context="Root"&gt;<br>
+						                  &lt;sch:assert
+test="count(child1) = 5"&gt;You must have exactly 5 child1 elements.&lt;/sch:assert&gt;<br>
+						                  &lt;sch:assert
+test="count(child2) = 2"&gt;You must have exactly 2 child2 elements.&lt;/sch:assert&gt;<br>
+						                  &lt;sch:assert
+test="count(child3) &amp;lt;= 1"&gt;You can only have one child3 element.&lt;/sch:assert&gt;<br>
+						                  &lt;sch:assert
+test="count(child4) &amp;gt;= 3 and count(child4) &amp;lt;= 7"&gt;You must have at
+least 3 child3 elements but you can&#8217;t have more than 7.&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+					               &lt;sch:rule
+context="Root/*"&gt;<br>
+						                  &lt;sch:assert
+test="not(preceding-sibling::*[1][name() != name(current())][preceding-sibling::*[name()
+= name(current())]])"&gt;All &lt;sch:name/&gt; elements must be grouped with the other
+&lt;sch:name/&gt; elements.&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+				            &lt;/sch:pattern&gt;<br>
+			         &lt;/xs:appinfo&gt;<br>
+		      &lt;/xs:annotation&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:choice minOccurs="0"
+maxOccurs="unbounded"&gt;<br>
+				            &lt;xs:element
+name="child1" type="xs:string" minOccurs="5" maxOccurs="5"/&gt;<br>
+				            &lt;xs:element
+name="child2" type="xs:string" minOccurs="2" maxOccurs="2"/&gt;<br>
+				            &lt;xs:element
+name="child3" type="xs:string" minOccurs="0"/&gt;<br>
+				            &lt;xs:element
+name="child4" type="xs:string" minOccurs="3" maxOccurs="7"/&gt;<br>
+			         &lt;/xs:choice&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p><a name="2Interleaving_of_elements">The new rule has each of the child elements of <span class="element">Root</span> as its
+context so this rule will apply to all the children of
+<span class="element">Root</span>. The assertion in the rule uses the preceding sibling axis
+to assert that all the child elements must be
+grouped together. In this case it would have been enough to apply this rule to <span class="element">child4</span>
+(since it's the only element with an occurrence range) but it is just as easy to apply the same rule for all the children.</a></p>
+
+
+<a name="2Co-occurrence_constraints"><span class="heading2">Co-occurrence constraints</span>
+</a><p><a name="2Co-occurrence_constraints">The number of examples for co-occurrence constraints is more or less unlimited and one example
+was used in the </a><a href="#Introduction_to_Schematron">Introduction to Schematron</a> section above. In that example the co-occurrence constraint was
+that if the <span class="attribute">Title</span>
+attribute on element <span class="element">Person</span> had the value 'Mr' then the value
+of the <span class="element">Sex</span> sub-element must be 'Male'.
+Instead of defining everything using a Schematron schema, this example will show how to do
+the structure in
+W3C XML Schema and the co-occurrence constraint with a Schematron rule. The W3C XML Schema
+for this simple
+example is straightforward:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Person"&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:sequence&gt;<br>
+				            &lt;xs:element
+name="Name" type="xs:string"/&gt;<br>
+				            &lt;xs:element
+name="Sex"&gt;<br>
+					               &lt;xs:simpleType&gt;<br>
+						                  &lt;xs:restriction
+base="xs:string"&gt;<br>
+							                     &lt;xs:enumeration
+value="Male"/&gt;<br>
+							                     &lt;xs:enumeration
+value="Female"/&gt;<br>
+						                  &lt;/xs:restriction&gt;<br>
+					               &lt;/xs:simpleType&gt;<br>
+				            &lt;/xs:element&gt;<br>
+			         &lt;/xs:sequence&gt;<br>
+			         &lt;xs:attribute name="Title"
+type="xs:string" use="required"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>This schema  defines the structure of the XML instance document and the only thing the Schematron
+rule needs to
+define is the co-occurrence constraint. The complete schema with an embedded Schematron rule
+would look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Person"&gt;<br>
+		      &lt;xs:annotation&gt;<br>
+			         &lt;xs:appinfo&gt;<br>
+				            &lt;sch:pattern
+name="Co-occurrence constraint on attribute Title" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					               &lt;sch:rule
+context="Person[@Title='Mr']"&gt;<br>
+						                  &lt;sch:assert
+test="Sex = 'Male'"&gt;If the Title is "Mr" then the sex of the person
+must be "Male".&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+				            &lt;/sch:pattern&gt;<br>
+			         &lt;/xs:appinfo&gt;<br>
+		      &lt;/xs:annotation&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:sequence&gt;<br>
+				            &lt;xs:element
+name="Name" type="xs:string"/&gt;<br>
+				            &lt;xs:element
+name="Sex"&gt;<br>
+					               &lt;xs:simpleType&gt;<br>
+						                  &lt;xs:restriction
+base="xs:string"&gt;<br>
+							                     &lt;xs:enumeration
+value="Male"/&gt;<br>
+							                     &lt;xs:enumeration
+value="Female"/&gt;<br>
+						                  &lt;/xs:restriction&gt;<br>
+					               &lt;/xs:simpleType&gt;<br>
+				            &lt;/xs:element&gt;<br>
+			         &lt;/xs:sequence&gt;<br>
+			         &lt;xs:attribute name="Title"
+type="xs:string" use="required"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+
+<a name="2Dependancy"><span class="heading2">Dependancy between XML documents</span>
+</a><p><a name="2Dependancy">By using the </a><a href="http://www.w3.org/TR/xslt#function-document">document()</a> function in XSLT it is also possible to apply constraints between
+XML instance documents
+and not just within a single document. To illustrate this we use two simple XML instance documents
+where one document
+contain a single <span class="element">Person</span> element with a <span class="element">name</span>
+sub-element and one document that contain a single <span class="element">Car</span> element
+with an
+<span class="attribute">Owner</span> attribute. The W3C XML Schemas for these documents would
+be:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Person"&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:sequence&gt;<br>
+				            &lt;xs:element
+name="Name" type="xs:string"/&gt;<br>
+			         &lt;/xs:sequence&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>and</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Car"&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:attribute name="Owner"
+type="xs:string" use="required"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>The instance documents would be:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Person&gt;<br>
+	   &lt;Name&gt;Eddie&lt;/Name&gt;<br>
+&lt;/Person&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>and</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Car Owner="Eddie"/&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>Now we want to make sure that the value of the <span class="attribute">Owner</span> attribute
+in Car.xml must match the value of <span class="element">Person/Name</span> in
+Person.xml. This can be done by inserting a Schematron rule in the W3C XML Schema that defines
+the Car document:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;<br>
+	   &lt;xs:element name="Car"&gt;<br>
+		      &lt;xs:annotation&gt;<br>
+			         &lt;xs:appinfo&gt;<br>
+				            &lt;sch:pattern
+name="Car owner must link to a person" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+					               &lt;sch:rule
+context="Car"&gt;<br>
+						                  &lt;sch:assert
+test="document('Person.xml')/Person/Name = @Owner"&gt;The owner of the
+car must match the name of the person in Person.xml.&lt;/sch:assert&gt;<br>
+					               &lt;/sch:rule&gt;<br>
+				            &lt;/sch:pattern&gt;<br>
+			         &lt;/xs:appinfo&gt;<br>
+		      &lt;/xs:annotation&gt;<br>
+		      &lt;xs:complexType&gt;<br>
+			         &lt;xs:attribute name="Owner"
+type="xs:string" use="required"/&gt;<br>
+		      &lt;/xs:complexType&gt;<br>
+	   &lt;/xs:element&gt;<br>
+&lt;/xs:schema&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>The document() function will bring in the elements from the Person.xml file and the assertion
+will make sure that
+the value of the <span class="attribute">Owner</span> attribute match the value of the <span class="element">Person/Name</span> element.</p>
+
+
+
+<a name="Embedded_Schematron_Rules_RNG"><span class="heading1">Embedded Schematron Rules
+in RELAX-NG</span>
+		</a><p><a name="Embedded_Schematron_Rules_RNG">Unlike for W3C XML Schemas the embedded Schematron rules in a RELAX-NG schema does
+not have to be declared within a specific element. Since a RELAX-NG validator will ignore
+all elements not in the RELAX-NG namespace (<i>http://relaxng.org/ns/structure/1.0</i>
+), the Schematron rules can be declared between any RELAX-NG element.</a></p>
+<a name="Embedded_Schematron_Rules_RNG">		</a><p><a name="Embedded_Schematron_Rules_RNG">Here is a very simple RELAX-NG schema:</a></p>
+<a name="Embedded_Schematron_Rules_RNG">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;element name="Root" xmlns="http://relaxng.org/ns/structure/1.0"&gt;<br>
+	   &lt;text/&gt;<br>
+&lt;/element&gt;<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<a name="Embedded_Schematron_Rules_RNG">		</a><p><a name="Embedded_Schematron_Rules_RNG">Now, if a Schematron rule should have the <span class="element">Root</span> element as its context this rule could be
+added as an embedded Schematron rule like this:
+</a></p>
+<a name="Embedded_Schematron_Rules_RNG">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;element name="Root" xmlns="http://relaxng.org/ns/structure/1.0"&gt;<br>
+	   &lt;sch:pattern name="Test constraints on the Root element" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+    	      &lt;sch:rule context="Root"&gt;<br>
+        	         &lt;sch:assert test="test-condition"&gt;Error message when the assertion condition is
+broken...&lt;/sch:assert&gt;<br>
+	          &lt;/sch:rule&gt;<br>
+	   &lt;/sch:pattern&gt;<br>
+	   &lt;text/&gt;<br>
+&lt;/element&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<a name="Embedded_Schematron_Rules_RNG">		</a><p><a name="Embedded_Schematron_Rules_RNG">The Schematron rules embedded in a RELAX-NG schema are inserted on the pattern
+level and need to be declared in the Schematron namespace (<i>http://purl.oclc.org/dsdl/schematron</i>
+) just like for W3C XML
+Schemas.</a></p>
+
+
+<a name="3Co-occurrence_constraints"><span class="heading2">Co-occurrence constraints</span>
+		</a><p><a name="3Co-occurrence_constraints">Although RELAX-NG have better support for co-occurence constraints than W3C
+XML Schema there are still many types of co-occurence constraints that cannot be
+expressed by RELAX-NG. One such example is identity constraints that has been left out of the current
+version of RELAX-NG.</a></p>
+<a name="3Co-occurrence_constraints">		</a><p><a name="3Co-occurrence_constraints">As an example we are going to use a schema that defines a sports tournament.
+The tournament have a name, a number of teams which have a unique id and a number of matches
+that define which teams will meet in each match. Typically such a schema would validate that every
+team in a match must also be one of the teams registered in the
+tournament. Although some basic identity constraints can be done usings DTD's
+</a><a href="http://www.w3.org/TR/2000/REC-xml-20001006#id">ID</a> and
+<a href="http://www.w3.org/TR/2000/REC-xml-20001006#idref">IDREF</a>, more complex identity constraints will have to be checked with embedded
+Schematron rules.</p>
+		<p>A RELAX-NG for the above described tournament could look like this:</p>
+
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;grammar xmlns="http://relaxng.org/ns/structure/1.0"&gt;<br>
+	   &lt;start&gt;<br>
+		      &lt;ref name="Tournament"/&gt;<br>
+	   &lt;/start&gt;<br>
+	   &lt;define name="Tournament"&gt;<br>
+		      &lt;element name="Tournament"&gt;<br>
+			         &lt;element name="Name"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+			         &lt;element name="Teams"&gt;<br>
+				            &lt;!-- We must have at
+least two teams --&gt;<br>
+				            &lt;ref name="Team"/&gt;<br>
+				            &lt;oneOrMore&gt;<br>
+					               &lt;ref name="Team"/&gt;<br>
+				            &lt;/oneOrMore&gt;<br>
+			         &lt;/element&gt;<br>
+			         &lt;element name="Matches"&gt;<br>
+				            &lt;oneOrMore&gt;<br>
+					               &lt;element name="Match"&gt;<br>
+						                  &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						                  &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						                  &lt;attribute name="id"/&gt;<br>
+					               &lt;/element&gt;<br>
+				            &lt;/oneOrMore&gt;<br>
+			         &lt;/element&gt;<br>
+		      &lt;/element&gt;<br>
+	   &lt;/define&gt;<br>
+	   &lt;define name="Team"&gt;<br>
+		      &lt;element name="Team"&gt;<br>
+			         &lt;attribute name="id"/&gt;<br>
+			         &lt;optional&gt;<br>
+				            &lt;attribute name="Name"/&gt;<br>
+			         &lt;/optional&gt;<br>
+		      &lt;/element&gt;<br>
+	   &lt;/define&gt;<br>
+&lt;/grammar&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+		<p>An XML instance document that would be valid against this schema is:</p>
+
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Tournament&gt;<br>
+	   &lt;Name&gt;FIFA World Cup&lt;/Name&gt;<br>
+	   &lt;Teams&gt;<br>
+		      &lt;Team Name="Sweden" id="t1"/&gt;<br>
+		      &lt;Team Name="Argentina" id="t2"/&gt;<br>
+		      &lt;Team Name="Nigeria" id="t3"/&gt;<br>
+		      &lt;Team Name="England" id="t4"/&gt;<br>
+	   &lt;/Teams&gt;<br>
+	   &lt;Matches&gt;<br>
+		      &lt;Match id="m1"&gt;<br>
+			         &lt;Team&gt;t1&lt;/Team&gt;<br>
+			         &lt;Team&gt;t4&lt;/Team&gt;<br>
+		      &lt;/Match&gt;<br>
+		      &lt;Match id="m2"&gt;<br>
+			         &lt;Team&gt;t2&lt;/Team&gt;<br>
+			         &lt;Team&gt;t3&lt;/Team&gt;<br>
+		      &lt;/Match&gt;<br>
+	   &lt;/Matches&gt;<br>
+&lt;/Tournament&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+		<p>Unfortunately the RELAX-NG schema will also validate the XML instance document even if
+the <span class="attribute">id</span> for one of the teams playing in a match doesn't match the <span class="attribute">id</span> of a team that
+has been registered in the tournament (appears as a child of the <span class="element">Teams</span> element).
+It is very easy to add a Schematron rule to check this extra constraint and it could
+for example be done by adding an embedded rule to the definition of the pattern that
+match the <span class="element">Match</span> element:</p>
+
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+			&lt;element name="Matches"&gt;<br>
+				   &lt;oneOrMore&gt;<br>
+					      &lt;element name="Match"&gt;<br>
+						         &lt;sch:pattern name="Check that each team is registered in
+the tournament" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+							            &lt;sch:rule context="Matches/Match/Team"&gt;<br>
+								               &lt;sch:assert test="text() = ../../../Teams/Team/@id"<br>
+&gt;Each Team in a Match must be a registered Team in the tournament.&lt;/sch:assert&gt;<br>
+							            &lt;/sch:rule&gt;<br>
+						         &lt;/sch:pattern&gt;<br>
+						         &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						         &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						         &lt;attribute name="id"/&gt;<br>
+					      &lt;/element&gt;<br>
+				   &lt;/oneOrMore&gt;<br>
+			&lt;/element&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+		<p>With this new definition for the pattern following XML instance document would be invalid</p>
+
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Tournament&gt;<br>
+	   &lt;Name&gt;FIFA World Cup&lt;/Name&gt;<br>
+	   &lt;Teams&gt;<br>
+		      &lt;Team Name="Sweden" id="t1"/&gt;<br>
+		      &lt;Team Name="Argentina" id="t2"/&gt;<br>
+	   &lt;/Teams&gt;<br>
+	   &lt;Matches&gt;<br>
+		      &lt;Match id="m1"&gt;<br>
+			         &lt;Team&gt;t1&lt;/Team&gt;<br>
+			         &lt;Team&gt;t4&lt;/Team&gt;<br>
+		      &lt;/Match&gt;<br>
+	   &lt;/Matches&gt;<br>
+&lt;/Tournament&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+		<p>since a team with an <span class="attribute">id</span>="t4" is not registered in the tournament.</p>
+
+<a name="3Dependancy"><span class="heading2">Dependancy between XML documents</span>
+		</a><p><a name="3Dependancy">Neither RELAX-NG nor W3C XML Schema was designed to handle dependancies between
+XML instance documents but sometimes this is a necessary requirement. For example, if the teams in the previous example were
+put in a separate XML instance document
+we would still need to validate that each team in a match is registered as a child
+of the <span class="element">Teams</span> element.</a></p>
+<a name="3Dependancy">		</a><p><a name="3Dependancy">With this new design the RELAX-NG schema for the tournament would be:</a></p>
+
+<a name="3Dependancy">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;grammar xmlns="http://relaxng.org/ns/structure/1.0"&gt;<br>
+	   &lt;start&gt;<br>
+		      &lt;ref name="Tournament"/&gt;<br>
+	   &lt;/start&gt;<br>
+	   &lt;define name="Tournament"&gt;<br>
+		      &lt;element name="Tournament"&gt;<br>
+			         &lt;element name="Name"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+			         &lt;element name="Matches"&gt;<br>
+				            &lt;oneOrMore&gt;<br>
+					               &lt;element name="Match"&gt;<br>
+						                  &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						                  &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						                  &lt;attribute name="id"/&gt;<br>
+					               &lt;/element&gt;<br>
+				            &lt;/oneOrMore&gt;<br>
+			         &lt;/element&gt;<br>
+		      &lt;/element&gt;<br>
+	   &lt;/define&gt;<br>
+&lt;/grammar&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+<a name="3Dependancy">		</a><p><a name="3Dependancy">with the corresponding instance:</a></p>
+
+<a name="3Dependancy">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Tournament&gt;<br>
+	   &lt;Name&gt;FIFA World Cup&lt;/Name&gt;<br>
+	   &lt;Matches&gt;<br>
+		      &lt;Match id="m1"&gt;<br>
+			         &lt;Team&gt;t1&lt;/Team&gt;<br>
+			         &lt;Team&gt;t4&lt;/Team&gt;<br>
+		      &lt;/Match&gt;<br>
+		      &lt;Match id="m2"&gt;<br>
+			         &lt;Team&gt;t2&lt;/Team&gt;<br>
+			         &lt;Team&gt;t3&lt;/Team&gt;<br>
+		      &lt;/Match&gt;<br>
+	   &lt;/Matches&gt;<br>
+&lt;/Tournament&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+<a name="3Dependancy">		</a><p><a name="3Dependancy">The schema that defines the teams would be:</a></p>
+
+<a name="3Dependancy">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;grammar xmlns="http://relaxng.org/ns/structure/1.0"&gt;<br>
+	   &lt;start&gt;<br>
+		      &lt;ref name="Teams"/&gt;<br>
+	   &lt;/start&gt;<br>
+	   &lt;define name="Teams"&gt;<br>
+		      &lt;element name="Teams"&gt;<br>
+			         &lt;!-- We must have at least two teams --&gt;<br>
+			         &lt;ref name="Team"/&gt;<br>
+			         &lt;oneOrMore&gt;<br>
+				            &lt;ref name="Team"/&gt;<br>
+			         &lt;/oneOrMore&gt;<br>
+		      &lt;/element&gt;<br>
+	   &lt;/define&gt;<br>
+	   &lt;define name="Team"&gt;<br>
+		      &lt;element name="Team"&gt;<br>
+			         &lt;attribute name="id"/&gt;<br>
+			         &lt;optional&gt;<br>
+				            &lt;attribute name="Name"/&gt;<br>
+			         &lt;/optional&gt;<br>
+		      &lt;/element&gt;<br>
+	   &lt;/define&gt;<br>
+&lt;/grammar&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+<a name="3Dependancy">		</a><p><a name="3Dependancy">with the instance:</a></p>
+
+<a name="3Dependancy">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;Teams&gt;<br>
+	   &lt;Team Name="Sweden" id="t1"/&gt;<br>
+	   &lt;Team Name="Argentina" id="t2"/&gt;<br>
+	   &lt;Team Name="Nigeria" id="t3"/&gt;<br>
+	   &lt;Team Name="England" id="t4"/&gt;<br>
+&lt;/Teams&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+<a name="3Dependancy">		</a><p><a name="3Dependancy">Now, when validation is performed of the XML instance document with the tournament
+information we still want to make sure that each team in a match is declared in the XML
+instance document that
+contains the teams. Like in the previous example the embedded Schematron rule can
+be defined on the pattern for the <span class="element">Match</span> element. The
+only difference will be that this time the document() function will be used to access
+the instance where the teams are defined:</a></p>
+
+<a name="3Dependancy">		</a><table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+			&lt;element name="Matches"&gt;<br>
+				   &lt;oneOrMore&gt;<br>
+					      &lt;element name="Match"&gt;<br>
+						         &lt;sch:pattern name="Check that each team is registered in
+the tournament" xmlns:sch="http://purl.oclc.org/dsdl/schematron"&gt;<br>
+							            &lt;sch:rule context="Matches/Match/Team"&gt;<br>
+								               &lt;sch:assert test="text() = document('Teams.xml')/Teams/Team/@id"<br>
+&gt;Each Team in a Match must be a registered Team in the tournament.&lt;/sch:assert&gt;<br>
+							            &lt;/sch:rule&gt;<br>
+						         &lt;/sch:pattern&gt;<br>
+						         &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						         &lt;element name="Team"&gt;&lt;text/&gt;&lt;/element&gt;<br>
+						         &lt;attribute name="id"/&gt;<br>
+					      &lt;/element&gt;<br>
+				   &lt;/oneOrMore&gt;<br>
+			&lt;/element&gt;
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+
+<a name="Processing"><span class="heading1">Processing</span>
+	</a><p><a name="Processing">Neither
+a W3C XML Schema nor a RELAX-NG processor will recognize and perform the
+validation constraints expressed by the embedded Schematron rules. In fact,
+the embedded Schematron rules will be completely ignored by both processors
+since for W3C XML Schema they are declared within the <span class="element">appinfo</span> element and
+for RELAX-NG they are declared in the Schematron namespace<sup></sup></a><sup><a href="#fotnot2">2</a></sup>. This means that in order to use the Schematron rules for validation they need
+to be extracted from the host schema and concatenated into a Schematron schema. Since all
+three schema languages use XML syntax a perfect tool for this is XSLT.</p>
+	<p>The <del><a href="http://www.topologi.com/public/Schtrn_XSD/XSD2Schtrn.zip">XSD2Schtrn.xsl</a></del>  <a href="http://www.schematron.com/implementation.html">ExtractSchFromXSD.xsl</a> stylesheet
+will extract embedded Schematron rules from a W3C XML Schema document and merge them
+into a complete Schematron schema. It will also extract Schematron rules that have
+been declared in W3C XML Schema modules that are imported, included or redefined
+in the base schema. (There is a version for Schematron schemas that use XSLT2 called
+<a href="http://www.schematron.com/implementation.html">ExtractSchFromXSD-2.xsl</a>) <p>
+
+<p>Similarily, the <del><a href="http://www.topologi.com/public/Schtrn_XSD/RNG2Schtrn.zip">RNG2Schtrn.xsl</a></del> <a href="http://www.schematron.com/implementation.html">ExtractSchFromRNG.xsl</a> stylesheet
+will extract embedded Schematron rules from a RELAX-NG schema document. It will also extract Schematron rules that has
+been declared in RELAX-NG modules that are included in or referenced from the base schema. (There is a version for Schematron schemas that use XSLT2 called
+<a href="http://www.schematron.com/implementation.html">ExtractSchFromRNG-2.xsl</a>) </p>
+	<p>The result from the scripts is a complete Schematron schema that can be validated
+using the two-step XSLT process described in the <a href="#Introduction_to_Schematron">Introduction to Schematron</a>
+section above. This means that validation results are available from both
+Schematron validation and W3C XML Schema or RELAX-NG validation and if needed
+the results can be merged into one report. The whole process is described
+in the following picture:</p>
+<center>
+  <img src="../images/Figure-2_both.jpg" border="0">
+</center>
+	<p>As
+can be seen in the picture, there are two distinctive paths in the processing
+which means that if timing is important the two paths could be implemented
+as separate processes and be executed in parallel.</p>
+	<p>A batch file that would (using <a href="http://www.ltg.ed.ac.uk/%7Eht/xsv-status.html">XSV</a> and Saxon) validate an
+XML instance document against both W3C XML Schema and its embedded Schematron rules can look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+echo Running XSV validation on Person_bad.xml...<br>
+<br>
+      xsv Person_bad.xml<br>
+<br>
+echo Creating Schematron schema from appinfo in Person.xsd...<br>
+<br>
+      saxon -o Person.sch Person.xsd XSD2Schtron.xsl<br>
+<br>
+echo Running Basic Schematron validation on file Person_bad.xml...<br>
+<br>
+	   saxon -o validate.xsl Person.sch schematron-basic.xsl<br>
+	   saxon Person_bad.xml validate.xsl<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>So, first is the XML instance document is validated against the W3C XML Schema using XSV and then it is validated with
+the embedded Schematron rules using Saxon. An output example could look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+Running XSV validation on Person.xml...<br>
+<br>
+&lt;?xml version='1.0'?&gt;<br> &lt;xsv docElt='{None}Person' instanceAssessed='true'
+instanceErrors='0' rootType='[Anonymous]' schemaErrors='0' schemaLocs='None
+-&gt; Person.xsd' target='file:/E:/Work/XMLSchema/XML-DEV/Schtrn+W3C/Person.xml'
+validation='strict' version='XSV 1.203.2.16/1.106.2.8 of 2001/<br>
+10/28 17:39:15' xmlns='http://www.w3.org/2000/05/xsv'&gt;<br>
+&lt;schemaDocAttempt URI='file://C:/Person.xsd' outcome='success' source='schemaLoc'/&gt;<br>
+&lt;/xsv&gt;<br>
+<br>
+Done.<br>
+<br>
+Creating Schematron schema from appinfo in Person.xsd...<br>
+Running Basic Schematron validation on file Person.xml...<br>
+<br>
+	   From pattern "Check structure": <br>
+<br>
+	   From pattern "Check co-occurrence constraints": <br>
+Assertion fails: "If the Title is "Mr" then the sex of the person must be "Male"."  at <br>
+      /Person[1] <br>
+      &lt;Person Title="Mr"&gt;...&lt;/&gt; <br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+	<p>Similarily a batch file that would (using the Win32 executable of <a href="http://www.thaiopensource.com/relaxng/jing.html">Jing</a> and Saxon) validate
+an XML instance document against a RELAX-NG schema and its embedded Schematron rules can look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+echo Running Jing validation on Tournament_bad.xml...<br>
+<br>
+      jing Tournament.rng Tournament_bad.xml<br>
+<br>
+echo Creating Schematron schema from Tournament.rng...<br>
+<br>
+      saxon -o Tournament.sch Tournament.rng RNG2Schtron.xsl<br>
+<br>
+echo Running Basic Schematron validation on file Tournament_bad.xml...<br>
+<br>
+	   saxon -o validate.xsl Tournament.sch schematron-basic.xsl<br>
+	   saxon Tournament_bad.xml validate.xsl<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+<p>An output example could look like this:</p>
+		<table border="0" cellpadding="14" cellspacing="14" width="100%">
+			<tbody><tr class="greytable">
+				<td>
+					<p><span class="greytable">
+Running Jing validation on Tournament_bad.xml...<br>
+<br>
+Error at URL "file:/D:/Work/XMLSchema/XML-DEV/Schtrn+W3C/Article/Emb_Schtrn/Tournament_bad.xml", line number 7: unknown
+element "BugusTeam"<br>
+<br>
+Creating Schematron schema from Tournament.rng...<br>
+<br>
+Running Basic Schematron validation on file Tournament_bad.xml...<br>
+<br>
+From pattern "Check that each team is registered in the tournament":<br>
+        Assertion fails: "Each Team in a Match must be a registered Team in the tournament."  at
+        /Tournament[1]/Matches[1]/Match[1]/Team[2]<br>
+        &lt;Team&gt;...&lt;/&gt;<br>
+<br>
+Done.<br>
+					</span></p>
+				</td>
+			</tr>
+		</tbody></table>
+
+	<p>The <a href="http://www.topologi.com/">Topologi Schematron Validator</a> is a graphical validator that can validate and
+XML instance document using both W3C XML Schemas and RELAX-NG schemas with embedded Schematron rules.</p>
+
+
+<a name="Summary"><span class="heading1">Summary</span>
+</a><p><a name="Summary">Schematron is a very good complement to both W3C XML Schema and RELAX-NG and there seems
+little that cannot be validated by the combination.
+This article has shown how to extract the embedded Schematron rules and validate
+the resulting Schematron schema using a three-step XSLT process. The examples shown can be downloaded
+in a </a><a href="http://www.topologi.com/public/Schtrn_XSD/Examples2.zip">zip-file</a> that also contains Saxon,
+XSV and Jing so you can try them out yourself (only Windows is supported and Jing
+needs Microsoft Java VM).</p>
+
+	<p>It is up to each project and use-case to evaluate if this is suitable technique
+to achieve more powerful validation and some of the advantages and disadvantages
+to take into account are:</p>
+		<dir><p>
+			+ By combining the power of W3C XML Schema and Schematron the limit for
+what can be done in terms of validation is raised to a new level.<br>
+			+ Many of the constraints that previously had to be checked in the application
+can now be moved out of the application and into the schema.<br>
+			+ Since Schematron lets you provide your own error messages (the content
+of the assertion elements) you can assure that each message is as explanatory
+as it needs to be.<br><br>
+			- In time critical applications the overhead of processing the embedded Schematron rules may be too long.<br>
+			- Since the extraction of Schematron rules from a RELAX-NG schema is performed with
+XSLT, embedded Schematron rules are only supported in RELAX-NG schema that use the
+full XML syntax.</p>
+		</dir>
+	<p>For
+W3C XML Schema it should also be noted that, at this stage, Schematron rules
+can only applied on specific elements in the XML instance document. It is
+not yet possible to apply a Schematron rule to a type definition in W3C XML
+Schema which would make this technique even more powerful. Depending on how
+much of the PSVI<sup><a href="#fotnot3">3</a></sup> that will be
+available in the next version of XPath this is something that may be possible in the future.</p>
+	<p>If you do not mind adding two more XSLT processes to the processing chain this is in fact possible to do with the
+help of Francis Norton's <a href="http://www.schemavalid.com/utils/typeTagger.zip">typeTagger</a>.
+The basic idea is that it annotates the XML instance document with extra
+attributes containing, among other things, the element type information from
+the W3C XML Schema.</p>
+	<p>Instead of using the RNG2Schtrn.xsl stylesheet there exists an alternative way
+to validate embedded Schematron rules in a RELAX-NG schema. One version of Sun's
+<a href="http://wwws.sun.com/software/xml/developers/schematronaddon/">MSV</a> have an
+add-on that will validate XML documents against RELAX-NG schemas annotated with Schematron rules.</p>
+	<p>The ability to combine embedded Schematron rules is not unique to W3C XML Schema and
+RELAX-NG and in fact it should be possible in all XML Schema languages the uses XML syntax and have an extensibility mechanism.
+The only thing needed is to modify the XSLT extractor stylesheet to accomodate the
+extension mechanism in the XML Schema language.</p>
+
+<a name="Acknowledgements"><span class="heading1">Acknowledgements</span>
+</a><p><a name="Acknowledgements">I would like to thank Rick Jelliffe for taking the time to review this paper.</a></p>
+<a name="Acknowledgements">		</a><hr>
+<a name="Acknowledgements">	</a><p><a name="fotnot1"></a><span class="footnote">1. The test attribute allows XPath expressions to be combined in or groups (using the | operator and parentheses for grouping.</span> <a href="javascript: history.go(-1);">Back to text</a> </p>
+	<p><a name="fotnot2"></a><span class="footnote">2. A RELAX-NG processor will ignore
+all element that are defined in a different namespace than the RELAX-NG namespace
+(http://relaxng.org/ns/structure/1.0).</span> <a href="javascript: history.go(-1);">Back to text</a></p>
+	<p><a name="fotnot3"></a><span class="footnote">3. PSVI is short hand for Post Schema Validation Infoset which is a modified version of the original document's <a href="http://www.w3.org/TR/2001/REC-xml-infoset-20011024/">infoset</a>, providing additional information such as default values, datatypes, etc.</span> <a href="javascript: history.go(-1);">Back to text</a></p>
+		<hr><p><a name="copyright"></a>Copyright © 2002, Eddie Robertsson<br>This is a draft paper that can be used privately but do not repost publicly.</p>
+	</body></html>

@@ -27,6 +27,8 @@
   <import file="${ant-hology.taskdefs.dir}/java-xt.xml" unless:set="ant-hology.taskdefs.java-xt.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/mathmlToPng.xml" unless:set="ant-hology.taskdefs.mathmlToPng.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/property.set.ant-hology.jdk_JAVA_HOME.xml" unless:set="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/schemavalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.schemavalidate-xmlcatalog.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/script-javascript.xml" unless:set="ant-hology.taskdefs.script-javascript.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-calabash.xml" unless:set="ant-hology.taskdefs.task-calabash.loaded"/>
@@ -43,6 +45,7 @@
   <import file="${ant-hology.taskdefs.dir}/windows-mklink.xml" unless:set="ant-hology.taskdefs..windows-mklink.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xmlvalidate-wellformed-xerces.xml" unless:set="ant-hology.taskdefs.xmlvalidate-wellformed-xerces.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xmlvalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.xmlvalidate-xmlcatalog.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/XSD2SCH.xml" unless:set="ant-hology.taskdefs.XSD2SCH.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHE.xml" unless:set="ant-hology.taskdefs.xslt-saxonHE.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEhtmlparser.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEneko.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEneko.loaded"/>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.iso-schematron-xslt1"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.iso-schematron-xslt1.dir" file="${ant.file.ant-hology.pathdefs.iso-schematron-xslt1}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://code.google.com/p/schematron/#ISO_Schematron -->
+  <!-- See http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html -->
+  <path id="iso-schematron-xslt1.required">
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/ExtractSchFromRNG.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/ExtractSchFromXSD.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_abstract_expand.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_dsdl_include.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_schematron_message.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_schematron_skeleton_for_xslt1.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_schematron_terminator_xslt1.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_schematron_text_xslt1.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_svrl_for_xslt1.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/readme.txt"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt1/schematron-skeleton-api.htm"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.iso-schematron-xslt1.loaded" value="true"/>
+
+</project>

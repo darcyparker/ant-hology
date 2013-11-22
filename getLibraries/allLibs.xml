@@ -45,6 +45,8 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.hamcrest.xml" unless:set="ant-hology.getLibraryDefs.hamcrest.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.htmlparser.xml" unless:set="ant-hology.getLibraryDefs.htmlparser.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.icu4j.xml" unless:set="ant-hology.getLibraryDefs.icu4j.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt1.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt1.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt2.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt2.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.jchardet.xml" unless:set="ant-hology.getLibraryDefs.jchardet.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.jeuclid.xml" unless:set="ant-hology.getLibraryDefs.jeuclid.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.jing.xml" unless:set="ant-hology.getLibraryDefs.jing.loaded"/>
@@ -68,6 +70,8 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.xmlunit.xml" unless:set="ant-hology.getLibraryDefs.xmlunit.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.xom.xml" unless:set="ant-hology.getLibraryDefs.xom.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.xp.xml" unless:set="ant-hology.getLibraryDefs.xp.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.XSD2SCH.xml" unless:set="ant-hology.getLibraryDefs.XSD2SCH.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.xsdlib.xml" unless:set="ant-hology.getLibraryDefs.xsdlib.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.xt.xml" unless:set="ant-hology.getLibraryDefs.xt.loaded"/>
 
   <target
@@ -107,6 +111,8 @@
     ant-hology.get.hamcrest,
     ant-hology.get.htmlparser,
     ant-hology.get.icu4j,
+    ant-hology.get.iso-schematron-xslt1,
+    ant-hology.get.iso-schematron-xslt2,
     ant-hology.get.jchardet,
     ant-hology.get.jeuclid,
     ant-hology.get.jing,
@@ -130,6 +136,8 @@
     ant-hology.get.xmlunit,
     ant-hology.get.xom,
     ant-hology.get.xp,
+    ant-hology.get.XSD2SCH,
+    ant-hology.get.xsdlib,
     ant-hology.get.xt
     "
     >

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.iso-schematron-xslt2"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.iso-schematron-xslt2.dir" file="${ant.file.ant-hology.pathdefs.iso-schematron-xslt2}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See https://code.google.com/p/schematron/#ISO_Schematron -->
+  <!-- See http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html -->
+  <path id="iso-schematron-xslt2.required">
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/ExtractSchFromRNG-2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/ExtractSchFromXSD-2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_abstract_expand.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_dsdl_include.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_schematron_message_xslt2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_schematron_skeleton_for_saxon.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_schematron_terminator_xslt2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_schematron_text_xslt2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_svrl_for_xslt2.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/readme.txt"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/sch-messages-cs.xhtml"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/sch-messages-de.xhtml"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/sch-messages-en.xhtml"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/sch-messages-fr.xhtml"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/sch-messages-nl.xhtml"/>
+    <pathelement location="${ant-hology.lib.dir}/iso-schematron-xslt2/schematron-skeleton-api.htm"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.iso-schematron-xslt2.loaded" value="true"/>
+
+</project>

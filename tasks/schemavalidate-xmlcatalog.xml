@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.schemavalidate-xmlcatalog"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+  <!-- preset schemavalidate task configured to use xmlcatalog and validate
+       against XML schemas -->
+
+  <dirname property="ant-hology.taskdefs.schemavalidate-xmlcatalog.dir" file="${ant.file.ant-hology.taskdefs.schemavalidate-xmlcatalog}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <presetdef
+    name="schemavalidate-xmlcatalog"
+    description="preset schemavalidate task configured to use xmlcatalog and validate against XML schemas"
+    if:set="_requiredAvailable"
+    >
+    <schemavalidate
+      failonerror="true"
+      lenient="false"
+      warn="true"
+      classname="org.apache.xml.resolver.tools.ResolvingXMLReader">
+      <!--Note: ResolvingParser does not report errors-->
+      <!--classname="org.apache.xml.resolver.tools.ResolvingParser">-->
+
+      <classpath>
+        <path refid="apache-xerces.classpath"/>
+        <path refid="apache-commons-xmlresolver.classpath"/>
+        <path refid="xmlcatalog.classpath"/>
+      </classpath>
+      <!--See features here:-->
+      <!--http://xerces.apache.org/xerces2-j/features.html-->
+      <attribute
+        name="http://xml.org/sax/features/namespaces"
+        value="true"/>
+      <attribute
+        name="http://xml.org/sax/features/validation"
+        value="true"/>
+      <attribute
+        name="http://apache.org/xml/features/validation/schema"
+        value="true"/>
+    </schemavalidate>
+  </presetdef>
+
+  <property name="ant-hology.taskdefs.schemavalidate-xmlcatalog.loaded" value="true"/>
+
+</project>
