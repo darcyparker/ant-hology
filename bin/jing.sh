@@ -55,7 +55,7 @@ fi
 #jing.sh -C XMLCatalog/catalog.xml -I rnc -O xsd XMLCatalog/schematron/iso/iso-schematron.rnc XMLCatalog/schematron/iso/iso-schematron.xsd
 if [ -z "$*" ]; then
   java \
-    -jar "$_jingDir/bin/jing.jar"
+    -jar "$_jingDir/jing.jar"
 else
   java \
     -cp \
