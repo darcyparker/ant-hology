@@ -18,6 +18,13 @@
     <pathelement location="${ant-hology.lib.dir}/apache-xerces-2.11.0/serializer.jar"/>
   </path>
 
+  <!--Contains xni.XMLGrammarBuilder class-->
+  <!--This is used by XSD2SCH task.-->
+  <!--Also contains xni.parser.CSVParser-->
+  <path id="apache-xerces.samples.classpath">
+    <pathelement location="${ant-hology.lib.dir}/apache-xerces-2.11.0/xercesSamples.jar"/>
+  </path>
+
   <property name="ant-hology.pathdefs.apache-xerces.loaded" value="true"/>
 
 </project>
