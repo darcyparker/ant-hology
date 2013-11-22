@@ -11,6 +11,7 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/xsdlib.xml" unless:set="ant-hology.pathdefs.xsdlib.loaded"/>
 
   <!-- See http://msv.sourceforge.net/ -->
