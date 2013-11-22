@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.exec-hg"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.exec-hg.dir" file="${ant.file.ant-hology.taskdefs.exec-hg}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!--Simple wrapper for hg command.-->
+
+  <macrodef
+    name="exec-hg"
+    description="A simple wrapper for the hg command"
+    >
+    <attribute
+      name="dir"
+      description="the directory in which the hg command will be executed"
+      />
+    <attribute
+      name="options"
+      description="options to pass to hg executable"
+      default=""/>
+    <attribute
+      name="failonerror"
+      default="true"
+      />
+
+    <sequential>
+      <!--Convert attributes to paths for os-->
+      <local name="_dir"/>
+      <property
+        name="_dir"
+        location="@{dir}"
+        />
+      <exec executable="hg" dir="${_dir}" searchpath="true" failonerror="@{failonerror}">
+        <arg line="@{options}"/>
+      </exec>
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.exec-hg.loaded" value="true"/>
+
+</project>

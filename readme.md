@@ -23,6 +23,7 @@ use in my projects. (Particularly XSLT related tasks).
     - `cvs` from http://ftp.gnu.org/non-gnu/cvs/binary/stable/x86-woe
     - `svn` from http://alagazam.net/
     - `git` from http://git-scm.com/downloads
+    - `hg` from http://mercurial.selenic.com/
 - Other 3rd party library requirements can be installed using the getter targets
   in ant-hology. For example
   - `ant ant-hology.getAllLibraries` to get all libraries

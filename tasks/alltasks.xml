@@ -13,6 +13,7 @@
 
   <import file="${ant-hology.taskdefs.dir}/exec-git.xml" unless:set="ant-hology.taskdefs.exec-git.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/exec-svn.xml" unless:set="ant-hology.taskdefs.exec-svn.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/exec-hg.xml" unless:set="ant-hology.taskdefs.exec-hg.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonbhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonbhtmlparser.loaded"/>

@@ -43,6 +43,7 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-io.xml" unless:set="ant-hology.getLibraryDefs.freehep-io.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.google-closure-compiler.xml" unless:set="ant-hology.getLibraryDefs.google-closure-compiler.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.hamcrest.xml" unless:set="ant-hology.getLibraryDefs.hamcrest.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.html5validator.xml" unless:set="ant-hology.getLibraryDefs.html5validator.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.htmlparser.xml" unless:set="ant-hology.getLibraryDefs.htmlparser.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.icu4j.xml" unless:set="ant-hology.getLibraryDefs.icu4j.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt1.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt1.loaded"/>
@@ -109,6 +110,7 @@
     ant-hology.get.freehep-io,
     ant-hology.get.google-closure-compiler,
     ant-hology.get.hamcrest,
+    ant-hology.get.html5validator,
     ant-hology.get.htmlparser,
     ant-hology.get.icu4j,
     ant-hology.get.iso-schematron-xslt1,

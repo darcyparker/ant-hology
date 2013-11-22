@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.html5validator"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.html5validator.dir" file="${ant.file.ant-hology.pathdefs.html5validator}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://syntax.whattf.org/ -->
+  <!--This is an html5 validator based on relaxng and schematron-->
+  <path id="html5validator.required">
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/applications.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/aria.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/assertions.sch"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/block.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/common.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/core-scripting.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/data.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/embed.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/form-datatypes.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/html5.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/html5exclusions.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/media.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/meta.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/microdata.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/phrase.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/rdfa.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/revision.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/ruby.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/sectional.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/structural.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/tables.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/web-components.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/web-forms-scripting.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/web-forms.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/web-forms2-scripting.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/web-forms2.rnc"/>
+    <pathelement location="${ant-hology.lib.dir}/html5validator/relaxng/xhtml5.rnc"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.html5validator.loaded" value="true"/>
+
+</project>
