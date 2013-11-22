@@ -13,6 +13,7 @@
   <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xmlvalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.xmlvalidate-xmlcatalog.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/schemavalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.schemavalidate-xmlcatalog.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-jing.xml" unless:set="ant-hology.taskdefs.task-jing.loaded"/>
 
   <import file="${ant-hology.pathdefs.dir}/saxonHE.xml" unless:set="ant-hology.pathdefs.saxonHE.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
