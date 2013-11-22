@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.property.set.fileName"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.property.set.fileName.dir" file="${ant-hology.taskdefs.property.set.fileName}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="${ant-hology.commonProperties.loaded}"/>
+  <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
+
+  <scriptdef-javascript
+    name="property.set.fileName"
+    description="property.set.fileName receives a @{filepath} and creates @{property} with its filename."
+    src="${ant-hology.taskdefs.dir}/property.set.fileName.min.js">
+    <!--src="${ant-hology.taskdefs.dir}/property.set.fileName.js">-->
+    <!--FYI: minified with google closure compiler-->
+    <!--Of course minification is not necessary... but trying it out.-->
+    <attribute
+      name="property"/>
+    <attribute
+      name="filepath"/>
+    <attribute
+      name="ant:if:if:set"/>
+    <attribute
+      name="ant:if:if:true"/>
+    <attribute
+      name="ant:if:if:blank"/>
+    <attribute
+      name="ant:unless:unless:set"/>
+    <attribute
+      name="ant:unless:unless:true"/>
+    <attribute
+      name="ant:unless:unless:blank"/>
+  </scriptdef-javascript>
+
+  <property name="ant-hology.taskdefs.property.set.fileName.loaded" value="true"/>
+
+</project>

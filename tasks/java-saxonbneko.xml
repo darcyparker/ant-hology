@@ -10,6 +10,8 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
+
   <import file="${ant-hology.pathdefs.dir}/saxonb.xml" unless:set="ant-hology.pathdefs.saxonb.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/nekohtml.xml" unless:set="ant-hology.pathdefs.nekohtml.loaded"/>
@@ -64,7 +66,7 @@
     <attribute
       name="srcdir"
       default=""
-      description="Destination directory for output."/>
+      description="Source directory for srcfile."/>
     <attribute
       name="srcfile"
       default=""
@@ -182,17 +184,20 @@
       <!--This sequential is for the case when user defines <files/>-->
       <sequential if:set="_haveFiles">
         <!--<echo>Transforming ${_filesCount} file(s).</echo>-->
-        <!--Extract just the _xslrelativepath-->
-        <local name="_xslrelativepath"/>
-        <property name="_xslrelativepath" location="@{xsl}" relative="true"/>
+        <!--Extract _xslFileName-->
+        <local name="_xslPath"/>
+        <property name="_xslPath" location="@{xsl}"/>
+        <local name="_xslFileName"/>
+        <property.set.fileName property="_xslFileName" filepath="${_xslPath}"/>
+        <!--<echo>_xslFileName=${_xslFileName}</echo>-->
 
         <!--Compile the XSL once so it doesn't have to be compiled for each file in <files/>-->
-        <!--Output compiled stylesheet to ${ant-hology.temp.dir}/${_xslrelativepath}.compiled-->
+        <!--Output compiled stylesheet to ${ant-hology.temp.dir}/${_xslFileName}.compiled-->
         <!--Note: This is for saxonb.  net.sf.saxon.Compile is not available for saxonHE-->
-        <echo unless:set="_reloadStylesheet">Compiling stylesheet @{xsl} to ${ant-hology.temp.dir}/${_xslrelativepath}.compiled</echo>
+        <echo unless:set="_reloadStylesheet">Compiling stylesheet @{xsl} to ${ant-hology.temp.dir}/${_xslFileName}.compiled</echo>
         <echo if:set="_reloadStylesheet">Not pre-compiling stylesheet. @{xsl} will be compiled for each transform.</echo>
-        <delete file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
-        <mkdir dir="${ant-hology.temp.dir}/${_xslrelativepath}/.." unless:set="_reloadStylesheet"/>
+        <delete file="${ant-hology.temp.dir}/${_xslFileName}.compiled" unless:set="_reloadStylesheet"/>
+        <mkdir dir="${ant-hology.temp.dir}" unless:set="_reloadStylesheet"/>
         <exec executable="java" failonerror="@{failonerror}" unless:set="_reloadStylesheet">
           <arg value="-cp"/>
           <arg value="${_classpath}"/>
@@ -208,7 +213,7 @@
           <arg value="-r"/>
           <arg value="org.apache.xml.resolver.tools.CatalogResolver"/>
           <arg file="@{xsl}"/>
-          <arg file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled"/>
+          <arg file="${ant-hology.temp.dir}/${_xslFileName}.compiled"/>
         </exec>
         <apply executable="java" parallel="false" failonerror="@{failonerror}">
           <files/>
@@ -227,14 +232,14 @@
           <arg value="-r:org.apache.xml.resolver.tools.CatalogResolver"/>
           <arg prefix="-it:" value="@{initialtemplate}" unless:blank="@{initialtemplate}"/>
           <arg prefix="-im:" value="@{initialmode}" unless:blank="@{initialmode}"/>
-          <arg prefix="-c:" file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
+          <arg prefix="-c:" file="${ant-hology.temp.dir}/${_xslFileName}.compiled" unless:set="_reloadStylesheet"/>
           <arg prefix="-xsl:" file="@{xsl}" if:set="_reloadStylesheet"/>
           <srcfile prefix="-s:"/>
           <targetfile prefix="-o:"/>
           <arg line="@{options}"/>
         </apply>
         <!--Finally discard the compiled stylesheet-->
-        <delete file="${ant-hology.temp.dir}/${_xslrelativepath}.compiled" unless:set="_reloadStylesheet"/>
+        <delete file="${ant-hology.temp.dir}/${_xslFileName}.compiled" unless:set="_reloadStylesheet"/>
       </sequential>
       <!--Otherwise there is just a single transform-->
       <!--  Note: With a single transform, ${_src} and ${_dest} may not be set.-->

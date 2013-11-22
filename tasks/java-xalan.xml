@@ -10,6 +10,8 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
+
   <import file="${ant-hology.pathdefs.dir}/apache-xalan.xml" unless:set="ant-hology.pathdefs.apache.xalan.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
   <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
@@ -54,7 +56,7 @@
     <attribute
       name="srcdir"
       default=""
-      description="Destination directory for output."/>
+      description="Source directory for srcfile."/>
     <attribute
       name="srcfile"
       default=""
@@ -145,10 +147,6 @@
       <!--This sequential is for the case when user defines <files/>-->
       <sequential if:set="_haveFiles">
         <!--<echo>Transforming ${_filesCount} file(s).</echo>-->
-        <!--Extract just the _xslrelativepath-->
-        <local name="_xslrelativepath"/>
-        <property name="_xslrelativepath" location="@{xsl}" relative="true"/>
-
         <apply executable="java" parallel="false" failonerror="@{failonerror}">
           <files/>
           <inputToOutputMapper/>
