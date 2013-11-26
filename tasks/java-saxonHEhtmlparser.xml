@@ -109,9 +109,18 @@
       description="Additional command line options for saxon. For example, stylesheet parameters could be passed."
       default=""/>
     <attribute name="failonerror" default="true" />
+    <attribute
+      name="suppressEcho"
+      description="Suppress echo if true."
+      default="false"
+      />
 
     <sequential>
-      <echo>Transforming with saxonHE XSLT processor using htmlparser for src</echo>
+      <local name="_suppressEcho"/>
+      <condition property="_suppressEcho">
+        <equals arg1="@{suppressEcho}" arg2="true"/>
+      </condition>
+      <echo unless:set="_suppressEcho">Transforming with saxonHE XSLT processor using htmlparser for src</echo>
       <local name="_classpath"/>
       <pathconvert property="_classpath">
         <path refid="saxonHE.classpath"/>

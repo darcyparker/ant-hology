@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.iso-schematron-svrl-compile-xslt1"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.iso-schematron-svrl-compile-xslt1.dir" file="${ant.file.ant-hology.taskdefs.iso-schematron-svrl-compile-xslt1}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-xalan.xml" unless:set="ant-hology.taskdefs.java-xalan.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/schematron-1.5.xml" unless:set="ant-hology.pathdefs.schematron-1.5.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.iso-schematron-xslt1"
+    pathRefId="iso-schematron-xslt1.required"
+    />
+
+  <!-- See https://code.google.com/p/schematron/#ISO_Schematron -->
+  <!-- See http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html -->
+  <macrodef
+    name="iso-schematron-svrl-compile-xslt1"
+    description="iso-schematron svrl reporter compiler for xslt1"
+    if:set="ant-hology.availableLibraries.iso-schematron-xslt1"
+    >
+    <attribute
+      name="sch"
+      description="Path to the iso-schematron schema file"
+      />
+    <attribute
+      name="destXSL"
+      description="Path to the desitination XSL"
+      />
+    <!--Note: @{options} is only used for compiling phase (not include/expand-->
+    <attribute
+      name="options"
+      description="Additional command line options for xalan when compiling schematron schema. For example, stylesheet parameters could be passed."
+      default=""/>
+
+    <sequential>
+      <echo>Compiling ISO-Schematron SVRL reporter for schema: @{sch}</echo>
+      <delete file="@{destXSL}"/>
+      <mkdir dir="${ant-hology.temp.dir}/schematron"/>
+
+      <!--Extract _schFileName-->
+      <local name="_schPath"/>
+      <property name="_schPath" location="@{sch}"/>
+      <local name="_schFileName"/>
+      <property.set.fileName property="_schFileName" filepath="${_schPath}"/>
+      <!--Delete existing temp files if they exist-->
+      <local name="_tempfilesexist"/>
+
+      <delete>
+        <resources>
+          <file file="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedinclusions"/>
+          <file file="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedabstractpatterns"/>
+        </resources>
+      </delete>
+
+      <!--Note: xalan is used in case special extensions are desired in future.-->
+      <echo message="ISO-Schematron SVRL Reporter: Expanding inclusions"/>
+      <java-xalan
+        xsl="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_dsdl_include.xsl"
+        srcfile="@{sch}"
+        destfile="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedinclusions"
+        suppressEcho="true"
+        />
+      <echo message="ISO-Schematron SVRL Reporter: Expanding abstract patterns"/>
+      <java-xalan
+        xsl="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_abstract_expand.xsl"
+        srcfile="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedinclusions"
+        destfile="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedabstractpatterns"
+        suppressEcho="true"
+        />
+      <echo message="ISO-Schematron SVRL Reporter: Compiling"/>
+      <java-xalan
+        xsl="${ant-hology.lib.dir}/iso-schematron-xslt1/iso_svrl_for_xslt1.xsl"
+        srcfile="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedabstractpatterns"
+        destfile="@{destXSL}"
+        options="@{options}"
+        suppressEcho="true"
+        />
+      <!--Delete temporary files-->
+      <delete>
+        <resources>
+          <file file="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedinclusions"/>
+          <file file="${ant-hology.temp.dir}/schematron/${_schFileName}.xslt1.expandedabstractpatterns"/>
+        </resources>
+      </delete>
+
+      <local name="_destXSLExists"/>
+      <available
+        property="_destXSLExists"
+        file="@{destXSL}"
+        />
+      <echo
+        if:set="_destXSLExists"
+        message="Success: Compiled ISO-Schematron SVRL reporter: @{destXSL}"
+        />
+      <fail
+        unless:set="_destXSLExists"
+        message="Error: Compiling ISO-Schematron SVRL reporter failed."
+        />
+    </sequential>
+  </macrodef>
+
+  <property name="ant-hology.taskdefs.iso-schematron-svrl-compile-xslt1.loaded" value="true"/>
+
+</project>

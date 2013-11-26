@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.syntax.whattf.org"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.syntax.whattf.org.dir" file="${ant.file.ant-hology.pathdefs.syntax.whattf.org}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://syntax.whattf.org/ -->
+  <!-- Build instructions, see documentation: https://bitbucket.org/validator/build/src -->
+  <!-- This is an html5 validator based on relaxng and schematron -->
+  <path id="html5-validator.nu.required">
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/build"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/htmlparser"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/jars"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/jing-trang"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/local-entities"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/nu-validator-site"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/syntax"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/tests"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/util"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/validator"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/xmlparser"/>
+
+    <!--Todo, add jars-->
+  </path>
+
+  <property name="ant-hology.pathdefs.syntax.whattf.org.loaded" value="true"/>
+
+</project>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.schematron-1.5"
+  basedir="."
+  default="ant-hology.getLibraryDefs.schematron-1.5"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.schematron-1.5.dir" file="${ant.file.ant-hology.getLibraryDefs.schematron-1.5}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/schematron-1.5.xml" unless:set="ant-hology.pathdefs.schematron-1.5.loaded"/>
+
+  <!-- See http://xml.ascc.net/schematron/1.5/ -->
+  <!-- See http://xml.ascc.net/schematron/1.5/report1-5/schematron-report.html -->
+  <!-- See http://xml.ascc.net/schematron/1.5/basic1-5/schematron-basic.html -->
+  <!-- See http://xml.ascc.net/schematron/1.5/message1-5/schematron-message.html -->
+  <target
+    name="ant-hology.get.schematron-1.5"
+    description="Installs XSD schema to Schematron converter"
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver
+    "
+    unless="ant-hology.availableLibraries.schematron-1.5">
+    <areAllAvailable
+      property="ant-hology.availableLibraries.schematron-1.5"
+      pathRefId="schematron-1.5.required"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.schematron-1.5"
+      >
+      <echo>Installing Schematron v1.5</echo>
+      <delete dir="${ant-hology.lib.dir}/schematron-1.5"/>
+      <mkdir dir="${ant-hology.lib.dir}/schematron-1.5"/>
+      <get
+        src="http://xml.ascc.net/schematron/1.5/skeleton1-5.xsl"
+        dest="${ant-hology.lib.dir}/schematron-1.5/skeleton1-5.xsl"/>
+      <get
+        src="http://xml.ascc.net/schematron/1.5/report1-5/schematron-report.xsl"
+        dest="${ant-hology.lib.dir}/schematron-1.5/schematron-report.xsl"/>
+      <get
+        src="http://xml.ascc.net/schematron/1.5/report1-5/verbid.xsl"
+        dest="${ant-hology.lib.dir}/schematron-1.5/verbid.xsl"/>
+      <get
+        src="http://xml.ascc.net/schematron/1.5/conformance1-5.xsl"
+        dest="${ant-hology.lib.dir}/schematron-1.5/conformance1-5.xsl"/>
+      <get
+        src="http://xml.ascc.net/schematron/schematron1-5.xsd"
+        dest="${ant-hology.lib.dir}/schematron-1.5/schematron1-5.xsd"/>
+      <get
+        src="http://xml.ascc.net/schematron/schematron1-5.sch"
+        dest="${ant-hology.lib.dir}/schematron-1.5/schematron1-5.sch"/>
+      <!--URL is broken... so using backup in patches folder-->
+      <!--<get-->
+        <!--src="http://www.ascc.net/xml/schematron/1.5/basic1-5/schematron-basic.xsl"-->
+        <!--dest="${ant-hology.lib.dir}/schematron-1.5/schematron-basic.xsl"/>-->
+      <!--<get-->
+        <!--src="http://www.ascc.net/xml/schematron/1.5/message1-5/schematron-message.xsl"-->
+        <!--dest="${ant-hology.lib.dir}/schematron-1.5/schematron-message.xsl"/>-->
+
+      <copy todir="${ant-hology.lib.dir}/schematron-1.5">
+        <resources>
+          <file file="${ant-hology.patches.dir}/schematron-basic.xsl"/>
+          <file file="${ant-hology.patches.dir}/schematron-message.xsl"/>
+        </resources>
+      </copy>
+
+      <fixcrlf
+        srcDir="${ant-hology.lib.dir}/schematron-1.5"
+        eol="lf"
+        includes="**/*"/>
+      <!--By default patch does not work on windows if patch file does not have CR-LF line endings.-->
+      <!--See "Installation and Usage" information here about this limitation: http://gnuwin32.sourceforge.net/packages/patch.htm -->
+      <!--To work around this, pass the ==binary== argument to patch. Unfortunately the ant patch task does not-->
+      <!--have support for this.  So on windows, I am using exec task to run patch.exe.-->
+      <patch
+        unless:set="ant-hology.OS.onWindows"
+        patchfile="${ant-hology.patches.dir}/schematron-1.5-patch.txt"
+        dir="${ant-hology.lib.dir}/schematron-1.5"
+        strip="1"
+        backups="true"
+        failonerror="true"/>
+      <echo if:set="ant-hology.onWindows">Starting Patch. This requires GNU patch to be installed and in %PATH%.</echo>
+      <exec
+        dir="${ant-hology.lib.dir}/schematron-1.5"
+        executable="patch.exe"
+        failonerror="true"
+        if:set="ant-hology.OS.onWindows"
+        >
+        <arg value="--binary"/> <!--Necessary since the patch file has unix line endings.-->
+        <arg value="-b"/> <!--make backup files-->
+        <arg value="--strip=1"/> <!--strip first dir from path in patch-->
+        <arg prefix="--input=" value="${ant-hology.patches.dir}\schematron-1.5-patch.txt"/> <!--input patch file-->
+        <arg prefix="--directory=" value="${ant-hology.lib.dir}\schematron-1.5"/> <!--dir to apply patch-->
+      </exec>
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.schematron-1.5"
+        pathRefId="schematron-1.5.required"
+        />
+      <fail message="Installation failed: Some file(s) in path[@refid='schematron-1.5.required'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.schematron-1.5"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>Schematron v1.5 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.schematron-1.5.loaded" value="true"/>
+
+</project>

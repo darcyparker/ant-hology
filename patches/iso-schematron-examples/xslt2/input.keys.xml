@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<doc xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!--See http://www.dpawson.co.uk/schematron/keys.html#keys.ex1 -->
+  <chapter xml:id="c1">
+    <title>chapter title</title>
+    <para>Chapter content</para>
+  </chapter>
+
+  <chapter xml:id="c2">
+    <title>chapter title</title>
+    <para>xx</para>
+    <para>yy</para>
+    <para>zz</para>
+  </chapter>
+
+  <chapter xml:id="c3">
+    <para>Invalid first child of chapter</para>
+    <title>chapter title</title>
+    <para>xx</para>
+    <para>yy</para>
+    <para>This paragraph uses a link to a file called
+      <a xlink:href="c3.html">c3.html</a></para>
+  </chapter>
+</doc>

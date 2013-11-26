@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.apache-jena"
+  basedir="."
+  default="ant-hology.getLibraryDefs.apache-jena"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.apache-jena.dir" file="${ant.file.ant-hology.getLibraryDefs.apache-jena}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-httpcomponents.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-httpcomponents.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xerces.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/apache-jena.xml" unless:set="ant-hology.pathdefs.apache-jena.loaded"/>
+
+  <!-- See http://jena.apache.org/ -->
+  <target
+    name="ant-hology.get.apache-jena"
+    description="Installs apache-jena library"
+    depends="
+    ant-hology.get.apache-commons-httpcomponents,
+    ant-hology.get.apache-xerces
+    "
+    unless="ant-hology.availableLibraries.apache-jena">
+    <getLibraryDefs.tasks.getLib
+      libUrl="http://www.apache.org/dist/jena/binaries/apache-jena-2.11.0.zip"
+      libName="apache-jena"
+      libVersion="2.11.0"
+      classpath="apache-jena.classpath"/>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.apache-jena.loaded" value="true"/>
+
+</project>

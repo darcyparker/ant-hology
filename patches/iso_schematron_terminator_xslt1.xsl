@@ -66,7 +66,7 @@
   <!-- Select the import statement and adjust the path as
    necessary for your system.
   -->
-  <xsl:import href="iso_schematron_terminator_xsl1.xsl"/>
+  <xsl:import href="iso_schematron_skeleton_for_xslt1.xsl"/>
   <xsl:param name="diagnose">yes</xsl:param>
   <xsl:param name="phase">
     <xsl:choose>
@@ -90,8 +90,15 @@
 
   <!-- default output action: output first message and terminate -->
   <xsl:template name="process-message">
-    <xsl:variable name=" result ">
-      <xsl:apply-templates mode="text"/>
+    <!--darcyparker@gmail.com: 11/26/2013 Adding expected params "pattern" and "role"-->
+    <!--darcyparker@gmail.com: 11/26/2013 If not present then there is an error.-->
+    <xsl:param name="pattern" />
+    <xsl:param name="role" />
+    <xsl:variable name="result">
+      <xsl:apply-templates mode="text"
+        /> (<xsl:value-of select="$pattern" />
+      <xsl:if test="$role"> / <xsl:value-of select="$role" />
+      </xsl:if>)
       <xsl:choose>
         <xsl:when test=" $generate-paths = 'true' and $path-format = '2' ">
           <axsl:text>: </axsl:text>

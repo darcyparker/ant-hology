@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.pathdefs.schematron-1.5"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.pathdefs.schematron-1.5.dir" file="${ant.file.ant-hology.pathdefs.schematron-1.5}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+
+  <!-- See http://xml.ascc.net/schematron/1.5/ -->
+  <!-- See http://xml.ascc.net/schematron/1.5/report1-5/schematron-report.html -->
+  <!-- See http://xml.ascc.net/schematron/1.5/basic1-5/schematron-basic.html -->
+  <!-- See http://xml.ascc.net/schematron/1.5/message1-5/schematron-message.html -->
+  <path id="schematron-1.5.required">
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/skeleton1-5.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/conformance1-5.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/schematron-basic.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/schematron-message.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/schematron-report.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/verbid.xsl"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/schematron1-5.xsd"/>
+    <pathelement location="${ant-hology.lib.dir}/schematron-1.5/schematron1-5.sch"/>
+  </path>
+
+  <property name="ant-hology.pathdefs.schematron-1.5.loaded" value="true"/>
+
+</project>

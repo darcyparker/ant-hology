@@ -15,6 +15,7 @@
 
   <!-- See https://code.google.com/p/schematron/#ISO_Schematron -->
   <!-- See http://webcache.googleusercontent.com/search?q=cache:http://www.topologi.com/resources/schtrn_xsd_paper.html -->
+  <!-- http://www.dpawson.co.uk/schematron/ -->
   <target
     name="ant-hology.get.iso-schematron-xslt2"
     description="Installs XSD schema to Schematron converter"
@@ -42,6 +43,9 @@
           <file file="${ant-hology.patches.dir}/iso_schematron_text_xslt2.xsl"/>
           <file file="${ant-hology.patches.dir}/Combining Schematron with other XML Schema languages.html"/>
         </resources>
+      </copy>
+      <copy todir="${ant-hology.lib.dir}/iso-schematron-xslt2/iso-schematron-examples">
+        <fileset dir="${ant-hology.patches.dir}/iso-schematron-examples/xslt2"/>
       </copy>
       <fixcrlf
         srcDir="${ant-hology.lib.dir}/iso-schematron-xslt2"

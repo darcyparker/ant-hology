@@ -66,18 +66,29 @@
     </classpath>
   </taskdef>
 
+  <pathconvert property="ant-hology.ant-schematron.classpath">
+    <path refid="saxonHE.classpath"/>
+    <path refid="apache-xerces.classpath"/>
+    <path refid="apache-commons-xmlresolver.classpath"/>
+    <path refid="xmlcatalog.classpath"/>
+    <path refid="ant-schematron.classpath"/>
+  </pathconvert>
+  <!--<echo>ant-hology.ant-schematron.classpath=${ant-hology.ant-schematron.classpath}</echo>-->
+
   <presetdef
     name="schematron-validate"
     description="schematron-validate is a preset definition for configured schematron task."
     if:set="ant-hology.availableLibraries.ant-schematron"
     >
-    <schematron failonerror="true">
-      <sysproperty
-        key="org.xml.sax.driver"
-        value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
-      <sysproperty
-        key="javax.xml.transform.TransformerFactory"
-        value="net.sf.saxon.TransformerFactoryImpl"/>
+    <schematron
+      failonerror="true"
+      classpath="${ant-hology.ant-schematron.classpath}">
+      <!--<sysproperty-->
+        <!--key="org.xml.sax.driver"-->
+        <!--value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>-->
+      <!--<sysproperty-->
+        <!--key="javax.xml.transform.TransformerFactory"-->
+        <!--value="net.sf.saxon.TransformerFactoryImpl"/>-->
     </schematron>
   </presetdef>
 

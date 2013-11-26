@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.html5-validator.nu"
+  basedir="."
+  default="ant-hology.getLibraryDefs.html5-validator.nu"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.html5-validator.nu.dir" file="${ant.file.ant-hology.getLibraryDefs.html5-validator.nu}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
+
+  <!--<import file="${ant-hology.pathdefs.dir}/jing.xml" unless:set="ant-hology.pathdefs.jing.loaded"/>-->
+  <!--<import file="${ant-hology.pathdefs.dir}/icu4j.xml" unless:set="ant-hology.pathdefs.icu4j.loaded"/>-->
+  <!--<import file="${ant-hology.pathdefs.dir}/jchardet.xml" unless:set="ant-hology.pathdefs.jchardet.loaded"/>-->
+  <!--<import file="${ant-hology.pathdefs.dir}/xom.xml" unless:set="ant-hology.pathdefs.xom.loaded"/>-->
+  <!--<import file="${ant-hology.pathdefs.dir}/rhino.xml" unless:set="ant-hology.pathdefs.rhino.loaded"/>-->
+  <!--<import file="${ant-hology.pathdefs.dir}/apache-jena.xml" unless:set="ant-hology.pathdefs.apache-jena.loaded"/>-->
+
+  <import file="${ant-hology.pathdefs.dir}/html5-validator.nu.xml" unless:set="ant-hology.pathdefs.html5-validator.nu.loaded"/>
+
+  <!-- See http://syntax.whattf.org/ -->
+  <!-- Build instructions, see documentation: https://bitbucket.org/validator/build/src -->
+  <!-- This is an html5 validator based on relaxng and schematron -->
+  <target
+    name="ant-hology.get.html5-validator.nu"
+    description="Installs html5-validator.nu library"
+    unless="ant-hology.availableLibraries.html5-validator.nu"
+    if="ant-hology.OS.onUnix"
+    >
+
+    <areAllAvailable
+      property="ant-hology.availableLibraries.html5-validator.nu"
+      pathRefId="html5-validator.nu.required"
+      />
+
+    <sequential
+      unless:set="ant-hology.availableLibraries.html5-validator.nu"
+      >
+      <echo>Installing html5-validator.nu</echo>
+      <delete dir="${ant-hology.lib.dir}/html5-validator.nu"/>
+      <mkdir dir="${ant-hology.lib.dir}/html5-validator.nu"/>
+      <exec-hg
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        options="clone https://bitbucket.org/validator/build build"/>
+      <!--Tasks:-->
+      <!--checkout : Checks out the sources-->
+      <!--dldeps   : Downloads missing dependency libraries and entities-->
+      <!--dltests  : Downloads the external test suite if missing-->
+      <!--build    : Build the source-->
+      <!--test     : Run tests-->
+      <!--run      : Run the system-->
+      <!--all      : checkout dldeps dltests build test run-->
+      <!--dist     : Create a release distribution-->
+      <echo>checkout all sources</echo>
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="checkout"/>
+      </exec>
+      <echo>Downloads missing dependency libraries and entities</echo>
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="dldeps"/>
+      </exec>
+      <echo>Downloads the external test suite if missing</echo>
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="dltests"/>
+      </exec>
+      <echo>Build the source</echo>
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="build"/>
+      </exec>
+      <!--See documentation https://bitbucket.org/validator/build/src -->
+      <!--build.py all must be executed twice-->
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="build"/>
+      </exec>
+      <echo>Run the tests</echo>
+      <exec
+        executable="python"
+        dir="${ant-hology.lib.dir}/html5-validator.nu"
+        searchpath="true"
+        >
+        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
+        <arg value="test"/>
+      </exec>
+      <!--See documentation https://bitbucket.org/validator/build/src -->
+      <!--build.py all must be executed twice-->
+      <!--<exec-->
+        <!--executable="python"-->
+        <!--dir="${ant-hology.lib.dir}/html5-validator.nu"-->
+        <!--searchpath="true"-->
+        <!-->-->
+        <!--<arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>-->
+        <!--<arg value="all"/>-->
+      <!--</exec>-->
+
+      <!--Test installation-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.html5-validator.nu"
+        pathRefId="html5-validator.nu.required"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='html5-validator.nu.required'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.html5-validator.nu"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>html5-validator.nu was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.html5-validator.nu.loaded" value="true"/>
+
+</project>

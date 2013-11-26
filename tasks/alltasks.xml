@@ -12,8 +12,16 @@
   <import file="commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
 
   <import file="${ant-hology.taskdefs.dir}/exec-git.xml" unless:set="ant-hology.taskdefs.exec-git.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/exec-svn.xml" unless:set="ant-hology.taskdefs.exec-svn.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/exec-hg.xml" unless:set="ant-hology.taskdefs.exec-hg.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/exec-svn.xml" unless:set="ant-hology.taskdefs.exec-svn.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-message-compile-xslt1.xml" unless:set="ant-hology.taskdefs.iso-schematron-message-compile-xslt1.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-message-compile-xslt2.xml" unless:set="ant-hology.taskdefs.iso-schematron-message-compile-xslt2.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-svrl-compile-xslt1.xml" unless:set="ant-hology.taskdefs.iso-schematron-svrl-compile-xslt1.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-svrl-compile-xslt2.xml" unless:set="ant-hology.taskdefs.iso-schematron-svrl-compile-xslt2.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-terminator-compile-xslt1.xml" unless:set="ant-hology.taskdefs.iso-schematron-terminator-compile-xslt1.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-terminator-compile-xslt2.xml" unless:set="ant-hology.taskdefs.iso-schematron-terminator-compile-xslt2.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-text-compile-xslt1.xml" unless:set="ant-hology.taskdefs.iso-schematron-text-compile-xslt1.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/iso-schematron-text-compile-xslt2.xml" unless:set="ant-hology.taskdefs.iso-schematron-text-compile-xslt2.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonbhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonbhtmlparser.loaded"/>
@@ -29,6 +37,10 @@
   <import file="${ant-hology.taskdefs.dir}/mathmlToPng.xml" unless:set="ant-hology.taskdefs.mathmlToPng.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/property.set.ant-hology.jdk_JAVA_HOME.xml" unless:set="ant-hology.taskdefs.property.set.ant-hology.jdk_JAVA_HOME.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/schematron-1.5-basic-compile.xml" unless:set="ant-hology.taskdefs.schematron-1.5-basic-compile.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/schematron-1.5-conformance-compile.xml" unless:set="ant-hology.taskdefs.schematron-1.5-conformance-compile.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/schematron-1.5-message-compile.xml" unless:set="ant-hology.taskdefs.schematron-1.5-message-compile.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/schematron-1.5-report-compile.xml" unless:set="ant-hology.taskdefs.schematron-1.5-report-compile.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/schemavalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.schemavalidate-xmlcatalog.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/script-javascript.xml" unless:set="ant-hology.taskdefs.script-javascript.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
@@ -37,7 +49,7 @@
   <import file="${ant-hology.taskdefs.dir}/task-google-closure-compile.xml" unless:set="ant-hology.taskdefs.task-google-closure-compile.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-jing.xml" unless:set="ant-hology.taskdefs.task-jing.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-mmlconverter.xml" unless:set="ant-hology.taskdefs.task-mmlconverter.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/task-schematron.xml" unless:set="ant-hology.taskdefs.task-schematron.loaded"/>
+  <!--<import file="${ant-hology.taskdefs.dir}/task-schematron.xml" unless:set="ant-hology.taskdefs.task-schematron.loaded"/>-->
   <import file="${ant-hology.taskdefs.dir}/task-SVGRasterize.xml" unless:set="ant-hology.taskdefs.task-SVGRasterize.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-tidy.xml" unless:set="ant-hology.taskdefs.task-tidy.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-xmltask.xml" unless:set="ant-hology.taskdefs.task-xmltask.loaded"/>

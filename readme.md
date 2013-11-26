@@ -24,6 +24,7 @@ use in my projects. (Particularly XSLT related tasks).
     - `svn` from http://alagazam.net/
     - `git` from http://git-scm.com/downloads
     - `hg` from http://mercurial.selenic.com/
+    - `python`
 - Other 3rd party library requirements can be installed using the getter targets
   in ant-hology. For example
   - `ant ant-hology.getAllLibraries` to get all libraries

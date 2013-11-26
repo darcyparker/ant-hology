@@ -29,6 +29,7 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlgraphics.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlgraphics.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-fop.xml" unless:set="ant-hology.getLibraryDefs.apache-fop.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-jena.xml" unless:set="ant-hology.getLibraryDefs.apache-jena.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-tika-app.xml" unless:set="ant-hology.getLibraryDefs.apache-tika-app.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xalan.xml" unless:set="ant-hology.getLibraryDefs.apache-xalan.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
@@ -43,7 +44,7 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.freehep-io.xml" unless:set="ant-hology.getLibraryDefs.freehep-io.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.google-closure-compiler.xml" unless:set="ant-hology.getLibraryDefs.google-closure-compiler.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.hamcrest.xml" unless:set="ant-hology.getLibraryDefs.hamcrest.loaded"/>
-  <import file="${ant-hology.getLibraryDefs.dir}/get.html5validator.xml" unless:set="ant-hology.getLibraryDefs.html5validator.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.html5-validator.nu.xml" unless:set="ant-hology.getLibraryDefs.html5-validator.nu.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.htmlparser.xml" unless:set="ant-hology.getLibraryDefs.htmlparser.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.icu4j.xml" unless:set="ant-hology.getLibraryDefs.icu4j.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.iso-schematron-xslt1.xml" unless:set="ant-hology.getLibraryDefs.iso-schematron-xslt1.loaded"/>
@@ -64,6 +65,7 @@
   <import file="${ant-hology.getLibraryDefs.dir}/get.saxonbResources.xml" unless:set="ant-hology.getLibraryDefs.saxonbResources.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHEResources.xml" unless:set="ant-hology.getLibraryDefs.saxonHEResources.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.schematron-1.5.xml" unless:set="ant-hology.getLibraryDefs.schematron-1.5.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.tagsoup.xml" unless:set="ant-hology.getLibraryDefs.tagsoup.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.trang.xml" unless:set="ant-hology.getLibraryDefs.trang.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.WindowsElevationPowerToys.xml" unless:set="ant-hology.getLibraryDefs.WindowsElevationPowerToys.loaded"/>
@@ -84,8 +86,8 @@
     ant-hology.get.antlr,
     ant-hology.get.apache-ant,
     ant-hology.get.apache-avalon-framework,
-    ant-hology.get.apache-batik-resources,
     ant-hology.get.apache-batik,
+    ant-hology.get.apache-batik-resources,
     ant-hology.get.apache-commons-cli,
     ant-hology.get.apache-commons-codec,
     ant-hology.get.apache-commons-httpcomponents,
@@ -96,6 +98,7 @@
     ant-hology.get.apache-commons-xmlgraphics,
     ant-hology.get.apache-commons-xmlresolver,
     ant-hology.get.apache-fop,
+    ant-hology.get.apache-jena,
     ant-hology.get.apache-tika-app,
     ant-hology.get.apache-xalan,
     ant-hology.get.apache-xerces,
@@ -110,7 +113,7 @@
     ant-hology.get.freehep-io,
     ant-hology.get.google-closure-compiler,
     ant-hology.get.hamcrest,
-    ant-hology.get.html5validator,
+    ant-hology.get.html5-validator.nu,
     ant-hology.get.htmlparser,
     ant-hology.get.icu4j,
     ant-hology.get.iso-schematron-xslt1,
@@ -131,6 +134,7 @@
     ant-hology.get.saxonbResources,
     ant-hology.get.saxonHE,
     ant-hology.get.saxonHEResources,
+    ant-hology.get.schematron-1.5,
     ant-hology.get.tagsoup,
     ant-hology.get.trang,
     ant-hology.get.WindowsElevationPowerToys,

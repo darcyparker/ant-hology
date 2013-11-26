@@ -1,0 +1,12 @@
+diff -rupN --strip-trailing-cr schematron-1.5/conformance1-5.xsl schematron-1.5-new/conformance1-5.xsl
+--- schematron-1.5/conformance1-5.xsl	2013-11-26 09:57:58.085322643 -0500
++++ schematron-1.5-new/conformance1-5.xsl	2013-11-26 09:57:17.831940321 -0500
+@@ -36,7 +36,7 @@
+ 	xmlns:sch="http://www.ascc.net/xml/schematron"
+ >
+ 
+-<xsl:import href="..\..\schematron\skeleton1-5.xsl"/>
++<xsl:import href="skeleton1-5.xsl"/>
+ <xsl:param name="diagnose">yes</xsl:param>
+ <xsl:param name="block"></xsl:param><!-- reserved -->
+ <xsl:param name="phase">
