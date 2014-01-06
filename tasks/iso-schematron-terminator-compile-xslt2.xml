@@ -12,7 +12,7 @@
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
 
-  <import file="${ant-hology.pathdefs.dir}/schematron-1.5.xml" unless:set="ant-hology.pathdefs.schematron-1.5.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/iso-schematron-xslt2.xml" unless:set="ant-hology.pathdefs.iso-schematron-xslt2.loaded"/>
 
   <areAllAvailable
     property="ant-hology.availableLibraries.iso-schematron-xslt2"
