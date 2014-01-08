@@ -125,6 +125,11 @@ use in my projects. (Particularly XSLT related tasks).
        file="${ant-hology.dir}/all.xml"
        unless:set="${ant-hology.all.loaded}"/>
 
+     <!--If you aren't installing everything, it is useful to import the library-->
+     <!--getter targets so you can install libraries that tasks you are using may-->
+     <!--depend on.-->
+     <import file="${ant-hology.getLibraryDefs.dir}/allLibs.xml" unless:set="ant-hology.getLibraryDefs.allLibs.loaded"/>
+
      <!-- Continue your build.xml here. Define properties, targets, etc. -->
 
    </project>
