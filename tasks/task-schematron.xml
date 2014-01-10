@@ -55,7 +55,7 @@
   <taskdef
     name="schematron"
     classname="com.schematron.ant.SchematronTask"
-    if:set="ant-hology.availableLibraries.ant-schematron"
+    if:set="_requiredAvailable"
     >
     <classpath>
       <path refid="saxonHE.classpath"/>
@@ -78,7 +78,7 @@
   <presetdef
     name="schematron-validate"
     description="schematron-validate is a preset definition for configured schematron task."
-    if:set="ant-hology.availableLibraries.ant-schematron"
+    if:set="_requiredAvailable"
     >
     <schematron
       failonerror="true"
