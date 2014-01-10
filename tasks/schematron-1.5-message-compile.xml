@@ -18,13 +18,40 @@
     property="ant-hology.availableLibraries.schematron-1.5"
     pathRefId="schematron-1.5.required"
     />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonb"
+    pathRefId="saxonb.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.schematron-1.5"/>
+      <isset property="ant-hology.availableLibraries.saxonb"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
 
   <!-- See http://xml.ascc.net/schematron/1.5/ -->
   <!-- See http://xml.ascc.net/schematron/1.5/message1-5/schematron-message.html -->
   <macrodef
     name="schematron-1.5-message-compile"
     description="schematron-1.5 message reporter compiler"
-    if:set="ant-hology.availableLibraries.schematron-1.5"
+    if:set="_requiredAvailable"
     >
     <attribute
       name="sch"
