@@ -107,8 +107,8 @@
         <arg value="--binary"/> <!--Necessary since the patch file has unix line endings.-->
         <arg value="-b"/> <!--make backup files-->
         <arg value="--strip=1"/> <!--strip first dir from path in patch-->
-        <arg prefix="--input=" value="${ant-hology.patches.dir}\apache-batik-1.7-patch.txt"/> <!--input patch file-->
-        <arg prefix="--directory=" value="${ant-hology.lib.dir}\apache-batik-1.7"/> <!--dir to apply patch-->
+        <arg prefix="--input=" path="${ant-hology.patches.dir}\apache-batik-1.7-patch.txt"/> <!--input patch file-->
+        <arg prefix="--directory=" path="${ant-hology.lib.dir}\apache-batik-1.7"/> <!--dir to apply patch-->
       </exec>
       <fixcrlf
         srcdir="${ant-hology.lib.dir}/apache-batik-1.7"
