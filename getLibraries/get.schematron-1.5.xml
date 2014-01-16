@@ -95,8 +95,8 @@
         <arg value="--binary"/> <!--Necessary since the patch file has unix line endings.-->
         <arg value="-b"/> <!--make backup files-->
         <arg value="--strip=1"/> <!--strip first dir from path in patch-->
-        <arg prefix="--input=" value="${ant-hology.patches.dir}\schematron-1.5-patch.txt"/> <!--input patch file-->
-        <arg prefix="--directory=" value="${ant-hology.lib.dir}\schematron-1.5"/> <!--dir to apply patch-->
+        <arg prefix="--input=" path="${ant-hology.patches.dir}\schematron-1.5-patch.txt"/> <!--input patch file-->
+        <arg prefix="--directory=" path="${ant-hology.lib.dir}\schematron-1.5"/> <!--dir to apply patch-->
       </exec>
 
       <!--Test installation-->
