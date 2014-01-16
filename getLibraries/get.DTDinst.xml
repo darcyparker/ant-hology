@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.getLibraryDefs.DTDinst"
+  basedir="."
+  default="ant-hology.getLibraryDefs.DTDinst"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.getLibraryDefs.DTDinst.dir" file="${ant.file.ant-hology.getLibraryDefs.DTDinst}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
+
+  <import file="${ant-hology.getLibraryDefs.dir}/get.saxonHE.xml" unless:set="ant-hology.getLibraryDefs.saxonHE.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-xerces.xml" unless:set="ant-hology.getLibraryDefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.apache-commons-xmlresolver.xml" unless:set="ant-hology.getLibraryDefs.apache-commons-xmlresolver.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/DTDinst.xml" unless:set="ant-hology.pathdefs.DTDinst.loaded"/>
+
+  <!-- See http://www.thaiopensource.com/dtdinst/ -->
+  <!-- See https://code.google.com/p/jing-trang/ -->
+  <target
+    name="ant-hology.get.DTDinst"
+    description="Installs DTDinst library."
+    depends="
+    ant-hology.get.saxonHE,
+    ant-hology.get.apache-xerces,
+    ant-hology.get.apache-commons-xmlresolver
+    "
+    unless="ant-hology.availableLibraries.DTDinst">
+    <getLibraryDefs.tasks.getLib
+      libUrl="https://jing-trang.googlecode.com/files/dtdinst-20091111.zip"
+      libName="DTDinst"
+      libVersion="20091111"
+      classpath="DTDinst.classpath"
+      testInstallationAtEnd="false"
+      />
+    <!--Continue with installation if it is not available-->
+    <sequential
+      unless:set="ant-hology.availableLibraries.DTDinst"
+      >
+      <!--<mkdir dir="${ant-hology.lib.dir}/DTDinst-20091111/src"/>-->
+      <!--<unzip-->
+        <!--src="${ant-hology.lib.dir}/DTDinst-20091111/src.zip"-->
+        <!--dest="${ant-hology.lib.dir}/DTDinst-20091111/src"/>-->
+      <!--<delete file="${ant-hology.lib.dir}/DTDinst-20091111/src.zip"/>-->
+      <areAllAvailable
+        property="ant-hology.availableLibraries.DTDinst"
+        pathRefId="DTDinst.classpath"/>
+      <fail message="Installation failed: Some file(s) in path[@refid='DTDinst.classpath'] were not found.">
+        <condition>
+          <not>
+            <isset property="ant-hology.availableLibraries.DTDinst"/>
+          </not>
+        </condition>
+      </fail>
+      <echo>DTDinst, version 20091111 was installed successfully.</echo>
+    </sequential>
+  </target>
+
+  <property name="ant-hology.getLibraryDefs.DTDinst.loaded" value="true"/>
+
+</project>

@@ -217,7 +217,7 @@
           <arg file="@{xsl}"/>
           <arg file="${ant-hology.temp.dir}/${_xslFileName}.compiled"/>
         </exec>
-        <apply executable="java" parallel="false" failonerror="@{failonerror}">
+        <apply executable="java" parallel="false" failonerror="@{failonerror}" verbose="yes">
           <files/>
           <inputToOutputMapper/>
           <arg value="-cp"/>
