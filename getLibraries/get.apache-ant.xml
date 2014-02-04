@@ -17,9 +17,9 @@
   <import file="${ant-hology.pathdefs.dir}/apache-ant.xml" unless:set="ant-hology.pathdefs.apache-ant.loaded"/>
 
   <!-- See https://ant.apache.org/ -->
-  <!-- Using ant to get ant 1.9.2 -->
+  <!-- Using ant to get ant 1.9.3 -->
   <!--Currently my debian install has apache 1.9.1 and it doesn't always work as-->
-  <!--expected... so it can be useful to install 1.9.2-->
+  <!--expected... so it can be useful to install 1.9.3-->
   <target
     name="ant-hology.get.apache-ant"
     description="Installs apache-ant library"
@@ -28,9 +28,9 @@
     "
     unless="ant-hology.availableLibraries.apache-ant">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://archive.apache.org/dist/ant/binaries/apache-ant-1.9.2-bin.zip"
+      libUrl="ftp://apache.cs.utah.edu/apache.org//ant/binaries/apache-ant-1.9.3-bin.zip"
       libName="apache-ant"
-      libVersion="1.9.2"
+      libVersion="1.9.3"
       classpath="ant-hology.apache-ant.classpath"
       testInstallationAtEnd="false"
       />
@@ -38,12 +38,12 @@
     <sequential
       unless:set="ant-hology.availableLibraries.apache-ant"
       >
-      <chmod file="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant" perm="ugo+xr"/>
+      <chmod file="${ant-hology.lib.dir}/apache-ant-1.9.3/bin/ant" perm="ugo+xr"/>
       <sequential if:true="${ant-hology.useBinDir}">
         <symlink
           if:set="ant-hology.OS.onUnix"
           link="${ant-hology.bin.dir}/ant"
-          resource="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant"
+          resource="${ant-hology.lib.dir}/apache-ant-1.9.3/bin/ant"
           overwrite="true"/>
         <chmod
           if:set="ant-hology.OS.onUnix"
@@ -52,19 +52,19 @@
 
         <!--The following tasks have no effect on unix-->
         <windows-mklink
-          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant"
+          source="${ant-hology.lib.dir}/apache-ant-1.9.3/bin/ant"
           target="${ant-hology.bin.dir}/ant"
           overwrite="true"
           failonerror="true"
           />
         <windows-mklink
-          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant.bat"
+          source="${ant-hology.lib.dir}/apache-ant-1.9.3/bin/ant.bat"
           target="${ant-hology.bin.dir}/ant.bat"
           overwrite="true"
           failonerror="true"
           />
         <windows-mklink
-          source="${ant-hology.lib.dir}/apache-ant-1.9.2/bin/ant.cmd"
+          source="${ant-hology.lib.dir}/apache-ant-1.9.3/bin/ant.cmd"
           target="${ant-hology.bin.dir}/ant.cmd"
           overwrite="true"
           failonerror="true"
@@ -81,7 +81,7 @@
           </not>
         </condition>
       </fail>
-      <echo>apache-ant, version 1.9.2 was installed successfully.</echo>
+      <echo>apache-ant, version 1.9.3 was installed successfully.</echo>
     </sequential>
   </target>
 
