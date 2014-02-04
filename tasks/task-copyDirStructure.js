@@ -19,13 +19,29 @@
   //Note: ant converts attributes to lowercase!
   var toDir = attributes.get('todir');
   var fileSet = elements.get('fileset').get(0); //the first fileset
+  var sourceBaseDir = fileSet.getDir();
   var directoryScanner = fileSet.getDirectoryScanner(project);
   var includedDirs = directoryScanner.getIncludedDirectories();
   var includedDirsCount = directoryScanner.getIncludedDirsCount();
+  var includedFiles = directoryScanner.getIncludedFiles();
+  var includedFilesCount = directoryScanner.getIncludedFilesCount();
   var currentDir;
 
+  //self.log('toDir=' + String(toDir));
+  //self.log('sourceBaseDir=' + String(sourceBaseDir));
+  //self.log('dircount=' + includedDirsCount);
+  //self.log('Filescount=' + includedFilesCount);
   for (var i = 0; i < includedDirsCount; i++) {
     currentDir = new File(toDir, includedDirs[i]);
+    if (!currentDir.exists()) {
+      if (!currentDir.mkdirs()) {
+        echoMessage('Error: Could not make dir: ' + String(currentDir));
+        self.fail();
+      }
+    }
+  }
+  for (i = 0; i < includedFilesCount; i++) {
+    currentDir = (new File(toDir, includedFiles[i])).getParentFile();
     if (!currentDir.exists()) {
       if (!currentDir.mkdirs()) {
         echoMessage('Error: Could not make dir: ' + String(currentDir));
