@@ -1,0 +1,36 @@
+/* jshint rhino: true, unused: false */
+/* global project,self,attributes,elements */
+/* The directives above tell jshint about globals provided by ant and rhino */
+
+(function(project, self, attributes, elements) {
+  'use strict';
+
+  //Creating echo task instead of using self.log() so messages are aligned with other tasks
+  var echoTask = project.createTask('echo');
+  var echoMessage = function(message) {
+    echoTask.setMessage(message);
+    echoTask.perform();
+  };
+
+  //See http://docs.oracle.com/javase/7/docs/api/java/io/File.html
+  var File = java.io.File;
+
+  //Get attributes passed into task
+  //Note: ant converts attributes to lowercase!
+  var toDir = attributes.get('todir');
+  var fileSet = elements.get('fileset').get(0); //the first fileset
+  var directoryScanner = fileSet.getDirectoryScanner(project);
+  var includedDirs = directoryScanner.getIncludedDirectories();
+  var includedDirsCount = directoryScanner.getIncludedDirsCount();
+  var currentDir;
+
+  for (var i = 0; i < includedDirsCount; i++) {
+    currentDir = new File(toDir, includedDirs[i]);
+    if (!currentDir.exists()) {
+      if (!currentDir.mkdirs()) {
+        echoMessage('Error: Could not make dir: ' + String(currentDir));
+        self.fail();
+      }
+    }
+  }
+})(project, self, attributes, elements);

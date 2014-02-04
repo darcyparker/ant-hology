@@ -45,6 +45,7 @@
   <import file="${ant-hology.taskdefs.dir}/script-javascript.xml" unless:set="ant-hology.taskdefs.script-javascript.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-calabash.xml" unless:set="ant-hology.taskdefs.task-calabash.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-copyDirStructure.xml" unless:set="ant-hology.taskdefs.task-copyDirStructure.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-fop.xml" unless:set="ant-hology.taskdefs.task-fop.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-google-closure-compile.xml" unless:set="ant-hology.taskdefs.task-google-closure-compile.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-jing.xml" unless:set="ant-hology.taskdefs.task-jing.loaded"/>

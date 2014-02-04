@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-copyDirStructure"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-copyDirStructure.dir" file="${ant-hology.taskdefs.task-copyDirStructure}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="${ant-hology.commonProperties.loaded}"/>
+  <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
+
+  <scriptdef-javascript
+    name="copyDirStructure"
+    description="copyDirStructure is an ant task that copies the directory structure from input fileset to the ${todir}."
+    src="${ant-hology.taskdefs.dir}/task-copyDirStructure.min.js">
+    <!--src="${ant-hology.taskdefs.dir}/task-copyDirStructure.js">-->
+    <!--FYI: minified with google closure compiler-->
+    <!--Of course minification is not necessary... but trying it out.-->
+    <attribute
+      name="todir"/>
+    <element
+      name="fileset" type="fileset"/>
+  </scriptdef-javascript>
+
+  <property name="ant-hology.taskdefs.task-copyDirStructure.loaded" value="true"/>
+
+</project>
