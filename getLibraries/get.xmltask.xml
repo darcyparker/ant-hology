@@ -20,7 +20,8 @@
 
   <import file="${ant-hology.pathdefs.dir}/xmltask.xml" unless:set="ant-hology.pathdefs.xmltask.loaded"/>
 
-  <!-- See http://xmlunit.sourceforge.net/ -->
+  <!-- See http://www.oopsconsultancy.com/software/xmltask/ -->
+  <!-- See http://sourceforge.net/projects/xmltask/ -->
   <target
     name="ant-hology.get.xmltask"
     description="Installs xmltask library"
