@@ -65,11 +65,30 @@
         location="@{antlibrarydir}"
         />
 
+      <property.set.ant-hology.jdk_JAVA_HOME/>
       <echo>Starting java-ant.</echo>
+      <echo>  _anthome=${_anthome}</echo>
+      <echo>  _antlibrarydir=${_antlibrarydir}</echo>
       <echo>  antfile=${_antfile}</echo>
       <echo>  dir=${_dir}</echo>
       <echo>  target=@{target}</echo>
-      <property.set.ant-hology.jdk_JAVA_HOME/>
+
+      <!--For debugging info:-->
+      <!--Be careful about including too large a classpath...-->
+      <!--on some OSes (windows) it may be too long for command line when expanded.-->
+      <!--<local name="_classpath"/>-->
+      <!--<pathconvert property="_classpath">-->
+        <!--<path>-->
+          <!--<fileset dir="${ant-hology.jdk_JAVA_HOME}/lib">-->
+            <!--<include name="*.jar"/>-->
+          <!--</fileset>-->
+          <!--<fileset dir="${_antlibrarydir}">-->
+            <!--<include name="**/*.jar"/>-->
+          <!--</fileset>-->
+          <!--<additional-classpath/>-->
+        <!--</path>-->
+      <!--</pathconvert>-->
+      <!--<echo>  classpath=${_classpath}</echo>-->
       <java
         jvm="${ant-hology.jdk_JAVA_HOME}/bin/java"
         dir="${_dir}"
@@ -79,9 +98,11 @@
         if:set="ant-hology.jdk_JAVA_HOME"
         >
         <sysproperty key="ant.home" value="${_anthome}"/>
+        <!--Be careful about including too large a classpath...-->
+        <!--on some OSes (windows) it may be too long for command line when expanded.-->
         <classpath>
           <fileset dir="${ant-hology.jdk_JAVA_HOME}/lib">
-            <include name="**/*.jar"/>
+            <include name="*.jar"/>
           </fileset>
           <fileset dir="${_antlibrarydir}">
             <include name="**/*.jar"/>
@@ -90,7 +111,7 @@
         </classpath>
         <arg value="@{target}"/>
         <arg value="-f"/>
-        <arg value="${_antfile}"/>
+        <arg file="${_antfile}"/>
       </java>
       <echo>Finished java-ant.</echo>
     </sequential>
