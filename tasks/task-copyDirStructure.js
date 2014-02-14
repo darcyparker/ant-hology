@@ -15,7 +15,7 @@
   //See http://docs.oracle.com/javase/7/docs/api/java/io/File.html
   var File = java.io.File;
 
-  //Get attributes passed into task
+  //Get attribute and element passed into task
   //Note: ant converts attributes to lowercase!
   var toDir = attributes.get('todir');
   var fileSet = elements.get('fileset').get(0); //the first fileset
