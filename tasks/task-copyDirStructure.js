@@ -35,8 +35,7 @@
     currentDir = new File(toDir, includedDirs[i]);
     if (!currentDir.exists()) {
       if (!currentDir.mkdirs()) {
-        echoMessage('Error: Could not make dir: ' + String(currentDir));
-        self.fail();
+        self.fail('Error: Could not make dir: ' + String(currentDir));
       }
     }
   }
@@ -44,8 +43,7 @@
     currentDir = (new File(toDir, includedFiles[i])).getParentFile();
     if (!currentDir.exists()) {
       if (!currentDir.mkdirs()) {
-        echoMessage('Error: Could not make dir: ' + String(currentDir));
-        self.fail();
+        self.fail('Error: Could not make dir: ' + String(currentDir));
       }
     }
   }
