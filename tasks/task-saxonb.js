@@ -192,6 +192,8 @@
 
   //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/Processor.html
   var Processor = net.sf.saxon.s9api.Processor;
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/FeatureKeys.html
+  var FeatureKeys = net.sf.saxon.FeatureKeys;
   //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/QName.html
   var QName = net.sf.saxon.s9api.QName;
   //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/XdmAtomicValue.html
@@ -202,9 +204,26 @@
   var Serializer = net.sf.saxon.s9api.Serializer;
 
   var proc = new Processor(false); //create saxon processor (licensedEdition===false)
+
+  //Configure processor options
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/FeatureKeys.html
+  //SOURCE_PARSER_CLASS corresponds to command line -x option
+  proc.setConfigurationProperty(FeatureKeys.SOURCE_PARSER_CLASS,'org.apache.xml.resolver.tools.ResolvingXMLReader');
+  //STYLE_PARSER_CLASS corresponds to command line -y option
+  proc.setConfigurationProperty(FeatureKeys.STYLE_PARSER_CLASS,'org.apache.xml.resolver.tools.ResolvingXMLReader');
+  //VERSION_WARNING is a boolean
+  proc.setConfigurationProperty(FeatureKeys.VERSION_WARNING,false);
+  //DTD_VALIDATION is a boolean
+  proc.setConfigurationProperty(FeatureKeys.DTD_VALIDATION,false);
+  //ALLOW_EXTERNAL_FUNCTIONS is a boolean
+  proc.setConfigurationProperty(FeatureKeys.ALLOW_EXTERNAL_FUNCTIONS,true);
+  //LINE_NUMBERING is a boolean
+  proc.setConfigurationProperty(FeatureKeys.LINE_NUMBERING,true);
+
   var comp = proc.newXsltCompiler(); //create an xslt compiler
   var exp = comp.compile(new StreamSource(xslFile)); //compile xslFile
   var trans = exp.load(); //create the transformer by loading compiled xslFile
+
   //Set initialtemplate if applicable
   if (initialtemplate) {
     trans.setInitialTemplate(new QName(initialtemplate));
