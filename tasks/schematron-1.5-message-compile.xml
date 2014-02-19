@@ -10,7 +10,7 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-saxonb.xml" unless:set="ant-hology.taskdefs.task-saxonb.loaded"/>
 
   <import file="${ant-hology.pathdefs.dir}/schematron-1.5.xml" unless:set="ant-hology.pathdefs.schematron-1.5.loaded"/>
 
@@ -62,20 +62,19 @@
       description="Path to the desitination XSL"
       />
     <attribute
-      name="options"
-      description="Additional command line options for saxonb when compiling schematron schema. For example, stylesheet parameters could be passed."
+      name="parameters"
+      description="Parameters for saxonb when compiling schematron schema. For example, stylesheet parameters could be passed."
       default=""/>
 
     <sequential>
       <echo>Compiling Schematron 1.5 message reporter for schema: @{sch}</echo>
       <delete file="@{destXSL}"/>
       <!--Note: Saxonb is used in case special extensions are desired in future.-->
-      <java-saxonb
+      <saxonb
         xsl="${ant-hology.lib.dir}/schematron-1.5/schematron-message.xsl"
         srcfile="@{sch}"
         destfile="@{destXSL}"
-        options="@{options}"
-        suppressEcho="true"
+        parameters="@{parameters}"
         />
       <local name="_destXSLExists"/>
       <available

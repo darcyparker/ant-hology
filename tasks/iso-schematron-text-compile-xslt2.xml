@@ -10,7 +10,8 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-saxonb.xml" unless:set="ant-hology.taskdefs.task-saxonb.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
 
   <import file="${ant-hology.pathdefs.dir}/iso-schematron-xslt2.xml" unless:set="ant-hology.pathdefs.iso-schematron-xslt2.loaded"/>
 
@@ -34,10 +35,10 @@
       name="destXSL"
       description="Path to the desitination XSL"
       />
-    <!--Note: @{options} is only used for compiling phase (not include/expand-->
+    <!--Note: @{parameters} is only used for compiling phase (not include/expand-->
     <attribute
-      name="options"
-      description="Additional command line options for saxonb when compiling schematron schema. For example, stylesheet parameters could be passed."
+      name="parameters"
+      description="Parameters for saxonb when compiling schematron schema. For example, stylesheet parameters could be passed."
       default=""/>
 
     <sequential>
@@ -62,26 +63,23 @@
 
       <!--Note: Saxonb is used in case special extensions are desired in future.-->
       <echo message="ISO-Schematron text Reporter: Expanding inclusions"/>
-      <java-saxonb
+      <saxonb
         xsl="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_dsdl_include.xsl"
         srcfile="@{sch}"
         destfile="${ant-hology.temp.dir}/schematron/${_schFileName}.expandedinclusions"
-        suppressEcho="true"
         />
       <echo message="ISO-Schematron text Reporter: Expanding abstract patterns"/>
-      <java-saxonb
+      <saxonb
         xsl="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_abstract_expand.xsl"
         srcfile="${ant-hology.temp.dir}/schematron/${_schFileName}.expandedinclusions"
         destfile="${ant-hology.temp.dir}/schematron/${_schFileName}.expandedabstractpatterns"
-        suppressEcho="true"
         />
       <echo message="ISO-Schematron text Reporter: Compiling"/>
-      <java-saxonb
+      <saxonb
         xsl="${ant-hology.lib.dir}/iso-schematron-xslt2/iso_schematron_text_xslt2.xsl"
         srcfile="${ant-hology.temp.dir}/schematron/${_schFileName}.expandedabstractpatterns"
         destfile="@{destXSL}"
-        options="@{options}"
-        suppressEcho="true"
+        parameters="@{parameters}"
         />
       <!--Delete temporary files-->
       <delete>

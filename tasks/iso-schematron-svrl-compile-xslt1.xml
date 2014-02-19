@@ -11,6 +11,7 @@
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-xalan.xml" unless:set="ant-hology.taskdefs.java-xalan.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/property.set.fileName.xml" unless:set="ant-hology.taskdefs.property.set.fileName.loaded"/>
 
   <import file="${ant-hology.pathdefs.dir}/iso-schematron-xslt1.xml" unless:set="ant-hology.pathdefs.iso-schematron-xslt1.loaded"/>
 
