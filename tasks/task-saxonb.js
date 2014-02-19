@@ -176,6 +176,8 @@
   var StreamSource = javax.xml.transform.stream.StreamSource;
   //See http://docs.oracle.com/javase/6/docs/api/javax/xml/transform/stream/StreamResult.html
   var StreamResult = javax.xml.transform.stream.StreamResult;
+  //See http://docs.oracle.com/javase/6/docs/api/java/io/FileOutputStream.html
+  var FileOutputStream = java.io.FileOutputStream;
   //http://docs.oracle.com/javase/7/docs/api/java/lang/System.html
   var System = java.lang.System;
 
@@ -188,15 +190,15 @@
   //s9api is preferred for saxon because it allows greater configuration
   //for example, initialtemplate and initialmode can be used
 
-  //See http://www.saxonica.com/html/documentation/javadoc/net/sf/saxon/s9api/Processor.html
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/Processor.html
   var Processor = net.sf.saxon.s9api.Processor;
-  //See http://www.saxonica.com/html/documentation/javadoc/net/sf/saxon/s9api/QName.html
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/QName.html
   var QName = net.sf.saxon.s9api.QName;
-  //See http://www.saxonica.com/html/documentation/javadoc/net/sf/saxon/s9api/XdmAtomicValue.html
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/XdmAtomicValue.html
   var XdmAtomicValue = net.sf.saxon.s9api.XdmAtomicValue;
-  //See http://www.saxonica.com/html/documentation/javadoc/net/sf/saxon/s9api/XdmNode.html
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/XdmNode.html
   var XdmNode = net.sf.saxon.s9api.XdmNode;
-  //See http://www.saxonica.com/html/documentation/javadoc/net/sf/saxon/s9api/Serializer.html
+  //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/s9api/Serializer.html
   var Serializer = net.sf.saxon.s9api.Serializer;
 
   var proc = new Processor(false); //create saxon processor (licensedEdition===false)
@@ -246,6 +248,7 @@
 
   var currentSource;
   var currentDestination;
+  var currentOutputStream;
 
   //Transform each input
   if (inputOutputPairs.length > 0) {
@@ -258,19 +261,21 @@
       currentSource = proc.newDocumentBuilder().build(new StreamSource(inputOutputPairs[items].input));
       trans.setInitialContextNode(currentSource);
       currentDestination = new Serializer();
-      currentDestination.setOutputFile(inputOutputPairs[items].output);
+      currentOutputStream = new FileOutputStream(inputOutputPairs[items].output);
+      currentDestination.setOutputStream(currentOutputStream);
       trans.setDestination(currentDestination);
       trans.transform();
-      //close?? currentDestination.close() method does not exist?
+      currentOutputStream.close();
     }
   } else {
     //No input provided... Therefore there must be an initialtemplate
     if (initialtemplate) {
       currentDestination = new Serializer();
-      currentDestination.setOutputFile(destFile);
+      currentOutputStream = new FileOutputStream(destFile);
+      currentDestination.setOutputStream(currentOutputStream);
       trans.setDestination(currentDestination);
       trans.transform();
-      //close?? currentDestination.close() method does not exist?
+      currentOutputStream.close();
     } else {
       self.fail('Error: No initialtemplate provided. When no input srcfile and destfile is provided AND no fileset and mapper is provided, an initialtemplate is expected.');
     }
