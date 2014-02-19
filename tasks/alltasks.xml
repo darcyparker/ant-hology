@@ -50,6 +50,7 @@
   <import file="${ant-hology.taskdefs.dir}/task-google-closure-compile.xml" unless:set="ant-hology.taskdefs.task-google-closure-compile.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-jing.xml" unless:set="ant-hology.taskdefs.task-jing.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-mmlconverter.xml" unless:set="ant-hology.taskdefs.task-mmlconverter.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/task-saxonb.xml" unless:set="ant-hology.taskdefs.task-saxonb.loaded"/>
   <!--<import file="${ant-hology.taskdefs.dir}/task-schematron.xml" unless:set="ant-hology.taskdefs.task-schematron.loaded"/>-->
   <import file="${ant-hology.taskdefs.dir}/task-SVGRasterize.xml" unless:set="ant-hology.taskdefs.task-SVGRasterize.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/task-tidy.xml" unless:set="ant-hology.taskdefs.task-tidy.loaded"/>

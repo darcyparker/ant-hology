@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  name="ant-hology.taskdefs.task-saxonb"
+  basedir="."
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+  >
+
+  <dirname property="ant-hology.taskdefs.task-saxonb.dir" file="${ant-hology.taskdefs.task-saxonb}"/>
+
+  <import file="${ant-hology.dir}/commonProperties.xml" unless:set="${ant-hology.commonProperties.loaded}"/>
+  <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.taskdefs.dir}/scriptdef-javascript.xml" unless:set="ant-hology.taskdefs.scriptdef-javascript.loaded"/>
+
+  <import file="${ant-hology.pathdefs.dir}/saxonb.xml" unless:set="ant-hology.pathdefs.saxonb.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-xerces.xml" unless:set="ant-hology.pathdefs.apache-xerces.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/apache-commons-xmlresolver.xml" unless:set="ant-hology.pathdefs.apache-commons-xmlresolver.loaded"/>
+  <import file="${ant-hology.pathdefs.dir}/xmlcatalog.xml" unless:set="ant-hology.pathdefs.xmlcatalog.loaded"/>
+
+  <areAllAvailable
+    property="ant-hology.availableLibraries.saxonb"
+    pathRefId="saxonb.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-xerces"
+    pathRefId="apache-xerces.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.apache-commons-xmlresolver"
+    pathRefId="apache-commons-xmlresolver.classpath"
+    />
+  <areAllAvailable
+    property="ant-hology.availableLibraries.xmlcatalog"
+    pathRefId="xmlcatalog.required"
+    />
+
+  <local name="_requiredAvailable"/>
+  <condition property="_requiredAvailable">
+    <and>
+      <isset property="ant-hology.availableLibraries.saxonb"/>
+      <isset property="ant-hology.availableLibraries.apache-xerces"/>
+      <isset property="ant-hology.availableLibraries.apache-commons-xmlresolver"/>
+      <isset property="ant-hology.availableLibraries.xmlcatalog"/>
+    </and>
+  </condition>
+
+  <scriptdef-javascript
+    name="saxonb"
+    description="saxonb is an ant task that copies the directory structure from input fileset to the ${todir}."
+    src="${ant-hology.taskdefs.dir}/task-saxonb.js"
+    if:set="_requiredAvailable"
+    >
+    <!--src="${ant-hology.taskdefs.dir}/task-saxonb.min.js">-->
+    <!--FYI: minified with google closure compiler-->
+    <!--Of course minification is not necessary... but trying it out.-->
+
+    <!--Notes about attributes and elements.-->
+    <!--  @{srcfile} and @{destfile} are optional but typically @{srcfile} or <fileset/> would be-->
+    <!--  required.  One case where @{srcfile} and <fileset/> would not be required is if an-->
+    <!--  @{initialtemplate} was specified and it did not make references to a source file.-->
+    <!--  (The @{initialtemplate} could pull data from doc(), collection() or unparsed-text().-->
+    <attribute name="xsl"/>
+    <attribute name="srcdir"/>
+    <attribute name="srcfile"/>
+    <attribute name="destfile"/>
+    <attribute name="destdir"/>
+    <attribute name="initialtemplate"/>
+    <attribute name="initialmode"/>
+    <attribute name="parameters"/>
+    <element name="fileset" type="fileset"/>
+    <element name="mapper" classname="org.apache.tools.ant.util.CompositeMapper"/>
+    <classpath>
+      <path refid="scriptdef-javascript.classpath"/>
+      <path refid="saxonb.classpath"/>
+      <path refid="apache-xerces.classpath"/>
+      <path refid="apache-commons-xmlresolver.classpath"/>
+      <path refid="xmlcatalog.classpath"/>
+    </classpath>
+  </scriptdef-javascript>
+
+  <property name="ant-hology.taskdefs.task-saxonb.loaded" value="true"/>
+
+</project>
