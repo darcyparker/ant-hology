@@ -67,6 +67,7 @@
     <attribute name="initialtemplate"/>
     <attribute name="initialmode"/>
     <attribute name="parameters"/>
+    <attribute name="quiet"/>
     <element name="fileset" type="fileset"/>
     <element name="mapper" classname="org.apache.tools.ant.util.CompositeMapper"/>
     <classpath>

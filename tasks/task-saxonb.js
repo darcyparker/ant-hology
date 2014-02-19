@@ -27,6 +27,12 @@
   var initialtemplate = attributes.get('initialtemplate');
   var initialmode = attributes.get('initialmode');
   var parametersString = attributes.get('parameters');
+  var quiet;
+  if (attributes.get('quiet') === null && String(attributes.get('quiet')) !== 'false') {
+    quiet = true;
+  } else {
+    quiet = false;
+  }
 
   var inputOutputPairs = [];
 
@@ -50,7 +56,9 @@
     if (!xslFile.exists()) {
       self.fail('Error: xsl file \'' + String(xslFile.getAbsoluteFile()) + '\' does not exist.');
     }
-    //self.log('xslFile=' + String(xslFile));
+    if (!quiet) {
+      self.log('xslFile=' + xslFile);
+    }
   } else {
     self.fail('No xsl provided.');
   }
@@ -59,7 +67,9 @@
   if (srcfile) {
     if (srcdir) {
       srcFile = new File(srcdir, srcfile);
-      //self.log('srcFile='+srcFile);
+      if (!quiet) {
+        self.log('srcFile=' + srcFile);
+      }
       if (!srcFile.exists()) {
         self.log('srcdir=' + srcdir);
         self.log('srcfile=' + srcfile);
@@ -69,7 +79,9 @@
       //Note: It is not necessarily relative to project.getBaseDir()
       //An absolute file path could have been provided
       srcFile = new File(srcfile);
-      self.log('srcFile=' + srcFile);
+      if (!quiet) {
+        self.log('srcFile=' + srcFile);
+      }
       if (!srcFile.exists()) {
         self.log('srcdir=' + srcdir);
         self.log('srcfile=' + srcfile);
@@ -205,8 +217,10 @@
     if (!parametersString.contains(';')) {
       if (parametersString.contains('=')) {
         //then only a single parameter was passed
-        //self.log('adding parameter:' + parametersString.substring(0, parametersString.indexOf('=')) + ' = ' +
-          //parametersString.substring(parametersString.indexOf('=') + 1));
+        if (!quiet) {
+          self.log('adding parameter:' + parametersString.substring(0, parametersString.indexOf('=')) + ' = ' +
+            parametersString.substring(parametersString.indexOf('=') + 1));
+        }
         trans.setParameter(
           new QName(parametersString.substring(0, parametersString.indexOf('='))),
           new XdmAtomicValue(parametersString.substring(parametersString.indexOf('=') + 1))
@@ -217,8 +231,10 @@
       var keyvalues = parametersString.split(';');
       for (var currentParameter = 0; currentParameter < keyvalues.length; currentParameter++) {
         if (keyvalues.contains('=')) {
-          //self.log('adding parameter:' + keyvalues.substring(0, keyvalues.indexOf('=')) + '=' +
-            //keyvalues.substring(keyvalues.indexOf('=') + 1));
+          if (!quiet) {
+            self.log('adding parameter:' + keyvalues.substring(0, keyvalues.indexOf('=')) + '=' +
+              keyvalues.substring(keyvalues.indexOf('=') + 1));
+          }
           trans.setParameter(
             new QName(keyvalues.substring(0, keyvalues.indexOf('='))),
             new XdmAtomicValue(keyvalues.substring(keyvalues.indexOf('=') + 1))
@@ -235,15 +251,17 @@
   if (inputOutputPairs.length > 0) {
     for (var items = 0; items < inputOutputPairs.length; items++) {
       // Transform the source to output
-      //self.log('Transforming input: ' + String(inputOutputPairs[items].input));
-      //self.log('to output: ' + String(inputOutputPairs[items].output));
+      if (!quiet) {
+        self.log('Transforming input: ' + String(inputOutputPairs[items].input));
+        self.log('to output: ' + String(inputOutputPairs[items].output));
+      }
       currentSource = proc.newDocumentBuilder().build(new StreamSource(inputOutputPairs[items].input));
       trans.setInitialContextNode(currentSource);
       currentDestination = new Serializer();
       currentDestination.setOutputFile(inputOutputPairs[items].output);
       trans.setDestination(currentDestination);
       trans.transform();
-      //close??
+      //close?? currentDestination.close() method does not exist?
     }
   } else {
     //No input provided... Therefore there must be an initialtemplate
@@ -252,7 +270,7 @@
       currentDestination.setOutputFile(destFile);
       trans.setDestination(currentDestination);
       trans.transform();
-      //close??
+      //close?? currentDestination.close() method does not exist?
     } else {
       self.fail('Error: No initialtemplate provided. When no input srcfile and destfile is provided AND no fileset and mapper is provided, an initialtemplate is expected.');
     }
