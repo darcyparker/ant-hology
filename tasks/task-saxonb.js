@@ -208,17 +208,17 @@
   //Configure processor options
   //See http://saxonica.com/documentation9.1/javadoc/net/sf/saxon/FeatureKeys.html
   //SOURCE_PARSER_CLASS corresponds to command line -x option
-  proc.setConfigurationProperty(FeatureKeys.SOURCE_PARSER_CLASS,'org.apache.xml.resolver.tools.ResolvingXMLReader');
+  proc.setConfigurationProperty(FeatureKeys.SOURCE_PARSER_CLASS, 'org.apache.xml.resolver.tools.ResolvingXMLReader');
   //STYLE_PARSER_CLASS corresponds to command line -y option
-  proc.setConfigurationProperty(FeatureKeys.STYLE_PARSER_CLASS,'org.apache.xml.resolver.tools.ResolvingXMLReader');
+  proc.setConfigurationProperty(FeatureKeys.STYLE_PARSER_CLASS, 'org.apache.xml.resolver.tools.ResolvingXMLReader');
   //VERSION_WARNING is a boolean
-  proc.setConfigurationProperty(FeatureKeys.VERSION_WARNING,false);
+  proc.setConfigurationProperty(FeatureKeys.VERSION_WARNING, false);
   //DTD_VALIDATION is a boolean
-  proc.setConfigurationProperty(FeatureKeys.DTD_VALIDATION,false);
+  proc.setConfigurationProperty(FeatureKeys.DTD_VALIDATION, false);
   //ALLOW_EXTERNAL_FUNCTIONS is a boolean
-  proc.setConfigurationProperty(FeatureKeys.ALLOW_EXTERNAL_FUNCTIONS,true);
+  proc.setConfigurationProperty(FeatureKeys.ALLOW_EXTERNAL_FUNCTIONS, true);
   //LINE_NUMBERING is a boolean
-  proc.setConfigurationProperty(FeatureKeys.LINE_NUMBERING,true);
+  proc.setConfigurationProperty(FeatureKeys.LINE_NUMBERING, true);
 
   var comp = proc.newXsltCompiler(); //create an xslt compiler
   var exp = comp.compile(new StreamSource(xslFile)); //compile xslFile
@@ -249,16 +249,17 @@
       }
     } else {
       //then multiple parameters were passed
-      var keyvalues = parametersString.split(';');
-      for (var currentParameter = 0; currentParameter < keyvalues.length; currentParameter++) {
-        if (keyvalues.contains('=')) {
+      var parameterKeyValueStrings = parametersString.split(';');
+      for (var parameterIteration = 0; parameterIteration < parameterKeyValueStrings.length; parameterIteration++) {
+        var currentParameter = parameterKeyValueStrings[parameterIteration];
+        if (currentParameter.contains('=')) {
           if (!quiet) {
-            self.log('adding parameter:' + keyvalues.substring(0, keyvalues.indexOf('=')) + '=' +
-              keyvalues.substring(keyvalues.indexOf('=') + 1));
+            self.log('adding parameter:' + currentParameter.substring(0, currentParameter.indexOf('=')) + '=' +
+              currentParameter.substring(currentParameter.indexOf('=') + 1));
           }
           trans.setParameter(
-            new QName(keyvalues.substring(0, keyvalues.indexOf('='))),
-            new XdmAtomicValue(keyvalues.substring(keyvalues.indexOf('=') + 1))
+            new QName(currentParameter.substring(0, currentParameter.indexOf('='))),
+            new XdmAtomicValue(currentParameter.substring(currentParameter.indexOf('=') + 1))
           );
         }
       }
@@ -271,16 +272,16 @@
 
   //Transform each input
   if (inputOutputPairs.length > 0) {
-    for (var items = 0; items < inputOutputPairs.length; items++) {
+    for (var itemIndex = 0; itemIndex < inputOutputPairs.length; itemIndex++) {
       // Transform the source to output
       if (!quiet) {
-        self.log('Transforming input: ' + String(inputOutputPairs[items].input));
-        self.log('to output: ' + String(inputOutputPairs[items].output));
+        self.log('Transforming input: ' + String(inputOutputPairs[itemIndex].input));
+        self.log('to output: ' + String(inputOutputPairs[itemIndex].output));
       }
-      currentSource = proc.newDocumentBuilder().build(new StreamSource(inputOutputPairs[items].input));
+      currentSource = proc.newDocumentBuilder().build(new StreamSource(inputOutputPairs[itemIndex].input));
       trans.setInitialContextNode(currentSource);
       currentDestination = new Serializer();
-      currentOutputStream = new FileOutputStream(inputOutputPairs[items].output);
+      currentOutputStream = new FileOutputStream(inputOutputPairs[itemIndex].output);
       currentDestination.setOutputStream(currentOutputStream);
       trans.setDestination(currentDestination);
       trans.transform();
@@ -293,6 +294,9 @@
       currentOutputStream = new FileOutputStream(destFile);
       currentDestination.setOutputStream(currentOutputStream);
       trans.setDestination(currentDestination);
+      if (!quiet) {
+        self.log('Transforming with no input to output: ' + String(destFile));
+      }
       trans.transform();
       currentOutputStream.close();
     } else {
