@@ -11,6 +11,7 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/test.areAllAvailable.xml" unless:set="ant-hology.taskdefs.test.areAllAvailable.loaded"/>
+  <import file="${ant-hology.getLibraryDefs.dir}/get.WindowsElevationPowerToys.xml" unless:set="ant-hology.getLibraryDefs.WindowsElevationPowerToys.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/windows-mklink.xml" unless:set="ant-hology.taskdefs.windows-mklink.loaded"/>
   <import file="${ant-hology.getLibraryDefs.dir}/get.tasks.getLib.xml" unless:set="ant-hology.getLibraryDefs.tasks.getLib.loaded"/>
 
