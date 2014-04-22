@@ -20,6 +20,16 @@ use in my projects. (Particularly XSLT related tasks).
   - I am assuming unix users already have or know how to install these
   - Windows users may need to install other required tools:
     - `patch` from http://gnuwin32.sourceforge.net/packages/patch.htm
+        > On Windows!!! Before running the above command, make sure you have the correct
+        > version of patch.exe.
+
+          ```dos
+          where patch.exe
+          ```
+
+        > should not return `C:\Program Files (x86)\Git\bin\patch.exe`.  The version of
+        > `patch.exe` included with git is obsolete.  Rename the `patch.exe` to
+        > something like `patch-old.exe` or remove it.
     - `cvs` from http://ftp.gnu.org/non-gnu/cvs/binary/stable/x86-woe
     - `svn` from http://alagazam.net/
     - `git` from http://git-scm.com/downloads
