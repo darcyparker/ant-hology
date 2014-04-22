@@ -13,7 +13,7 @@
   <!-- See http://commons.apache.org/proper/commons-lang/ -->
   <path
     id="apache-commons-lang.classpath"
-    path="${ant-hology.lib.dir}/apache-commons-lang-3.3.1/commons-lang3-3.1.jar"
+    path="${ant-hology.lib.dir}/apache-commons-lang-3.3.3.2/commons-lang3-3.3.2.jar"
     />
 
   <property name="ant-hology.pathdefs.apache-commons-lang.loaded" value="true"/>
