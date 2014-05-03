@@ -14,17 +14,17 @@
   <path id="apache-jena.classpath">
     <path refid="apache-commons-httpcomponents.classpath"/>
     <path refid="apache-xerces.classpath"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jena-arq-2.11.0.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jena-core-2.11.0.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jena-iri-1.0.0.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jena-sdb-1.4.0.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jena-tdb-1.0.0.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jena-arq-2.11.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jena-core-2.11.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jena-iri-1.0.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jena-sdb-1.4.1.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jena-tdb-1.0.1.jar"/>
     <!--See http://logging.apache.org/log4j/2.x/ -->
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/log4j-1.2.16.jar"/>
     <!--See http://www.slf4j.org/ -->
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/slf4j-api-1.6.4.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/slf4j-log4j12-1.6.4.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.0/lib/jcl-over-slf4j-1.6.4.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/slf4j-api-1.6.4.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/slf4j-log4j12-1.6.4.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-jena-2.11.1/lib/jcl-over-slf4j-1.6.4.jar"/>
 
     <!--http://sourceforge.net/projects/jena/files/IRI/iri-0.5/-->
     <!--http://jena.sourceforge.net/iri/javadoc/com/hp/hpl/jena/iri/IRIFactory.html-->

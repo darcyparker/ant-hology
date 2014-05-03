@@ -27,9 +27,9 @@
     "
     unless="ant-hology.availableLibraries.apache-jena">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://www.apache.org/dist/jena/binaries/apache-jena-2.11.0.zip"
+      libUrl="http://www.apache.org/dist/jena/binaries/apache-jena-2.11.1.zip"
       libName="apache-jena"
-      libVersion="2.11.0"
+      libVersion="2.11.1"
       classpath="apache-jena.classpath"/>
   </target>
 
