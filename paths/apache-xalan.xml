@@ -15,7 +15,7 @@
 
   <!-- See https://xalan.apache.org/xalan-j/index.html -->
   <path id="apache-xalan.classpath">
-    <pathelement location="${ant-hology.lib.dir}/apache-xalan-2.7.1/xalan.jar"/>
+    <pathelement location="${ant-hology.lib.dir}/apache-xalan-2.7.2/xalan.jar"/>
     <path refid="apache-commons-bsf-2.4.0.classpath"/>
     <path refid="apache-commons-logging.classpath"/>
     <path refid="rhino.classpath"/>

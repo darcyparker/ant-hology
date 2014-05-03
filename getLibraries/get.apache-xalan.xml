@@ -20,10 +20,10 @@
     description="Installs apache-xalan library"
     unless="ant-hology.availableLibraries.apache-xalan">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://apache.spinellicreations.com/xalan/xalan-j/binaries/xalan-j_2_7_1-bin.zip"
-      originalDestDir="xalan-j_2_7_1"
+      libUrl="http://apache.spinellicreations.com/xalan/xalan-j/binaries/xalan-j_2_7_2-bin.zip"
+      originalDestDir="xalan-j_2_7_2"
       libName="apache-xalan"
-      libVersion="2.7.1"
+      libVersion="2.7.2"
       classpath="apache-xalan.classpath"/>
   </target>
 
