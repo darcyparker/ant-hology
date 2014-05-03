@@ -28,11 +28,11 @@
     "
     unless="ant-hology.availableLibraries.apache-commons-httpcomponents">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://apache.cs.utah.edu//httpcomponents/httpclient/binary/httpcomponents-client-4.3-bin.zip"
+      libUrl="http://apache.cs.utah.edu//httpcomponents/httpclient/binary/httpcomponents-client-4.3.3-bin.zip"
+      originalDestDir="httpcomponents-client-4.3.3"
       libName="apache-commons-httpcomponents"
-      libVersion="4.3"
+      libVersion="4.3.3"
       classpath="apache-commons-httpcomponents.classpath"
-      unzipToDestDir="true"
       />
   </target>
 
