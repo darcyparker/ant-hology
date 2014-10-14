@@ -8,14 +8,14 @@ _thisDir=`dirname "$0"`
 _libDir=$( cd "$_thisDir/../lib"; pwd )
 _calabashDir="$_libDir/calabash-1.0.13-95"
 _saxonheDir="$_libDir/saxonHE-9.5.1.2"
-_xalanDir="$_libDir/apache-xalan-2.7.1"
+_xalanDir="$_libDir/apache-xalan-2.7.2"
 _xercesDir="$_libDir/apache-xerces-2.11.0"
 _resolverDir="$_libDir/apache-commons-xmlresolver-1.2"
 _XMLCatalogDir=$( cd "$_thisDir/../../XMLCatalog" ; pwd )
-_commonsCodecDir="$_libDir/apache-commons-codec-1.8"
+_commonsCodecDir="$_libDir/apache-commons-codec-1.9"
 _commonsLoggingDir="$_libDir/apache-commons-logging-1.1.3"
 _commonsCLIDir="$_libDir/apache-commons-cli-1.2"
-_commonsHttpComponentsDir="$_libDir/apache-commons-httpcomponents-4.3"
+_commonsHttpComponentsDir="$_libDir/apache-commons-httpcomponents-4.3.3"
 _commonsIODir="$_libDir/apache-commons-io-2.4"
 _XMLGraphicsDir="$_libDir/apache-commons-xmlgraphics-1.5/build"
 _XMLCommonsDir="$_libDir/apache-commons-xml-external-1.4.01"
@@ -73,8 +73,8 @@ if [ ! -d "$_XMLCatalogDir" ] || [ ! -s "$_XMLCatalogDir/catalog.xml" ]; then
   echo "Error: Could not find \"$_XMLCatalogDir/catalog.xml\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_commonsCodecDir" ] || [ ! -s "$_commonsCodecDir/commons-codec-1.8.jar" ]; then
-  echo "Error: Could not find \"$_commonsCodecDir/commons-codec-1.8.jar\"" > /dev/stderr
+if [ ! -d "$_commonsCodecDir" ] || [ ! -s "$_commonsCodecDir/commons-codec-1.9.jar" ]; then
+  echo "Error: Could not find \"$_commonsCodecDir/commons-codec-1.9.jar\"" > /dev/stderr
   return
 fi
 if [ ! -d "$_commonsLoggingDir" ] || [ ! -s "$_commonsLoggingDir/commons-logging-1.1.3.jar" ]; then
@@ -85,20 +85,20 @@ if [ ! -d "$_commonsCLIDir" ] || [ ! -s "$_commonsCLIDir/commons-cli-1.2.jar" ];
   echo "Error: Could not find \"$_commonsCLIDir/commons-cli-1.2.jar\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpcore-4.3.jar" ]; then
-  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpcore-4.3.jar\"" > /dev/stderr
+if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpcore-4.3.2.jar" ]; then
+  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpcore-4.3.2.jar\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpclient-4.3.jar" ]; then
-  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpclient-4.3.jar\"" > /dev/stderr
+if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpclient-4.3.3.jar" ]; then
+  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpclient-4.3.3.jar\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpmime-4.3.jar" ]; then
-  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpmime-4.3.jar\"" > /dev/stderr
+if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/httpmime-4.3.3.jar" ]; then
+  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/httpmime-4.3.3.jar\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/fluent-hc-4.3.jar" ]; then
-  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/fluent-hc-4.3.jar\"" > /dev/stderr
+if [ ! -d "$_commonsHttpComponentsDir" ] || [ ! -s "$_commonsHttpComponentsDir/lib/fluent-hc-4.3.3.jar" ]; then
+  echo "Error: Could not find \"$_commonsHttpComponentsDir/lib/fluent-hc-4.3.3.jar\"" > /dev/stderr
   return
 fi
 if [ ! -d "$_commonsIODir" ] || [ ! -s "$_commonsIODir/commons-io-2.4.jar" ]; then
@@ -182,14 +182,14 @@ fi
 java \
   -cp \
 "$_calabashDir/calabash.jar":\
-"$_commonsCodecDir/commons-codec-1.8.jar":\
+"$_commonsCodecDir/commons-codec-1.9.jar":\
 "$_commonsLoggingDir/commons-logging-1.1.3.jar":\
 "$_commonsCLIDir/commons-cli-1.2.jar":\
 "$_commonsIODir/commons-io-2.4.jar":\
-"$_commonsHttpComponentsDir/lib/httpclient-4.3.jar":\
-"$_commonsHttpComponentsDir/lib/httpcore-4.3.jar":\
-"$_commonsHttpComponentsDir/lib/httpmime-4.3.jar":\
-"$_commonsHttpComponentsDir/lib/fluent-hc-4.3.jar":\
+"$_commonsHttpComponentsDir/lib/httpclient-4.3.3.jar":\
+"$_commonsHttpComponentsDir/lib/httpcore-4.3.3.jar":\
+"$_commonsHttpComponentsDir/lib/httpmime-4.3.3.jar":\
+"$_commonsHttpComponentsDir/lib/fluent-hc-4.3.3.jar":\
 "$_XMLCommons/xml-apis.jar":"$_XMLCommonsDir/xml-apis-ext.jar":\
 "$_xercesDir/serializier.jar":"$_xercesDir/xercesImpl.jar":\
 "$_resolverDir/resolver.jar":"$_XMLCatalogDir":\
