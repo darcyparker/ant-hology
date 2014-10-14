@@ -22,8 +22,9 @@
 
   <import file="${ant-hology.pathdefs.dir}/html5-validator.nu.xml" unless:set="ant-hology.pathdefs.html5-validator.nu.loaded"/>
 
-  <!-- See http://syntax.whattf.org/ -->
-  <!-- Build instructions, see documentation: https://bitbucket.org/validator/build/src -->
+  <!-- OLD: See http://syntax.whattf.org/ -->
+  <!-- See http://validator.github.io/validator/-->
+  <!-- See https://github.com/validator/validator-->
   <!-- This is an html5 validator based on relaxng and schematron -->
   <target
     name="ant-hology.get.html5-validator.nu"
@@ -42,10 +43,9 @@
       >
       <echo>Installing html5-validator.nu</echo>
       <delete dir="${ant-hology.lib.dir}/html5-validator.nu"/>
-      <mkdir dir="${ant-hology.lib.dir}/html5-validator.nu"/>
-      <exec-hg
-        dir="${ant-hology.lib.dir}/html5-validator.nu"
-        options="clone https://bitbucket.org/validator/build build"/>
+      <exec-git
+        dir="${ant-hology.lib.dir}"
+        options="clone https://github.com/validator/validator.git html5-validator.nu"/>
       <!--Tasks:-->
       <!--checkout : Checks out the sources-->
       <!--dldeps   : Downloads missing dependency libraries and entities-->
@@ -90,6 +90,7 @@
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="build"/>
+        <arg value="all"/>
       </exec>
       <!--See documentation https://bitbucket.org/validator/build/src -->
       <!--build.py all must be executed twice-->
@@ -100,6 +101,7 @@
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="build"/>
+        <arg value="all"/>
       </exec>
       <echo>Run the tests</echo>
       <exec

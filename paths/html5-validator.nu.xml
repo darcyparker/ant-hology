@@ -10,24 +10,31 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
 
-  <!-- See http://syntax.whattf.org/ -->
-  <!-- Build instructions, see documentation: https://bitbucket.org/validator/build/src -->
+  <!-- OLD: See http://syntax.whattf.org/ -->
+  <!-- See http://validator.github.io/validator/-->
+  <!-- See https://github.com/validator/validator-->
   <!-- This is an html5 validator based on relaxng and schematron -->
   <path id="html5-validator.nu.required">
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu"/>
-    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/build"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/extras"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/htmlparser"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/jars"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/jing-trang"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/local-entities"/>
-    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/nu-validator-site"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/research-src"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/resources"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/sample"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/schema"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/site"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/spec"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/src"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/syntax"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/test-harness"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/tests"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/util"/>
-    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/validator"/>
+    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/xml-src"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/xmlparser"/>
-
     <!--Todo, add jars-->
   </path>
 
