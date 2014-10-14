@@ -56,7 +56,9 @@ fi
 java \
   -cp \
 "$_saxonheDir/saxon9he.jar":\
+"$_XMLCommons/xml-apis.jar":"$_XMLCommonsDir/xml-apis-ext.jar":\
 "$_xercesDir/xercesImpl.jar":\
+"$_resolverDir/resolver.jar":\
 "$_nekoDir/nekohtml.jar"\
   '-Dorg.xml.sax.driver=org.apache.xml.resolver.tools.ResolvingXMLReader' \
   '-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl' \
