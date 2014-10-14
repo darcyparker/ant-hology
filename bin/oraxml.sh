@@ -5,7 +5,7 @@
 #Internal variables
 _thisDir=`dirname "$0"`
 _libDir=$( cd "$_thisDir/../lib"; pwd )
-_oracleDir="$_libDir/oracle-xml"
+_oracleDir="$_libDir/oracle-xmlparser-v2/"
 
 #Check setup
 if [ ! `which java 2> /dev/null` ]; then

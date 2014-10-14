@@ -5,8 +5,9 @@
 #Internal variables
 _thisDir=`dirname "$0"`
 _libDir=$( cd "$_thisDir/../lib"; pwd )
-_oracleDir="$_libDir/oracle-xml"
-_xercesDir="$_libDir/apache-xerces-2_11_0"
+_oracleDir="$_libDir/oracle-xmlparser-v2/"
+_xercesDir="$_libDir/apache-xerces-2.11.0/"
+_XMLCommonsDir="$_libDir/apache-commons-xml-external-1.4.01"
 _resolverDir="$_libDir/apache-commons-xmlresolver-1.2"
 _XMLCatalogDir=$( cd "$_thisDir/../../XMLCatalog" ; pwd )
 
