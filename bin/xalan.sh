@@ -5,7 +5,7 @@
 #Internal variables
 _thisDir=`dirname "$0"`
 _libDir=$( cd "$_thisDir/../lib"; pwd )
-_xalanDir="$_libDir/apache-xalan-2.7.1"
+_xalanDir="$_libDir/apache-xalan-2.7.2"
 _xercesDir="$_libDir/apache-xerces-2.11.0"
 _resolverDir="$_libDir/apache-commons-xmlresolver-1.2"
 _XMLCatalogDir=$( cd "$_thisDir/../../XMLCatalog" ; pwd )
