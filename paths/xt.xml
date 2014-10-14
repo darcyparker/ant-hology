@@ -11,9 +11,11 @@
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
 
   <!-- See http://www.blnz.com/xt/index.html -->
+  <!-- See http://www.blnz.com/xt/xt-20051206/index.html -->
+  <!-- See ftp://ftp.jclark.com/pub/xml/xt.zip -->
   <path
     id="xt.classpath"
-    path="${ant-hology.lib.dir}/xt-20051206/xt20051206.jar"
+    path="${ant-hology.lib.dir}/xt/xt.jar"
     />
 
   <property name="ant-hology.pathdefs.xt.loaded" value="true"/>

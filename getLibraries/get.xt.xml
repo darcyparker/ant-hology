@@ -15,6 +15,7 @@
 
   <!-- See http://www.blnz.com/xt/index.html -->
   <!-- See http://www.blnz.com/xt/xt-20051206/index.html -->
+  <!-- See ftp://ftp.jclark.com/pub/xml/xt.zip -->
   <target
     name="ant-hology.get.xt"
     description="Installs xt library."
@@ -31,17 +32,24 @@
       <echo>Installing xt, version 20051206</echo>
       <delete dir="${ant-hology.lib.dir}/xt-20051206"/>
       <mkdir dir="${ant-hology.lib.dir}/xt-20051206"/>
-      <get
-        src="http://www.blnz.com/xt/xt-20051206/lib/xt20051206.jar"
-        dest="${ant-hology.lib.dir}/xt-20051206/xt20051206.jar"/>
+      <!--<get-->
+        <!--src="http://www.blnz.com/xt/xt-20051206/lib/xt20051206.jar"-->
+        <!--dest="${ant-hology.lib.dir}/xt-20051206/xt20051206.jar"/>-->
       <!--Note, have to get src from different location because of bad link at blnz.com-->
+      <!--<get-->
+        <!--src="http://gentoo.netnitco.net/distfiles/xt-20051206-src.zip"-->
+        <!--dest="${ant-hology.lib.dir}/xt-20051206-src.zip"/>-->
+      <!--<unzip-->
+        <!--src="${ant-hology.lib.dir}/xt-20051206-src.zip"-->
+        <!--dest="${ant-hology.lib.dir}"/>-->
+      <!--<delete file="${ant-hology.lib.dir}/xt-20051206-src.zip"/>-->
       <get
-        src="http://gentoo.netnitco.net/distfiles/xt-20051206-src.zip"
-        dest="${ant-hology.lib.dir}/xt-20051206-src.zip"/>
+        src="ftp://ftp.jclark.com/pub/xml/xt.zip"
+        dest="${ant-hology.lib.dir}/xt.zip"/>
       <unzip
-        src="${ant-hology.lib.dir}/xt-20051206-src.zip"
-        dest="${ant-hology.lib.dir}"/>
-      <delete file="${ant-hology.lib.dir}/xt-20051206-src.zip"/>
+        src="${ant-hology.lib.dir}/xt.zip"
+        dest="${ant-hology.lib.dir}/xt"/>
+      <delete file="${ant-hology.lib.dir}/xt.zip"/>
       <!--Test installation-->
       <areAllAvailable
         property="ant-hology.availableLibraries.xt"

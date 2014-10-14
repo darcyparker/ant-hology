@@ -9,7 +9,7 @@ _libDir=$( cd "$_thisDir/../lib"; pwd )
 _xercesDir="$_libDir/apache-xerces-2.11.0"
 _resolverDir="$_libDir/apache-commons-xmlresolver-1.2"
 _xpDir="$_libDir/xp"
-_xtDir="$_libDir/xt-20051206"
+_xtDir="$_libDir/xt"
 _XMLCatalogDir=$( cd "$_thisDir/../../XMLCatalog" ; pwd )
 _XMLCommonsDir="$_libDir/apache-commons-xml-external-1.4.01"
 
@@ -22,8 +22,8 @@ if [ ! -d "$_libDir" ]; then
   echo "Error: Could not find \"$_libDir\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_xtDir" ] || [ ! -s "$_xtDir/xt20051206.jar" ]; then
-  echo "Error: Could not find \"$_xtDir/xt20051206.jar\"" > /dev/stderr
+if [ ! -d "$_xtDir" ] || [ ! -s "$_xtDir/xt.jar" ]; then
+  echo "Error: Could not find \"$_xtDir/xt.jar\"" > /dev/stderr
   return
 fi
 if [ ! -d "$_xpDir" ] || [ ! -s "$_xpDir/xp.jar" ]; then
@@ -57,7 +57,7 @@ fi
   #'-Dcom.jclark.xsl.sax.parser=org.apache.xml.resolver.tools.ResolvingParser' \
 java \
   -cp \
-"$_xtDir/xt20051206.jar":\
+"$_xtDir/xt.jar":\
 "$_xpDir/xp.jar":\
 "$_XMLCommons/xml-apis.jar":"$_XMLCommonsDir/xml-apis-ext.jar":\
 "$_xercesDir/serializier.jar":"$_xercesDir/xercesImpl.jar":\
