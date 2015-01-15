@@ -13,7 +13,7 @@
   <!-- See http://commons.apache.org/proper/commons-codec/ -->
   <path
     id="apache-commons-codec.classpath"
-    path="${ant-hology.lib.dir}/apache-commons-codec-1.9/commons-codec-1.9.jar"
+    path="${ant-hology.lib.dir}/apache-commons-codec-1.10/commons-codec-1.10.jar"
     />
 
   <property name="ant-hology.pathdefs.apache-commons-codec.loaded" value="true"/>
