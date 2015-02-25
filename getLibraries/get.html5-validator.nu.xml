@@ -23,8 +23,8 @@
   <import file="${ant-hology.pathdefs.dir}/html5-validator.nu.xml" unless:set="ant-hology.pathdefs.html5-validator.nu.loaded"/>
 
   <!-- OLD: See http://syntax.whattf.org/ -->
-  <!-- See http://validator.github.io/validator/-->
-  <!-- See https://github.com/validator/validator-->
+  <!-- See http://validator.github.io/validator/ -->
+  <!-- See https://github.com/validator/validator -->
   <!-- This is an html5 validator based on relaxng and schematron -->
   <target
     name="ant-hology.get.html5-validator.nu"

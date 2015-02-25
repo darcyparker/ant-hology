@@ -115,7 +115,6 @@
     ant-hology.get.freehep-io,
     ant-hology.get.google-closure-compiler,
     ant-hology.get.hamcrest,
-    ant-hology.get.html5-validator.nu,
     ant-hology.get.htmlparser,
     ant-hology.get.icu4j,
     ant-hology.get.iso-schematron-xslt1,
@@ -149,6 +148,9 @@
     ant-hology.get.xt
     "
     >
+    <!-- Note: html5-validator.nu doesn't build correctly. It is obsolete... -->
+    <!-- ant-hology.get.html5-validator.nu, -->
+    <!-- TODO: Update its getter to use https://github.com/validator/validator -->
     <echo>Successfully installed all libraries.</echo>
   </target>
 
