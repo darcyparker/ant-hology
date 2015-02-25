@@ -21,7 +21,7 @@
     depends="ant-hology.get.apache-commons-xml-external"
     unless="ant-hology.availableLibraries.apache-xerces">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://apache.mirrors.lucidnetworks.net//xerces/j/binaries/Xerces-J-bin.2.11.0.zip"
+      libUrl="http://apache.cs.utah.edu//xerces/j/binaries/Xerces-J-bin.2.11.0.zip"
       libName="apache-xerces"
       libVersion="2.11.0"
       classpath="apache-xerces.classpath"
