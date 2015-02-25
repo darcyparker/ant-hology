@@ -19,7 +19,7 @@
     description="Installs apache-commons-lang library"
     unless="ant-hology.availableLibraries.apache-commons-lang">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://apache.mirrors.lucidnetworks.net//commons/lang/binaries/commons-lang3-3.3.2-bin.zip"
+      libUrl="http://mirrors.advancedhosters.com/apache//commons/lang/binaries/commons-lang3-3.3.2-bin.zip"
       originalDestDir="commons-lang3-3.3.2"
       libName="apache-commons-lang"
       libVersion="3.3.3.2"
