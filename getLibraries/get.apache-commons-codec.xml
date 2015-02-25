@@ -19,7 +19,7 @@
     description="Installs apache-commons-codec library"
     unless="ant-hology.availableLibraries.apache-commons-codec">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://apache.mirrors.lucidnetworks.net//commons/codec/binaries/commons-codec-1.10-bin.zip"
+      libUrl="http://mirror.tcpdiag.net/apache//commons/codec/binaries/commons-codec-1.10-bin.zip"
       originalDestDir="commons-codec-1.10"
       libName="apache-commons-codec"
       libVersion="1.10"
