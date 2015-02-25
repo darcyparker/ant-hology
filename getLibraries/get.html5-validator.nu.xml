@@ -47,24 +47,28 @@
         dir="${ant-hology.lib.dir}"
         options="clone https://github.com/validator/validator.git html5-validator.nu"/>
       <!--Tasks:-->
-      <!--checkout : Checks out the sources-->
-      <!--dldeps   : Downloads missing dependency libraries and entities-->
-      <!--dltests  : Downloads the external test suite if missing-->
-      <!--build    : Build the source-->
-      <!--test     : Run tests-->
-      <!--run      : Run the system-->
-      <!--all      : checkout dldeps dltests build test run-->
-      <!--dist     : Create a release distribution-->
-      <echo>checkout all sources</echo>
+      <!-- update   - Update git submodules" -->
+      <!-- dldeps   - Download missing dependency libraries and entities" -->
+      <!-- build    - Build the source" -->
+      <!-- test     - Run regression tests" -->
+      <!-- check    - Perform self-test of the system" -->
+      <!-- run      - Run the system" -->
+      <!-- all      - update dldeps build test run" -->
+      <!-- jar      - Create a JAR file containing a release distribution" -->
+      <!-- war      - Create a WAR file containing a release distribution" -->
+      <!-- checkjar - Run tests with the build jar file" -->
+      <!-- script   - Make run-validator.sh script for running the system" -->
+
+      <echo>Update git submodules</echo>
       <exec
         executable="python"
         dir="${ant-hology.lib.dir}/html5-validator.nu"
         searchpath="true"
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
-        <arg value="checkout"/>
+        <arg value="update"/>
       </exec>
-      <echo>Downloads missing dependency libraries and entities</echo>
+      <echo>Download missing dependency libraries and entities</echo>
       <exec
         executable="python"
         dir="${ant-hology.lib.dir}/html5-validator.nu"
@@ -72,15 +76,6 @@
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="dldeps"/>
-      </exec>
-      <echo>Downloads the external test suite if missing</echo>
-      <exec
-        executable="python"
-        dir="${ant-hology.lib.dir}/html5-validator.nu"
-        searchpath="true"
-        >
-        <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
-        <arg value="dltests"/>
       </exec>
       <echo>Build the source</echo>
       <exec
@@ -90,9 +85,8 @@
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="build"/>
-        <arg value="all"/>
       </exec>
-      <!--See documentation https://bitbucket.org/validator/build/src -->
+      <!--See documentation https://github.com/validator/validator -->
       <!--build.py all must be executed twice-->
       <exec
         executable="python"
@@ -101,9 +95,8 @@
         >
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="build"/>
-        <arg value="all"/>
       </exec>
-      <echo>Run the tests</echo>
+      <echo>Run the regression tests</echo>
       <exec
         executable="python"
         dir="${ant-hology.lib.dir}/html5-validator.nu"
@@ -112,16 +105,6 @@
         <arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>
         <arg value="test"/>
       </exec>
-      <!--See documentation https://bitbucket.org/validator/build/src -->
-      <!--build.py all must be executed twice-->
-      <!--<exec-->
-        <!--executable="python"-->
-        <!--dir="${ant-hology.lib.dir}/html5-validator.nu"-->
-        <!--searchpath="true"-->
-        <!-->-->
-        <!--<arg file="${ant-hology.lib.dir}/html5-validator.nu/build/build.py"/>-->
-        <!--<arg value="all"/>-->
-      <!--</exec>-->
 
       <!--Test installation-->
       <areAllAvailable

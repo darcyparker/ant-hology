@@ -145,12 +145,10 @@
     ant-hology.get.xp,
     ant-hology.get.XSD2SCH,
     ant-hology.get.xsdlib,
-    ant-hology.get.xt
+    ant-hology.get.xt,
+    ant-hology.get.html5-validator.nu
     "
     >
-    <!-- Note: html5-validator.nu doesn't build correctly. It is obsolete... -->
-    <!-- ant-hology.get.html5-validator.nu, -->
-    <!-- TODO: Update its getter to use https://github.com/validator/validator -->
     <echo>Successfully installed all libraries.</echo>
   </target>
 
