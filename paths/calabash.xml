@@ -34,7 +34,7 @@
     <path refid="msv.classpath"/>
     <path refid="metadata-extractor.classpath"/>
     <path refid="tagsoup.classpath"/>
-    <path refid="htmlparser.classpath"/>
+    <!--TODO: <path refid="htmlparser.classpath"/> -->
     <pathelement location="${ant-hology.lib.dir}/calabash-1.0.13-95/calabash.jar"/>
   </path>
 

@@ -27,6 +27,7 @@
 
   <!-- See http://xmlcalabash.com/ -->
   <!-- See https://en.wikipedia.org/wiki/XProc -->
+  <!-- TODO: Add ant-hology.get.htmlparser as a depends -->
   <target
     name="ant-hology.get.calabash"
     description="Installs calabash library."
@@ -39,8 +40,7 @@
     ant-hology.get.xmlunit,
     ant-hology.get.msv,
     ant-hology.get.metadata-extractor,
-    ant-hology.get.tagsoup,
-    ant-hology.get.htmlparser
+    ant-hology.get.tagsoup
     "
     unless="ant-hology.availableLibraries.calabash">
     <getLibraryDefs.tasks.getLib

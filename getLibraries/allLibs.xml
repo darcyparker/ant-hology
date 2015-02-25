@@ -115,7 +115,6 @@
     ant-hology.get.freehep-io,
     ant-hology.get.google-closure-compiler,
     ant-hology.get.hamcrest,
-    ant-hology.get.htmlparser,
     ant-hology.get.icu4j,
     ant-hology.get.iso-schematron-xslt1,
     ant-hology.get.iso-schematron-xslt2,
@@ -149,6 +148,8 @@
     ant-hology.get.html5-validator.nu
     "
     >
+    <!-- TODO: Update -->
+    <!-- ant-hology.get.htmlparser -->
     <echo>Successfully installed all libraries.</echo>
   </target>
 

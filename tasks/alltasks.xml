@@ -24,11 +24,11 @@
   <import file="${ant-hology.taskdefs.dir}/iso-schematron-text-compile-xslt2.xml" unless:set="ant-hology.taskdefs.iso-schematron-text-compile-xslt2.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-ant.xml" unless:set="ant-hology.taskdefs.java-ant.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonb.xml" unless:set="ant-hology.taskdefs.java-saxonb.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/java-saxonbhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonbhtmlparser.loaded"/>
+  <!-- <import file="${ant-hology.taskdefs.dir}/java-saxonbhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonbhtmlparser.loaded"/> -->
   <import file="${ant-hology.taskdefs.dir}/java-saxonbneko.xml" unless:set="ant-hology.taskdefs.java-saxonbneko.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonbtagsoup.xml" unless:set="ant-hology.taskdefs.java-saxonbtagsoup.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonHE.xml" unless:set="ant-hology.taskdefs.java-saxonHE.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/java-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonHEhtmlparser.loaded"/>
+  <!-- <import file="${ant-hology.taskdefs.dir}/java-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.java-saxonHEhtmlparser.loaded"/> -->
   <import file="${ant-hology.taskdefs.dir}/java-saxonHEneko.xml" unless:set="ant-hology.taskdefs.java-saxonHEneko.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-saxonHEtagsoup.xml" unless:set="ant-hology.taskdefs.java-saxonHEtagsoup.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/java-tika-extractXML.xml" unless:set="ant-hology.taskdefs.java-tika-extractXML.loaded"/>
@@ -62,7 +62,7 @@
   <import file="${ant-hology.taskdefs.dir}/xmlvalidate-xmlcatalog.xml" unless:set="ant-hology.taskdefs.xmlvalidate-xmlcatalog.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/XSD2SCH.xml" unless:set="ant-hology.taskdefs.XSD2SCH.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHE.xml" unless:set="ant-hology.taskdefs.xslt-saxonHE.loaded"/>
-  <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEhtmlparser.loaded"/>
+  <!-- <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEhtmlparser.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEhtmlparser.loaded"/> -->
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEneko.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEneko.loaded"/>
   <import file="${ant-hology.taskdefs.dir}/xslt-saxonHEtagsoup.xml" unless:set="ant-hology.taskdefs.xslt-saxonHEtagsoup.loaded"/>
 

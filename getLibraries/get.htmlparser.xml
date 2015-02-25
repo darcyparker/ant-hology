@@ -19,6 +19,7 @@
   <import file="${ant-hology.pathdefs.dir}/htmlparser.xml" unless:set="ant-hology.pathdefs.htmlparser.loaded"/>
 
   <!-- See http://about.validator.nu/htmlparser/ -->
+  <!-- New: https://github.com/validator/htmlparser -->
   <target
     name="ant-hology.get.htmlparser"
     description="Installs htmlparser library."
@@ -29,7 +30,7 @@
     "
     unless="ant-hology.availableLibraries.htmlparser">
     <getLibraryDefs.tasks.getLib
-      libUrl="http://about.validator.nu/htmlparser/htmlparser-1.4.zip"
+      libUrl="https://about.validator.nu/htmlparser/htmlparser-1.4.zip"
       libName="htmlparser"
       libVersion="1.4"
       classpath="htmlparser.classpath"/>
