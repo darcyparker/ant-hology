@@ -11,7 +11,7 @@
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
 
   <!--Note, this property is used by task "tika-extractXML" defined in ${ant-hology.taskdefs.dir}/java-tika-extractXML.xml-->
-  <property name="ant-hology.pathdefs.apache-tika-app.jarfile" value="${ant-hology.lib.dir}/apache-tika-app-1.6/tika-app-1.6.jar"/>
+  <property name="ant-hology.pathdefs.apache-tika-app.jarfile" value="${ant-hology.lib.dir}/apache-tika-app-1.7/tika-app-1.7.jar"/>
 
   <!-- See https://tika.apache.org/ -->
   <path
