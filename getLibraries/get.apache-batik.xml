@@ -37,52 +37,52 @@
     <sequential
       unless:set="ant-hology.availableLibraries.apache-batik"
       >
-      <echo>Installing apache-batik, version 1.7</echo>
+      <echo>Installing apache-batik, version 1.8</echo>
 
       <!--Remove existing install if present-->
-      <delete dir="${ant-hology.lib.dir}/apache-batik-1.7"/>
+      <delete dir="${ant-hology.lib.dir}/apache-batik-1.8"/>
 
       <!--get src-->
-      <delete file="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+      <delete file="${ant-hology.lib.dir}/batik-src-1.8.zip"/>
       <get
-        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-src-1.7.zip"
-        dest="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/source/batik-src-1.8.zip"
+        dest="${ant-hology.lib.dir}/batik-src-1.8.zip"/>
       <unzip
-        src="${ant-hology.lib.dir}/batik-src-1.7.zip"
+        src="${ant-hology.lib.dir}/batik-src-1.8.zip"
         dest="${ant-hology.lib.dir}"/>
-      <delete file="${ant-hology.lib.dir}/batik-src-1.7.zip"/>
+      <delete file="${ant-hology.lib.dir}/batik-src-1.8.zip"/>
 
       <!--get jars-->
-      <delete file="${ant-hology.lib.dir}/batik-1.7.zip"/>
+      <delete file="${ant-hology.lib.dir}/batik-1.8.zip"/>
       <get
-        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-1.7.zip"
-        dest="${ant-hology.lib.dir}/batik-1.7.zip"/>
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/binaries/batik-bin-1.8.zip"
+        dest="${ant-hology.lib.dir}/batik-1.8.zip"/>
       <unzip
-        src="${ant-hology.lib.dir}/batik-1.7.zip"
+        src="${ant-hology.lib.dir}/batik-1.8.zip"
         dest="${ant-hology.lib.dir}"/>
-      <delete file="${ant-hology.lib.dir}/batik-1.7.zip"/>
+      <delete file="${ant-hology.lib.dir}/batik-1.8.zip"/>
 
       <!--Rename directory to follow library naming convention-->
-      <move file="${ant-hology.lib.dir}/batik-1.7" tofile="${ant-hology.lib.dir}/apache-batik-1.7"/>
+      <move file="${ant-hology.lib.dir}/batik-1.8" tofile="${ant-hology.lib.dir}/apache-batik-1.8"/>
 
       <!--Apply the batik-rasterizer-patch so the rasterizer task can be built-->
       <!--Using a patch that is similar to https://issues.apache.org/bugzilla/attachment.cgi?id=22944 -->
       <!--Command used to create patch:-->
       <!--  Note: A double hyphen is not allowed in xml comment. So replace == with a double hyphen -->
-      <!--  diff -rupN ==strip-trailing-cr apache-batik-1.7/ apache-batik-1.7-new/ > apache-batik-1.7-patch.txt -->
+      <!--  diff -rupN ==strip-trailing-cr apache-batik-1.8/ apache-batik-1.8-new/ > apache-batik-1.8-patch.txt -->
       <!--Note: I temporarily change the line endings, because I don't want <CR> endings inside files in this git-->
       <!-- repo.  The patch file was created without the <CR> endings (strip-trailling-cr was used).-->
       <fail message="Could not find ${ant-hology.patches.dir}/batik-rasterizer-patch.txt. This is required to patch batik so the rasterizer ant task can be built.">
         <condition>
           <not>
             <available
-              file="${ant-hology.patches.dir}/apache-batik-1.7-patch.txt"
+              file="${ant-hology.patches.dir}/apache-batik-1.8-patch.txt"
               type="file"/>
           </not>
         </condition>
       </fail>
       <fixcrlf
-        srcdir="${ant-hology.lib.dir}/apache-batik-1.7"
+        srcdir="${ant-hology.lib.dir}/apache-batik-1.8"
         includes="contrib/rasterizertask/build.bat"
         eol="lf"
         />
@@ -92,14 +92,14 @@
       <!--have support for this.  So on windows, I am using exec task to run patch.exe.-->
       <patch
         unless:set="ant-hology.OS.onWindows"
-        patchfile="${ant-hology.patches.dir}/apache-batik-1.7-patch.txt"
-        dir="${ant-hology.lib.dir}/apache-batik-1.7"
+        patchfile="${ant-hology.patches.dir}/apache-batik-1.8-patch.txt"
+        dir="${ant-hology.lib.dir}/apache-batik-1.8"
         strip="1"
         backups="true"
         failonerror="true"/>
       <echo if:set="ant-hology.OS.onWindows">Starting Patch. This requires GNU patch to be installed and in %PATH%.</echo>
       <exec
-        dir="${ant-hology.lib.dir}/apache-batik-1.7"
+        dir="${ant-hology.lib.dir}/apache-batik-1.8"
         executable="patch.exe"
         failonerror="true"
         if:set="ant-hology.OS.onWindows"
@@ -107,15 +107,15 @@
         <arg value="--binary"/> <!--Necessary since the patch file has unix line endings.-->
         <arg value="-b"/> <!--make backup files-->
         <arg value="--strip=1"/> <!--strip first dir from path in patch-->
-        <arg prefix="--input=" file="${ant-hology.patches.dir}\apache-batik-1.7-patch.txt"/> <!--input patch file-->
-        <arg prefix="--directory=" file="${ant-hology.lib.dir}\apache-batik-1.7"/> <!--dir to apply patch-->
+        <arg prefix="--input=" file="${ant-hology.patches.dir}\apache-batik-1.8-patch.txt"/> <!--input patch file-->
+        <arg prefix="--directory=" file="${ant-hology.lib.dir}\apache-batik-1.8"/> <!--dir to apply patch-->
       </exec>
       <fixcrlf
-        srcdir="${ant-hology.lib.dir}/apache-batik-1.7"
+        srcdir="${ant-hology.lib.dir}/apache-batik-1.8"
         includes="contrib/rasterizertask/build.bat"
         eol="crlf"/>
-      <chmod file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.sh" perm="ugo+xr"/>
-      <chmod file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.bat" perm="ugo+xr"/>
+      <chmod file="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build.sh" perm="ugo+xr"/>
+      <chmod file="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build.bat" perm="ugo+xr"/>
 
       <!--Build the ant rasterizer task-->
       <!--Unfortunately the ant task can't be used because the classpath needs adjustment.-->
@@ -129,8 +129,8 @@
         </and>
       </condition>
       <exec
-        dir="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask"
-        executable="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build.sh"
+        dir="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask"
+        executable="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build.sh"
         failonerror="true"
         unless:set="ant-hology.OS.onWindows"
         if:set="ant-hology.jdk_JAVA_HOME"
@@ -142,8 +142,8 @@
         <arg line="jar"/>
       </exec>
       <exec
-        dir="${ant-hology.lib.dir}\apache-batik-1.7\contrib\rasterizertask"
-        executable="${ant-hology.lib.dir}\apache-batik-1.7\contrib\rasterizertask/build.bat"
+        dir="${ant-hology.lib.dir}\apache-batik-1.8\contrib\rasterizertask"
+        executable="${ant-hology.lib.dir}\apache-batik-1.8\contrib\rasterizertask/build.bat"
         failonerror="true"
         if:set="_jdkJAVAHOME_and_onWindows"
         >
@@ -157,19 +157,19 @@
         message="Could not find a JDK."
         unless:set="ant-hology.jdk_JAVA_HOME"/>
 
-      <!--Copy jar file to apache-batik-1.7 root folder if built successfully-->
-      <fail message="Could not find ${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar. The build must have failed.">
+      <!--Copy jar file to apache-batik-1.8 root folder if built successfully-->
+      <fail message="Could not find ${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build/lib/RasterizerTask.jar. The build must have failed.">
         <condition>
           <not>
             <available
-              file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar"
+              file="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build/lib/RasterizerTask.jar"
               type="file"/>
           </not>
         </condition>
       </fail>
       <copy
-        file="${ant-hology.lib.dir}/apache-batik-1.7/contrib/rasterizertask/build/lib/RasterizerTask.jar"
-        tofile="${ant-hology.lib.dir}/apache-batik-1.7/batik-rasterizertask.jar"/>
+        file="${ant-hology.lib.dir}/apache-batik-1.8/contrib/rasterizertask/build/lib/RasterizerTask.jar"
+        tofile="${ant-hology.lib.dir}/apache-batik-1.8/batik-rasterizertask.jar"/>
 
       <!--Test installation-->
       <areAllAvailable
@@ -183,7 +183,7 @@
         </condition>
       </fail>
       <!--TODO: Consider loading taskdefs that use batik (such as SVGRasterizerTask) after install-->
-      <echo>apache-batik, version 1.7 was installed successfully.</echo>
+      <echo>apache-batik, version 1.8 was installed successfully.</echo>
     </sequential>
   </target>
 

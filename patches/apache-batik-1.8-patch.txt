@@ -1,0 +1,88 @@
+diff -rupN --strip-trailing-cr apache-batik-1.8/contrib/rasterizertask/build.bat apache-batik-1.8-new/contrib/rasterizertask/build.bat
+--- apache-batik-1.8/contrib/rasterizertask/build.bat	2015-03-06 10:57:24.000000000 -0500
++++ apache-batik-1.8-new/contrib/rasterizertask/build.bat	2015-05-19 12:43:05.926969844 -0400
+@@ -28,22 +28,31 @@ ECHO You must set JAVA_HOME to point at
+ GOTO cleanup
+ :gotJavaHome
+ 
++:: ----- Set up classpath ---------------------------------------------------
++
++SET CP=%JAVA_HOME%\lib\tools.jar;
++
+ IF NOT "%ANT_HOME%" == "" GOTO gotAntHome
+ SET ANT_HOME=..\..
++SET CP=%CP%;%ANT_HOME%\lib\build\ant-1.6.5.jar;%ANT_HOME%\lib\build\ant-launcher-1.6.5.jar;
++goto continueCP
++
+ :gotAntHome
++SET CP=%CP%;%ANT_HOME%\lib\ant.jar;%ANT_HOME%\lib\ant-launcher.jar;
+ 
++:continueCP
+ SET BATIK_HOME=.\..\..
+ 
+ 
+ :: ----- Set up classpath ---------------------------------------------------
+ 
+-SET CP="%JAVA_HOME%\lib\tools.jar";"%ANT_HOME%\lib\build\ant-1.6.5.jar";"%ANT_HOME%\lib\build\ant-launcher-1.6.5.jar";"%BATIK_HOME%\lib\build\crimson-1.1.3.jar"
+-SET CP=%CP%;%BATIK_HOME%\classes
++SET CP=%CP%;%BATIK_HOME%\lib\build\crimson-1.1.3.jar;
++SET CP=%CP%;%BATIK_HOME%\batik.jar;%BATIK_HOME%\batik-rasterizer-1.8.jar;
+ 
+ 
+ :: ----- Execute ------------------------------------------------------------
+ 
+-"%JAVA_HOME%\bin\java.exe" %ANT_OPTS% -classpath %CP% org.apache.tools.ant.Main -Dant.home=%ANT_HOME% %1 -Dargs="%2 %3 %4 %5 %6 %7 %8 %9"
++"%JAVA_HOME%\bin\java.exe" %ANT_OPTS% -classpath "%CP%" org.apache.tools.ant.Main -Dant.home="%ANT_HOME%" %1 -Dargs="%2 %3 %4 %5 %6 %7 %8 %9"
+ 
+ 
+ :: ----- Cleanup the environment --------------------------------------------
+diff -rupN --strip-trailing-cr apache-batik-1.8/contrib/rasterizertask/build.sh apache-batik-1.8-new/contrib/rasterizertask/build.sh
+--- apache-batik-1.8/contrib/rasterizertask/build.sh	2015-03-06 10:57:24.000000000 -0500
++++ apache-batik-1.8-new/contrib/rasterizertask/build.sh	2015-05-19 12:42:26.491970551 -0400
+@@ -22,10 +22,6 @@
+ # --------------------------------------------------------------------------
+ 
+ # ----- Verify and Set Required Environment Variables -------------------------
+-   
+-if [ "$ANT_HOME" = "" ] ; then
+-  ANT_HOME=../..
+-fi
+ 
+ if [ "$JAVA_HOME" = "" ] ; then
+   echo You must set JAVA_HOME to point at your Java Development Kit installation
+@@ -44,15 +40,21 @@ if $cygwin ; then
+     JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+ fi
+ 
++# ----- Set up classpath ---------------------------------------------------
+ 
+-BATIK_HOME=../..
+-
++CP=$JAVA_HOME/lib/tools.jar
+ 
+-# ----- Set up classpath ---------------------------------------------------
++if [ "$ANT_HOME" = "" ] ; then
++  ANT_HOME=../..
++  CP=$CP:$ANT_HOME/lib/build/ant-1.6.5.jar:$ANT_HOME/lib/build/ant-launcher-1.6.5.jar
++else
++  CP=$CP:$ANT_HOME/lib/ant.jar:$ANT_HOME/lib/ant-launcher.jar
++fi
+ 
+-CP=$JAVA_HOME/lib/tools.jar:$ANT_HOME/lib/build/ant-1.6.5.jar:$ANT_HOME/lib/build/ant-launcher-1.6.5.jar:$BATIK_HOME/lib/build/crimson-1.1.3.jar
++BATIK_HOME=../..
+ 
+-CP=$CP:$BATIK_HOME/classes
++CP=$CP:$BATIK_HOME/lib/build/crimson-1.1.3.jar
++CP=$CP:$BATIK_HOME/batik-1.8.jar:$BATIK_HOME/batik-rasterizer-1.8.jar
+ 
+ if $cygwin; then
+   JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
+@@ -66,6 +68,8 @@ if [ $# != 0 ] ; then
+   shift 1
+ fi
+ 
++echo CP=$CP
++
+ "$JAVA_HOME/bin/java" $ANT_OPTS -classpath "$CP" org.apache.tools.ant.Main -emacs -Dant.home=$ANT_HOME $TARGET -Dargs="$*"
+ 
+ 

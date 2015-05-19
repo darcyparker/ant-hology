@@ -13,15 +13,10 @@ windows and unix-like systems.
 diff -rupN --strip-trailing-cr apache-batik-1.7/ apache-batik-1.7-new/ > apache-batik-1.7-patch.txt
 ```
 
-# schematron-1.5-patch.txt
+# apache-batik-1.8-patch.txt
 
-This patch is necessary for schematron v1.5's conformance1-5.xsl to work.
-
-```bash
-# Patch is created without the <CR> endings> because I don't want/allow <CR> endings
-# in my git repo.
-diff -rupN --strip-trailing-cr schematron-1.5/ schematron-1.5-new/ > schematron-1.5-patch.txt
-```
+This patch is patch is necessary so the ant rasterizer task can be build on
+windows and unix-like systems. (Similar to apache-batik-1.7-patch.txt.)
 
 #Files added to libraries
 

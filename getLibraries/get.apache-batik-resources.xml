@@ -25,11 +25,11 @@
       >
       <and>
         <available
-          file="${ant-hology.lib.dir}/apache-batik-1.7/docs"
+          file="${ant-hology.lib.dir}/apache-batik-1.8/docs"
           type="dir"/>
         <!--Just testing one file-->
         <available
-          file="${ant-hology.lib.dir}/apache-batik-1.7/docs/index.html"
+          file="${ant-hology.lib.dir}/apache-batik-1.8/docs/javadoc/index.html"
           type="file"/>
       </and>
     </condition>
@@ -37,32 +37,32 @@
     <sequential
       unless:set="ant-hology.availableLibraries.apache-batik-resources"
       >
-      <echo>Installing apache-batik-resources, version 1.7</echo>
+      <echo>Installing apache-batik-resources, version 1.7 under 1.8</echo>
 
       <!--get docs-->
       <delete file="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
-      <delete dir="${ant-hology.lib.dir}/batik-1.7/docs"/>
-      <mkdir dir="${ant-hology.lib.dir}/batik-1.7/docs"/>
+      <delete dir="${ant-hology.lib.dir}/batik-1.8/docs"/>
+      <mkdir dir="${ant-hology.lib.dir}/batik-1.8/docs"/>
       <get
-        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/batik-docs-1.7.zip"
+        src="http://mirror.metrocast.net/apache/xmlgraphics/batik/source/batik-docs-1.7.zip"
         dest="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
       <unzip
         src="${ant-hology.lib.dir}/batik-docs-1.7.zip"
-        dest="${ant-hology.lib.dir}/apache-batik-1.7/docs"/>
+        dest="${ant-hology.lib.dir}/apache-batik-1.8"/>
       <delete file="${ant-hology.lib.dir}/batik-docs-1.7.zip"/>
       <!--Test if installation was successful.-->
       <condition property="ant-hology.availableLibraries.apache-batik-resources">
         <and>
           <available
-            file="${ant-hology.lib.dir}/apache-batik-1.7/docs"
+            file="${ant-hology.lib.dir}/apache-batik-1.8/docs"
             type="dir"/>
           <!--Just testing one file-->
           <available
-            file="${ant-hology.lib.dir}/apache-batik-1.7/docs/index.html"
+            file="${ant-hology.lib.dir}/apache-batik-1.8/docs/javadoc/index.html"
             type="file"/>
         </and>
       </condition>
-      <fail message="Installation failed. Expected resources dirs under saxonHE-9.5.1.2 dir not present.">
+      <fail message="Installation failed. Expected ${ant-hology.lib.dir}/apache-batik-1.8/docs/javadoc/index.html is not present.">
         <!--Note, condition inside fail task doesn't support '@property' so it is defined in previous task-->
         <condition>
           <not>
