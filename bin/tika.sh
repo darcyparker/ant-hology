@@ -5,7 +5,7 @@
 #Internal variables
 _thisDir=`dirname "$0"`
 _libDir=$( cd "$_thisDir/../lib"; pwd )
-_tikaDir="$_libDir/apache-tika-app-1.6"
+_tikaDir="$_libDir/apache-tika-app-1.8"
 
 #Check setup
 if [ ! `which java 2> /dev/null` ]; then
@@ -16,8 +16,8 @@ if [ ! -d "$_libDir" ]; then
   echo "Error: Could not find \"$_libDir\"" > /dev/stderr
   return
 fi
-if [ ! -d "$_tikaDir" ] || [ ! -s "$_tikaDir/tika-app-1.6.jar" ]; then
-  echo "Error: Could not find \"$_tikaDir/tika-app-1.6.jar\"" > /dev/stderr
+if [ ! -d "$_tikaDir" ] || [ ! -s "$_tikaDir/tika-app-1.8.jar" ]; then
+  echo "Error: Could not find \"$_tikaDir/tika-app-1.8.jar\"" > /dev/stderr
   return
 fi
 
@@ -26,7 +26,7 @@ fi
 #Otherwise,execute with parameters passed
 if [ -z "$*" ]; then
   java \
-    -jar "$_tikaDir/tika-app-1.6.jar" \
+    -jar "$_tikaDir/tika-app-1.8.jar" \
     -?
 else
   java \
@@ -34,6 +34,6 @@ else
     '-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl' \
     '-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl' \
     '-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration' \
-    -jar "$_tikaDir/tika-app-1.6.jar" \
+    -jar "$_tikaDir/tika-app-1.8.jar" \
     "$@"
 fi
