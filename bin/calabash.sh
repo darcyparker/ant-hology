@@ -28,7 +28,7 @@ _htmlparserDir="$_libDir/htmlparser-1.4"
 _icu4jDir="$_libDir/icu4j-51.2"
 _jchardetDir="$_libDir/jchardet-1.1/dist/lib"
 _XOMDir="$_libDir/xom-1.2.10"
-_batikDir="$_libDir/apache-batik-1.7"
+_batikDir="$_libDir/apache-batik-1.8"
 _rhinoDir="$_libDir/rhino-1.7R4"
 _bsf24Dir="$_libDir/apache-commons-bsf-2.4.0/lib"
 
@@ -206,6 +206,7 @@ java \
 "$_icu4jDir/icu4j-charset-51_2.jar":\
 "$_icu4jDir/icu4j-localespi-51_2.jar":\
 "$_jchardetDir/chardet.jar":\
+"$_batikDir/batik-1.8.jar":\
 "$_XOMDir/xom-1.2.10.jar":\
 "$_rhinoDir/js.jar":\
 "$_bsf24Dir/bsf.jar":\
