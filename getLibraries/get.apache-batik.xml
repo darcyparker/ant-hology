@@ -97,7 +97,7 @@
         strip="1"
         backups="true"
         failonerror="true"/>
-      <echo if:set="ant-hology.OS.onWindows">Starting Patch. This requires GNU patch to be installed and in %PATH%.</echo>
+      <echo if:set="ant-hology.OS.onWindows">Starting Patch. This requires GNU patch to be installed and in %PATH%. Patch.exe from git does not work!</echo>
       <exec
         dir="${ant-hology.lib.dir}/apache-batik-1.8"
         executable="patch.exe"
