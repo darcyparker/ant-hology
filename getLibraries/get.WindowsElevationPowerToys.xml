@@ -53,7 +53,13 @@
         <arg value="/C"/>
         <arg prefix="/T:" path="${ant-hology.lib.dir}"/>
       </exec>
-      <unzip src="${ant-hology.lib.dir}\ELEVAT~1.EXE" dest="${ant-hology.lib.dir}"/>
+      <!-- ant unzip task is failing on windows so use exec command as workaround -->
+      <!-- <unzip src="${ant-hology.lib.dir}/ELEVAT~1.EXE" dest="${ant-hology.lib.dir}"/> -->
+      <!-- Note: User must have unzip.exe in the %PATH%.  See -->
+      <!-- http://gnuwin32.sourceforge.net/packages/unzip.htm -->
+      <exec executable="unzip" dir="${ant-hology.lib.dir}" searchpath="true" failonerror="@{failonerror}">
+        <arg line="${ant-hology.lib.dir}/ELEVAT~1.EXE"/>
+      </exec>
       <move file="${ant-hology.lib.dir}/Elevation" tofile="${ant-hology.getLibraryDefs.WindowsElevationPowerToys.destDir}"/>
       <delete file="${ant-hology.lib.dir}\WindowsElevationPowerToys-2008_06.exe"/>
       <delete file="${ant-hology.lib.dir}\ELEVAT~1.EXE"/>

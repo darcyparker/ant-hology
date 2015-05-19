@@ -30,6 +30,7 @@ use in my projects. (Particularly XSLT related tasks).
         > should not return `C:\Program Files (x86)\Git\bin\patch.exe`.  The version of
         > `patch.exe` included with git is obsolete.  Rename the `patch.exe` to
         > something like `patch-old.exe` or remove it.
+    - `unzip` from http://gnuwin32.sourceforge.net/packages/unzip.htm
     - `cvs` from http://ftp.gnu.org/non-gnu/cvs/binary/stable/x86-woe
     - `svn` from http://alagazam.net/
     - `git` from http://git-scm.com/downloads
