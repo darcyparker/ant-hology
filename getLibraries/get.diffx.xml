@@ -14,9 +14,10 @@
   <import file="${ant-hology.pathdefs.dir}/diffx.xml" unless:set="ant-hology.pathdefs.diffx.loaded"/>
 
   <!-- See http://weborganic.org/diffx.html -->
-  <!-- See https://code.google.com/p/wo-diffx/ -->
-  <!-- See http://pageseeder.org/apidocs/diffx/latest/index.html -->
-  <!-- See https://code.google.com/p/wo-diffx/w/list -->
+  <!-- Old: See https://code.google.com/p/wo-diffx/ -->
+  <!-- Old: See http://pageseeder.org/apidocs/diffx/latest/index.html -->
+  <!-- Old: See https://code.google.com/p/wo-diffx/w/list -->
+  <!-- New home: https://github.com/pageseeder/diffx -->
   <target
     name="ant-hology.get.diffx"
     description="Installs diffx library"
