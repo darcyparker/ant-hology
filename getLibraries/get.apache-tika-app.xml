@@ -27,12 +27,12 @@
     <sequential
       unless:set="ant-hology.availableLibraries.apache-tika-app"
       >
-      <echo>Installing apache-tika-app, version 1.8</echo>
-      <delete dir="${ant-hology.lib.dir}/apache-tika-app-1.8"/>
-      <mkdir dir="${ant-hology.lib.dir}/apache-tika-app-1.8"/>
+      <echo>Installing apache-tika-app, version 1.10</echo>
+      <delete dir="${ant-hology.lib.dir}/apache-tika-app-1.10"/>
+      <mkdir dir="${ant-hology.lib.dir}/apache-tika-app-1.10"/>
       <get
-        src="http://www.carfab.com/apachesoftware/tika/tika-app-1.8.jar"
-        dest="${ant-hology.lib.dir}/apache-tika-app-1.8/tika-app-1.8.jar"/>
+        src="http://www.carfab.com/apachesoftware/tika/tika-app-1.10.jar"
+        dest="${ant-hology.lib.dir}/apache-tika-app-1.10/tika-app-1.10.jar"/>
       <!--Test installation-->
       <areAllAvailable
         property="ant-hology.availableLibraries.apache-tika-app"
@@ -44,7 +44,7 @@
           </not>
         </condition>
       </fail>
-      <echo>apache-tika-app, version 1.8 was installed successfully.</echo>
+      <echo>apache-tika-app, version 1.10 was installed successfully.</echo>
     </sequential>
   </target>
 
