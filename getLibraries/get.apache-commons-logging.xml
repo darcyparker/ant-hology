@@ -12,7 +12,7 @@
 
   <import file="${ant-hology.dir}/commonProperties.xml" unless:set="ant-hology.commonProperties.loaded"/>
 
-  <property name="ant-hology.getLibraryDefs.apache-commons-logging.destDir" value="${ant-hology.lib.dir}/apache-commons-logging-1.1.3"/>
+  <property name="ant-hology.getLibraryDefs.apache-commons-logging.destDir" value="${ant-hology.lib.dir}/apache-commons-logging-1.2"/>
 
   <!-- See http://commons.apache.org/proper/commons-logging/ -->
   <target
@@ -22,7 +22,7 @@
 
     <available
       property="ant-hology.availableLibraries.apache-commons-logging"
-      file="${ant-hology.getLibraryDefs.apache-commons-logging.destDir}/commons-logging-1.1.3.jar"
+      file="${ant-hology.getLibraryDefs.apache-commons-logging.destDir}/commons-logging-1.2.jar"
       type="file"
       unless:set="ant-hology.availableLibraries.apache-commons-logging"
       />
@@ -30,9 +30,9 @@
     <sequential
       unless:set="ant-hology.availableLibraries.apache-commons-logging"
       >
-      <echo>Installing apache-commons-logging, version 1.1.3</echo>
-      <local name="_libUrl"/><property name="_libUrl" value="http://apache.claz.org//commons/logging/binaries/commons-logging-1.1.3-bin.zip"/>
-      <local name="_originalDestDir"/><property name="_originalDestDir" value="commons-logging-1.1.3"/>
+      <echo>Installing apache-commons-logging, version 1.2</echo>
+      <local name="_libUrl"/><property name="_libUrl" value="http://apache.claz.org//commons/logging/binaries/commons-logging-1.2-bin.zip"/>
+      <local name="_originalDestDir"/><property name="_originalDestDir" value="commons-logging-1.2"/>
 
       <local name="_destDir"/><property name="_destDir" value="${ant-hology.getLibraryDefs.apache-commons-logging.destDir}"/>
       <local name="_destZip"/><property name="_destZip" value="${_destDir}.zip"/>
@@ -50,7 +50,7 @@
       <!--Test if installation was successful.-->
       <available
         property="ant-hology.availableLibraries.apache-commons-logging"
-        file="${ant-hology.getLibraryDefs.apache-commons-logging.destDir}/commons-logging-1.1.3.jar"
+        file="${ant-hology.getLibraryDefs.apache-commons-logging.destDir}/commons-logging-1.2.jar"
         type="file"
         />
       <fail message="${_destDir} is not available or missing required files.">
@@ -60,7 +60,7 @@
           </not>
         </condition>
       </fail>
-      <echo>Apache Commons Logging v1.1.3 installed successfully.</echo>
+      <echo>Apache Commons Logging v1.2 installed successfully.</echo>
     </sequential>
   </target>
 
