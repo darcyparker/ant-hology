@@ -106,7 +106,6 @@
     ant-hology.get.AppleJavaExtensions,
     ant-hology.get.calabash,
     ant-hology.get.diffx,
-    ant-hology.get.dtd-flatten,
     ant-hology.get.DTDinst,
     ant-hology.get.env-js,
     ant-hology.get.freehep-graphics2d,
