@@ -28,7 +28,7 @@
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/rhino-1.7R5.jar"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/httpcore-4.4.jar"/>
-    <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/galimatias-0.1.0.jar"/>
+    <!-- <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/galimatias-0.1.0.jar"/> -->
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/jetty-io-9.2.9.v20150224.jar"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/javax.servlet-api-3.1.0.jar"/>
     <pathelement location="${ant-hology.lib.dir}/html5-validator.nu/dependencies/jetty-http-9.2.9.v20150224.jar"/>
